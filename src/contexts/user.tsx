@@ -18,9 +18,6 @@ export const UserProvider: React.FC<{
   const { admin, checkAuth, fetchUser, loading, login, logout, user } =
     useAuth();
 
-  // useEffect(() => {
-  //   checkAuth();
-  // }, [checkAuth]);
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);

@@ -23,7 +23,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [userType, setUserType] = useState<"user" | "admin">("user"); // ['user', 'admin'
+  const [userType, setUserType] = useState<"user" | "admin">("user");
   const [error, setError] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (loading || !user) return;
+    if (loading || !user) {
+      if (location.state?.from) {
+        setError("Please login to continue.");
+      }
+      return;
+    }
     if (!(user.first_name && user.last_name && user.title)) {
       navigate("/profile");
     } else {

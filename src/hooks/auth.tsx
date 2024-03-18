@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
-// import { userApi } from "../utils/api";
 import { UserType, UserContextType } from "../types/User.type";
 import loginApi from "@/utils/api/login";
 import logoutApi from "@/utils/api/logout";
 import checkAuthApi from "@/utils/api/checkAuth";
 import readUser from "@/utils/api/readUser";
+import { toast } from "react-toastify";
 
 const useAuth = (): UserContextType => {
   const [user, setUser] = useState<UserType | null>(null);
@@ -15,11 +15,12 @@ const useAuth = (): UserContextType => {
     try {
       const response = await readUser();
       if (!response || !response.success || !response.user) {
+        setUser(null);
+        setAdmin(false);
         return;
       }
       setUser(response.user);
       setAdmin(response.user.role.includes("admin"));
-      setLoading(false);
     } catch (error) {
       console.error(error);
     } finally {
@@ -33,6 +34,11 @@ const useAuth = (): UserContextType => {
       if (data?.user) {
         setUser(data.user);
         setAdmin(data.user.role.includes("admin"));
+        toast.success(`Welcome back, ${data.user.first_name}!`, {
+          autoClose: 2000,
+          closeButton: false,
+          closeOnClick: true,
+        });
       }
     } catch (error) {
       throw error as string;
@@ -42,6 +48,11 @@ const useAuth = (): UserContextType => {
   const logout = async () => {
     try {
       await logoutApi();
+      toast.info("Logged out", {
+        autoClose: 2000,
+        closeButton: false,
+        closeOnClick: true,
+      });
     } catch (error) {
       console.error(error);
     } finally {

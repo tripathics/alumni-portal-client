@@ -44,14 +44,13 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
     if (!file) {
       return true;
     }
-    console.log(file.size);
-    const maxFileSize = 5000;
-    const minFileSize = 1;
-    if (file.size > maxFileSize * 1000) {
-      return `File size should be less than ${maxFileSize / 1000} MB`;
+    const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+    const minFileSize = 10 * 1024; // 10kB in bytes
+    if (file.size > maxFileSize) {
+      return `File size should be less than ${maxFileSize / (1024 * 1024)} MB`;
     }
-    if (file.size < minFileSize * 1000) {
-      return `File size should be greater than ${minFileSize / 1000} MB`;
+    if (file.size < minFileSize) {
+      return `File size should be greater than ${minFileSize / 1024} kB`;
     }
     return true;
   };

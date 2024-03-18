@@ -67,7 +67,9 @@ const PersonalDetails = () => {
         fetchProfile();
         setTimeout(() => {
           setIsProfileModalOpen(false);
-          toast.success("Profile picture updated successfully");
+          toast.success("Profile picture updated successfully", {
+            autoClose: 2000,
+          });
         }, 1000);
       }
     } catch (error) {
