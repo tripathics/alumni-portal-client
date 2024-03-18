@@ -185,7 +185,7 @@ const MembershipForm = () => {
             schema={[
               { type: "section", label: "Membership Preferences" },
               {
-                name: "membershipLevel",
+                name: "membership_level",
                 label: "Membership level",
                 type: "select",
                 required: "Membership level is required",
@@ -208,7 +208,7 @@ const MembershipForm = () => {
                 type: "file",
                 required: "Signature is required",
                 allowedFormats: ["image/jpeg", "image/png", "image/gif"],
-                maxFileSize: 1000,
+                maxFileSize: 200 * 1024,
               },
             ]}
             onSubmit={onSubmit}

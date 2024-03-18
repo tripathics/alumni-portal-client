@@ -12,6 +12,9 @@ const alumniMembershipSubmit = async (
 > => {
   try {
     const response = await axios.request({
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
       method: "POST",
       url: "/api/alumni/membership",
       data: data,

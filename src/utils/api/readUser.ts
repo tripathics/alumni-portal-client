@@ -18,11 +18,8 @@ const readUser = async (): Promise<
     });
     return response.data;
   } catch (error) {
-    if (
-      (error as AxiosError<{ message: string }>).response?.data.message !==
-      "Token not found"
-    ) {
-      console.error(error);
+    const err = error as AxiosError<{ message: string }>;
+    if (err.response && err.response?.data.message !== "Token not found") {
       toast.error("Unauthorized, please login again");
     }
   }
