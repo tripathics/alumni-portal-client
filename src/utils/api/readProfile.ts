@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import axios from "../../config/axios.config";
 import { PersonalDetailsType } from "@/types/Profile.type";
 
