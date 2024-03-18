@@ -1,7 +1,7 @@
 export interface MembershipPrefillDataType {
   title: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   dob: string;
   category: string;
   nationality: string;
@@ -12,13 +12,13 @@ export interface MembershipPrefillDataType {
   state: string;
   country: string;
   phone: string;
-  altPhone: string;
+  alt_phone: string;
   email: string;
-  altEmail: string;
-  registrationNo: string;
-  rollNo: string;
+  alt_email: string;
+  registration_no: string;
+  roll_no: string;
   degree: string;
   discipline: string;
-  endDate: string;
+  graduation_date: string;
   status: string | null;
 }

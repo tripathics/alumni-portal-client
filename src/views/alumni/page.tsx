@@ -20,14 +20,12 @@ const MembershipForm = () => {
   useEffect(() => {
     const fetchPrefillData = async () => {
       try {
-        const response = await alumniPrefillApi();
-        if (response?.success && response?.data) {
-          setUserData(response.data);
-        } else if (response?.message) {
-          setErrorMsg(response.message);
+        const data = await alumniPrefillApi();
+        if (data) {
+          setUserData(data);
         }
       } catch (error) {
-        console.error(error);
+        setErrorMsg((error as Error).message);
       } finally {
         setLoading(false);
       }
@@ -83,13 +81,17 @@ const MembershipForm = () => {
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Full name</p>
               <p className={cx(styles.col, styles["value"])}>
-                {dataValueLookup[userData.title]} {userData.firstName}{" "}
-                {userData.lastName}
+                {dataValueLookup[userData.title]} {userData.first_name}{" "}
+                {userData.last_name}
               </p>
             </div>
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Date of Birth</p>
-              <p className={cx(styles.col, styles["value"])}>{userData.dob}</p>
+              <p className={cx(styles.col, styles["value"])}>
+                {new Date(userData.dob).toLocaleDateString("en-IN", {
+                  dateStyle: "long",
+                })}
+              </p>
             </div>
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Category</p>
@@ -124,13 +126,13 @@ const MembershipForm = () => {
                 Registration no.
               </p>
               <p className={cx(styles.col, styles["value"])}>
-                {userData.registrationNo}
+                {userData.registration_no}
               </p>
             </div>
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Roll no.</p>
               <p className={cx(styles.col, styles["value"])}>
-                {userData.rollNo}
+                {userData.roll_no}
               </p>
             </div>
             <div className={styles["box-row"]}>
@@ -140,9 +142,12 @@ const MembershipForm = () => {
               </p>
             </div>
             <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Graduation year</p>
+              <p className={cx(styles.col, styles["label"])}>Graduation date</p>
               <p className={cx(styles.col, styles["value"])}>
-                {userData.endDate.slice(0, 4)}
+                {new Date(userData.graduation_date).toLocaleDateString(
+                  "en-IN",
+                  { month: "long", year: "numeric" }
+                )}
               </p>
             </div>
           </div>
@@ -168,9 +173,9 @@ const MembershipForm = () => {
               </div>
               <div className={styles["col"]}>
                 <p className={styles["value"]}>{userData.email}</p>
-                <p className={styles["value"]}>{userData.altEmail}</p>
+                <p className={styles["value"]}>{userData.alt_email}</p>
                 <p className={styles["value"]}>{userData.phone}</p>
-                <p className={styles["value"]}>{userData.altPhone}</p>
+                <p className={styles["value"]}>{userData.alt_phone}</p>
               </div>
             </div>
           </div>

@@ -3,12 +3,7 @@ import axios from "../../config/axios.config";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
 
 const alumniPrefill = async (): Promise<
-  | {
-      success: boolean;
-      message?: string;
-      data?: MembershipPrefillDataType;
-    }
-  | undefined
+  MembershipPrefillDataType | undefined
 > => {
   try {
     const response = await axios.request({
@@ -17,10 +12,9 @@ const alumniPrefill = async (): Promise<
     });
     return response.data;
   } catch (error) {
-    if ((error as AxiosError).response?.status === 401) {
-      throw "Unauthorized";
-    } else {
-      console.error(error);
+    const err = error as AxiosError<{ message: string }>;
+    if (err.response?.data.message) {
+      throw new Error(err.response.data.message);
     }
   }
 };

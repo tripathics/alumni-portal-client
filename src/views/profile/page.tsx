@@ -81,7 +81,11 @@ const PersonalDetails = () => {
     try {
       const data = await readProfile();
       if (data?.success) {
-        setPersonalDetails((prev) => ({ ...prev, ...data.user }));
+        setPersonalDetails((prev) => ({
+          ...prev,
+          ...data.user,
+          dob: new Date(data.user.dob).toISOString().split("T")[0],
+        }));
       }
     } catch (error) {
       console.error(error);

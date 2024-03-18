@@ -152,6 +152,18 @@ const Education: React.FC = () => {
   };
 
   const openModal = (data: FieldValues | null = null) => {
+    if (data) {
+      const { start_date, end_date } = data;
+      data = {
+        ...data,
+        start_date: start_date
+          ? new Date(start_date).toISOString().split("T")[0]
+          : "",
+        end_date: end_date
+          ? new Date(end_date).toISOString().split("T")[0]
+          : "",
+      };
+    }
     setEditPrefillData(data as EducationType | null);
     setIsModalOpen(true);
   };

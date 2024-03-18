@@ -35,7 +35,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div className={styles.dropdown} ref={ref}>
-      <div onClick={() => setIsOpen(!isOpen)}>
+      <div className={styles.toggle} onClick={() => setIsOpen(!isOpen)}>
         {toggle({ isOpen, setIsOpen })}
       </div>
       {isOpen && (

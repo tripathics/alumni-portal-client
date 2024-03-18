@@ -1,6 +1,10 @@
 .dropdown {
   position: relative;
 
+  .toggle {
+    display: flex;
+  }
+
   .render {
     position: absolute;
     top: 100%;
