@@ -34,11 +34,15 @@ const useAuth = (): UserContextType => {
       if (data?.user) {
         setUser(data.user);
         setAdmin(data.user.role.includes("admin"));
-        toast.success(`Welcome back, ${data.user.first_name}!`, {
-          autoClose: 2000,
-          closeButton: false,
-          closeOnClick: true,
-        });
+        const firstName = data.user.first_name;
+        toast.success(
+          firstName ? `Welcome back, ${firstName}!` : `Welcome back!`,
+          {
+            autoClose: 2000,
+            closeButton: false,
+            closeOnClick: true,
+          }
+        );
       }
     } catch (error) {
       throw error as string;
@@ -48,16 +52,16 @@ const useAuth = (): UserContextType => {
   const logout = async () => {
     try {
       await logoutApi();
-      toast.info("Logged out", {
-        autoClose: 2000,
-        closeButton: false,
-        closeOnClick: true,
-      });
     } catch (error) {
       console.error(error);
     } finally {
       setUser(null);
       setAdmin(false);
+      toast.info("Logged out", {
+        autoClose: 2000,
+        closeButton: false,
+        closeOnClick: true,
+      });
     }
   };
 

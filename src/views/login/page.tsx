@@ -48,6 +48,9 @@ const Login = () => {
       return;
     }
     if (!(user.first_name && user.last_name && user.title)) {
+      if (user.role.includes("admin")) {
+        return navigate("/admin");
+      }
       navigate("/profile");
     } else {
       const { from } = location.state || { from: { pathname: "/" } };

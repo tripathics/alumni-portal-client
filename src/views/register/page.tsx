@@ -6,15 +6,11 @@ import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
 import signupApi, { SignupFormData } from "@/utils/api/signup";
-import {
-  Xmark as XmarkIcon,
-  WarningCircle as WarningIcon,
-  Mail as MailIcon,
-  Key as KeyIcon,
-} from "iconoir-react";
+import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import axiosInstance from "@/config/axios.config";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import Alert from "@/components/Alert/Alert";
 
 const OTPForm: React.FC<{
   sendOtp: (formData: FieldValues) => void;
@@ -186,7 +182,7 @@ const SignupForm: React.FC<{
 
 const Register = () => {
   const [email, setEmail] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>("error");
   const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState<"otp" | "verify" | "signup">(
     "otp"
@@ -261,13 +257,12 @@ const Register = () => {
         <h1>Sign up for NIT AP Alumni</h1>
       </header>
       {error && (
-        <div className={cx(styles["box"], styles["error"])}>
-          <WarningIcon />
-          <p>{error}</p>
-          <button onClick={() => setError(null)}>
-            <XmarkIcon />
-          </button>
-        </div>
+        <Alert
+          isOpen={!!error}
+          onClose={() => setError(null)}
+          severity="error"
+          message={error}
+        />
       )}
       {formState === "otp" ? (
         <OTPForm loading={loading} sendOtp={sendOtp} />
