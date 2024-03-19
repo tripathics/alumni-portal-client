@@ -2,13 +2,13 @@ import SchemaForm, { Button } from "@/components/forms";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import alumniPrefillApi from "@/utils/api/alumniPrefill";
 import cx from "classnames";
-import { InfoCircle as InfoIcon } from "iconoir-react";
 import { useEffect, useState } from "react";
 import { dataValueLookup } from "@/utils/constants/data";
 import { NavLink } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
+import Alert from "@/components/Alert/Alert";
 
 const MembershipForm = () => {
   const [userData, setUserData] = useState<MembershipPrefillDataType | null>(
@@ -55,21 +55,20 @@ const MembershipForm = () => {
   return loading ? (
     <p>Please wait</p>
   ) : errorMsg ? (
-    <section className={cx(styles.box, styles.alert, styles.info)}>
-      <InfoIcon />
-      <h3>{errorMsg}</h3>
-    </section>
+    <Alert message={errorMsg} />
   ) : (
     userData && (
       <>
-        <section className={cx(styles["box"], styles["alert"])}>
-          <InfoIcon className={styles["icon"]} />
-          <p>
-            Make sure your details are correct before applying for life
-            membership. Go to your <NavLink to="/profile">profile</NavLink> to
-            make any corrections.
-          </p>
-        </section>
+        <Alert
+          message={
+            <p>
+              Make sure your details are correct before applying for life
+              membership. Go to your <NavLink to="/profile">profile</NavLink> to
+              make any corrections.
+            </p>
+          }
+          severity="info"
+        />
         <section className={styles["box"]}>
           <h1 className={styles["title"]}>Profile details</h1>
           <div className={styles["box-table"]}>

@@ -182,7 +182,7 @@ const SignupForm: React.FC<{
 
 const Register = () => {
   const [email, setEmail] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>("error");
+  const [error, setError] = useState<string | React.ReactNode | null>(null);
   const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState<"otp" | "verify" | "signup">(
     "otp"
@@ -199,7 +199,14 @@ const Register = () => {
         navigate("/login");
       }
     } catch (error) {
-      setError(error as string);
+      if (error === "User already exists") {
+        setError(
+          <>
+            Email already exists. <NavLink to="/login">Login?</NavLink>
+          </>
+        );
+      }
+      // setError(error as string);
     } finally {
       setLoading(false);
     }
@@ -237,7 +244,16 @@ const Register = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        setError(error.response?.data.message || error.message);
+        if (error.response?.data.message === "User already exists") {
+          setError(
+            <>
+              The email address already exists.{" "}
+              <NavLink to="/login">Login?</NavLink>
+            </>
+          );
+        } else {
+          setError(error.message);
+        }
       }
     } finally {
       setLoading(false);
@@ -256,14 +272,12 @@ const Register = () => {
         </NavLink>
         <h1>Sign up for NIT AP Alumni</h1>
       </header>
-      {error && (
-        <Alert
-          isOpen={!!error}
-          onClose={() => setError(null)}
-          severity="error"
-          message={error}
-        />
-      )}
+      <Alert
+        isOpen={!!error}
+        onClose={() => setError(null)}
+        severity="error"
+        message={error}
+      />
       {formState === "otp" ? (
         <OTPForm loading={loading} sendOtp={sendOtp} />
       ) : formState === "verify" ? (

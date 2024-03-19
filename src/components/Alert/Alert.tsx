@@ -1,4 +1,5 @@
 import styles from "./Alert.module.scss";
+import cx from "classnames";
 
 import {
   Xmark,
@@ -10,7 +11,7 @@ import {
 
 interface AlertProps {
   message: string | React.ReactNode;
-  severity: "error" | "success" | "warning" | "info";
+  severity?: "error" | "success" | "warning" | "info";
   isOpen?: boolean;
   onClose?: () => void;
 }
@@ -25,11 +26,11 @@ const Alert: React.FC<AlertProps> = ({
     success: CheckCircle,
     warning: WarningTriangle,
     info: InfoCircle,
-  }[severity];
+  }[severity || "info"];
 
   return (
     (isOpen || onClose === undefined) && (
-      <div className={styles["alert"]}>
+      <div className={cx(styles["alert"], severity ? styles[severity] : null)}>
         <div className={styles["alert-content"]}>
           <AlertIcon className={styles["alert-icon"]} width={24} height={24} />
           <div className={styles["message"]}>{message}</div>

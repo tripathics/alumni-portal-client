@@ -5,13 +5,9 @@ import { useLocation, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
-import {
-  Xmark as XmarkIcon,
-  WarningCircle as WarningIcon,
-  Mail as MailIcon,
-  Key as KeyIcon,
-} from "iconoir-react";
+import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import styles from "@/components/layouts/auth/Auth.module.scss";
+import Alert from "@/components/Alert/Alert";
 
 const Login = () => {
   const location = useLocation();
@@ -24,7 +20,7 @@ const Login = () => {
     handleSubmit,
   } = useForm();
   const [userType, setUserType] = useState<"user" | "admin">("user");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | React.ReactNode | null>(null);
 
   const [loading, setLoading] = useState(false);
   const { login, user } = useUser();
@@ -70,15 +66,12 @@ const Login = () => {
         </NavLink>
         <h1>Sign in to NIT AP Alumni</h1>
       </header>
-      {error && (
-        <div className={cx(styles["box"], styles["error"])}>
-          <WarningIcon />
-          <p>{error}</p>
-          <button onClick={() => setError(null)}>
-            <XmarkIcon />
-          </button>
-        </div>
-      )}
+      <Alert
+        isOpen={!!error}
+        severity="error"
+        message={error}
+        onClose={() => setError(null)}
+      />
 
       <div className={styles["tabs"]}>
         <button
