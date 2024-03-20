@@ -205,8 +205,9 @@ const Register = () => {
             Email already exists. <NavLink to="/login">Login?</NavLink>
           </>
         );
+      } else {  
+        setError(error as string);
       }
-      // setError(error as string);
     } finally {
       setLoading(false);
     }
@@ -252,7 +253,7 @@ const Register = () => {
             </>
           );
         } else {
-          setError(error.message);
+          setError(error.response?.data.message || error.message);
         }
       }
     } finally {
