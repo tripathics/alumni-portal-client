@@ -18,6 +18,8 @@ const dataValueLookup: Record<string, string> = {
   "part-time": "Part time",
   job: "Job",
   internship: "Internship",
+  level1_networking: "Level 1: Networking",
+  level2_volunteering: "Level 2: Networking",
 };
 
 export { dataValueLookup };

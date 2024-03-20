@@ -1,10 +1,11 @@
 // import Table from "@/components/Table/table";
 import Alert from "@/components/Alert/Alert";
 import Avatar from "@/components/Avatar/Avatar";
-import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
+import styles from "../Admin.module.scss";
 import axios from "@/config/axios.config";
 import { dataValueLookup } from "@/utils/constants/data";
 import { useEffect, useState } from "react";
+import cx from "classnames";
 
 interface MembershipApplicationRow {
   user_id: "string";
@@ -56,15 +57,13 @@ const Applications = () => {
       </header>
       <main>
         {applications ? (
-          <div className={styles.box}>
-            <table>
+          <div className={cx(styles.box, styles["table-wrapper"])}>
+            <table className={styles.table}>
               <thead>
                 <tr>
                   <th scope="col">User</th>
-                  <th scope="col">Membership Level</th>
-                  <th scope="col">Registration and Roll No</th>
-                  <th scope="col">Degree</th>
-                  <th scope="col">Discipline</th>
+                  <th scope="col">Registration & Roll No</th>
+                  <th scope="col">Degree & Discipline</th>
                   <th scope="col">Graduation Date</th>
                   <th scope="col">Status</th>
                 </tr>
@@ -84,7 +83,7 @@ const Applications = () => {
                           avatar={applications[userId].avatar}
                           size="2.2rem"
                         />
-                        <p>
+                        <p className={styles["text-ellipsis"]}>
                           {dataValueLookup[applications[userId].title]}{" "}
                           {applications[userId].first_name}{" "}
                           {applications[userId].last_name}
@@ -92,22 +91,22 @@ const Applications = () => {
                       </div>
                     </td>
                     <td>
-                      {dataValueLookup[applications[userId].membership_level]}
-                    </td>
-                    <td>
-                      <p>{applications[userId].registration_no}</p>
-                      <p>{applications[userId].roll_no}</p>
+                      <p>
+                        {applications[userId].registration_no} |{" "}
+                        {applications[userId].roll_no}
+                      </p>
                     </td>
                     <td>
                       {dataValueLookup[applications[userId].degree] ||
-                        applications[userId].degree}
+                        applications[userId].degree}{" "}
+                      {applications[userId].discipline}
                     </td>
-                    <td>{applications[userId].discipline}</td>
                     <td>
                       {new Date(
                         applications[userId].graduation_date
                       ).toLocaleString("default", {
-                        month: "short",
+                        month: "long",
+                        year: "numeric",
                       })}
                     </td>
                     <td>{applications[userId].status}</td>
