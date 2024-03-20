@@ -272,12 +272,9 @@ const Register = () => {
         </NavLink>
         <h1>Sign up for NIT AP Alumni</h1>
       </header>
-      <Alert
-        isOpen={!!error}
-        onClose={() => setError(null)}
-        severity="error"
-        message={error}
-      />
+      <Alert isOpen={!!error} onClose={() => setError(null)} severity="error">
+        {error}
+      </Alert>
       {formState === "otp" ? (
         <OTPForm loading={loading} sendOtp={sendOtp} />
       ) : formState === "verify" ? (

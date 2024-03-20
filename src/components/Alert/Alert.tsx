@@ -10,13 +10,13 @@ import {
 } from "iconoir-react";
 
 interface AlertProps {
-  message: string | React.ReactNode;
+  children: React.ReactNode;
   severity?: "error" | "success" | "warning" | "info";
   isOpen?: boolean;
   onClose?: () => void;
 }
 const Alert: React.FC<AlertProps> = ({
-  message,
+  children,
   severity,
   isOpen,
   onClose,
@@ -29,11 +29,11 @@ const Alert: React.FC<AlertProps> = ({
   }[severity || "info"];
 
   return (
-    (isOpen || onClose === undefined) && (
+    (isOpen || (onClose === undefined && isOpen === undefined)) && (
       <div className={cx(styles["alert"], severity ? styles[severity] : null)}>
         <div className={styles["alert-content"]}>
           <AlertIcon className={styles["alert-icon"]} width={24} height={24} />
-          <div className={styles["message"]}>{message}</div>
+          <div className={styles["message"]}>{children}</div>
         </div>
         {onClose && (
           <button

@@ -49,7 +49,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            element: <PrivateRoutes />,
+            element: <PrivateRoutes adminRoute />,
             children: [
               {
                 path: "admin",

@@ -18,13 +18,25 @@ const Navbar: React.FC = () => {
 
   interface userLinksType extends NavLiProps {
     noAuth?: boolean;
+    rolesVislbleTo?: ("user" | "admin" | "alumni")[];
   }
   const userLinks: userLinksType[] = [
-    { label: "Login", href: "/login", noAuth: true },
-    { label: "Register", href: "/register", noAuth: true },
-    { label: "Profile", href: "/profile" },
-    { label: "Alumni Membership", href: "/alumni-membership" },
-    { label: "Logout", href: "/", action: logout, type: "button" },
+    { label: "Login", href: "/login" },
+    { label: "Register", href: "/register" },
+    { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "alumni"] },
+    {
+      label: "Alumni Membership",
+      href: "/alumni-membership",
+      rolesVislbleTo: ["user", "alumni"],
+    },
+    { label: "Admin", href: "/admin", rolesVislbleTo: ["admin"] },
+    {
+      label: "Logout",
+      href: "/",
+      action: logout,
+      type: "button",
+      rolesVislbleTo: ["user", "admin"],
+    },
   ];
 
   return (
@@ -119,7 +131,12 @@ const Navbar: React.FC = () => {
                     <hr />
                     <ul className={styles["collapsable-nav-list"]}>
                       {userLinks
-                        .filter((l) => !l.noAuth === !!user)
+                        .filter(({ rolesVislbleTo }) => {
+                          if (!user) return !rolesVislbleTo;
+                          return rolesVislbleTo?.some((role) =>
+                            user.role.includes(role)
+                          );
+                        })
                         .map((link) => (
                           <NavLi
                             key={link.href}

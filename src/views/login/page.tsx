@@ -19,7 +19,6 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [userType, setUserType] = useState<"user" | "admin">("user");
   const [error, setError] = useState<string | React.ReactNode | null>(null);
 
   const [loading, setLoading] = useState(false);
@@ -66,30 +65,10 @@ const Login = () => {
         </NavLink>
         <h1>Sign in to NIT AP Alumni</h1>
       </header>
-      <Alert
-        isOpen={!!error}
-        severity="error"
-        message={error}
-        onClose={() => setError(null)}
-      />
-
-      <div className={styles["tabs"]}>
-        <button
-          onClick={() => setUserType("user")}
-          className={cx(styles.tab, { [styles.active]: userType === "user" })}
-        >
-          User
-        </button>
-        <button
-          onClick={() => setUserType("admin")}
-          className={cx(styles.tab, {
-            [styles.active]: userType === "admin",
-          })}
-        >
-          Admin
-        </button>
-      </div>
-      <div className={cx(styles["box"], styles["form-box"])}>
+      <Alert isOpen={!!error} severity="error" onClose={() => setError(null)}>
+        {error}
+      </Alert>
+      <div className={styles["box"]}>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={cx(styles["login-form"])}

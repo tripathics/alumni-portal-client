@@ -17,7 +17,6 @@ const NavLi: React.FC<NavLiProps> = ({
   return (
     <li className={styles["nav-li"]}>
       <NavLink
-        end
         className={(state) =>
           cx(styles["link"], {
             [styles["active"]]: type === "button" ? false : state.isActive,

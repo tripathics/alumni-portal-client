@@ -55,20 +55,17 @@ const MembershipForm = () => {
   return loading ? (
     <p>Please wait</p>
   ) : errorMsg ? (
-    <Alert message={errorMsg} />
+    <Alert>{errorMsg}</Alert>
   ) : (
     userData && (
       <>
-        <Alert
-          message={
-            <p>
-              Make sure your details are correct before applying for life
-              membership. Go to your <NavLink to="/profile">profile</NavLink> to
-              make any corrections.
-            </p>
-          }
-          severity="info"
-        />
+        <Alert severity="info">
+          <p>
+            Make sure your details are correct before applying for life
+            membership. Go to your <NavLink to="/profile">profile</NavLink> to
+            make any corrections.
+          </p>
+        </Alert>
         <section className={styles["box"]}>
           <h1 className={styles["title"]}>Profile details</h1>
           <div className={styles["box-table"]}>
