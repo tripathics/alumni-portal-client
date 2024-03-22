@@ -8,8 +8,10 @@ const ProtectedRoutes = ({ adminRoute = false }) => {
 
   return loading ? (
     <div>Loading...</div>
-  ) : user === null || (adminRoute && !admin) ? (
+  ) : !user ? (
     <Navigate to="/login" state={{ from: location.pathname }} />
+  ) : !admin && adminRoute ? (
+    <div>Forbidden</div>
   ) : (
     <Outlet />
   );

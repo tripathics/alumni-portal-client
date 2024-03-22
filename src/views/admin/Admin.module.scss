@@ -77,28 +77,40 @@
 
 .table-wrapper {
   overflow-x: auto;
+  background: white;
+  box-shadow: var(--box-bs);
 }
 .table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 2rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   th,
   td {
-    padding: 0.8rem 0.6rem;
-    border-bottom: 1px solid rgb(242, 242, 242);
     text-align: left;
     font-size: 0.9rem;
-    white-space: nowrap;
+
+    &:first-child {
+      padding: 0;
+      padding-left: 1rem;
+    }
   }
 
   th {
+    border-bottom: 1px solid rgb(229, 231, 235);
+    padding: 1rem;
     font-weight: 500;
     color: var(--text-muted);
     white-space: nowrap;
   }
 
   td {
+    border-bottom: 1px solid rgb(242, 242, 242);
+    padding: 0.6rem 1rem;
     font-weight: 400;
   }
 

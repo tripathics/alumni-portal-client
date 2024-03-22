@@ -1,6 +1,8 @@
 import { createContext, useEffect } from "react";
 import useAuth from "../hooks/auth";
 import { UserContextType } from "../types/User.type";
+import eventEmitter from "@/config/eventEmitter.config";
+import { toast } from "react-toastify";
 
 export const UserContext = createContext<UserContextType>({
   user: null,
@@ -15,12 +17,30 @@ export const UserContext = createContext<UserContextType>({
 export const UserProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const { admin, checkAuth, fetchUser, loading, login, logout, user } =
-    useAuth();
+  const {
+    admin,
+    checkAuth,
+    fetchUser,
+    loading,
+    login,
+    logout,
+    user,
+    clearUser,
+  } = useAuth();
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  useEffect(() => {
+    eventEmitter.on("unauthorized", () => {
+      clearUser();
+      toast.error("Session expired.");
+    });
+    return () => {
+      eventEmitter.off("unauthorized");
+    };
+  }, []);
 
   return (
     <UserContext.Provider

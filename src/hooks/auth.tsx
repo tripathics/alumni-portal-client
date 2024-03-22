@@ -1,28 +1,34 @@
 import { useCallback, useState } from "react";
-import { UserType, UserContextType } from "../types/User.type";
+import { UserType } from "../types/User.type";
 import loginApi from "@/utils/api/login";
 import logoutApi from "@/utils/api/logout";
 import checkAuthApi from "@/utils/api/checkAuth";
 import readUser from "@/utils/api/readUser";
 import { toast } from "react-toastify";
 
-const useAuth = (): UserContextType => {
+const useAuth = () => {
   const [user, setUser] = useState<UserType | null>(null);
   const [admin, setAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const clearUser = () => {
+    setUser(null);
+    setAdmin(false);
+  };
 
   const fetchUser = useCallback(async () => {
     try {
       const response = await readUser();
       if (!response || !response.success || !response.user) {
-        setUser(null);
-        setAdmin(false);
+        clearUser();
         return;
       }
       setUser(response.user);
       setAdmin(response.user.role.includes("admin"));
     } catch (error) {
-      console.error(error);
+      if (typeof error === "string" && error !== "Token not found") {
+        toast.error(error as string);
+      }
     } finally {
       setLoading(false);
     }
@@ -35,6 +41,7 @@ const useAuth = (): UserContextType => {
         setUser(data.user);
         setAdmin(data.user.role.includes("admin"));
         const firstName = data.user.first_name;
+        toast.dismiss();
         toast.success(
           firstName ? `Welcome back, ${firstName}!` : `Welcome back!`,
           {
@@ -55,8 +62,7 @@ const useAuth = (): UserContextType => {
     } catch (error) {
       console.error(error);
     } finally {
-      setUser(null);
-      setAdmin(false);
+      clearUser();
       toast.info("Logged out", {
         autoClose: 2000,
         closeButton: false,
@@ -70,8 +76,7 @@ const useAuth = (): UserContextType => {
     try {
       const data = await checkAuthApi();
       if (!data?.success) {
-        setUser(null);
-        setAdmin(false);
+        clearUser();
       } else {
         fetchUser();
       }
@@ -94,6 +99,7 @@ const useAuth = (): UserContextType => {
     logout,
     checkAuth,
     fetchUser,
+    clearUser,
   };
 };
 

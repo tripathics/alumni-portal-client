@@ -1,44 +1,30 @@
-// import Table from "@/components/Table/table";
 import Alert from "@/components/Alert/Alert";
-import Avatar from "@/components/Avatar/Avatar";
 import styles from "../Admin.module.scss";
-import axios from "@/config/axios.config";
 import { dataValueLookup } from "@/utils/constants/data";
 import { useEffect, useState } from "react";
 import cx from "classnames";
-
-interface MembershipApplicationRow {
-  user_id: "string";
-  membership_level: "string";
-  sign: "string";
-  created_at: "string";
-  updated_at: "string";
-  status: "pending" | "approved" | "rejected";
-  registration_no: "string";
-  roll_no: "string";
-  avatar: "string";
-  title: "string";
-  first_name: "string";
-  last_name: "string";
-  degree: "string";
-  discipline: "string";
-  graduation_date: "string";
-  enrollment_date: "string";
-}
+import { ProfileCircle } from "iconoir-react";
+import fetchMembershipApplications, {
+  MembershipApplication,
+} from "@/utils/api/fetchMembershipApplications";
+import Modal from "@/components/Modal/Modal";
+import fetchApplicationById from "@/utils/api/fetchApplicationById";
 
 const Applications = () => {
   const [applications, setApplications] = useState<Record<
     string,
-    MembershipApplicationRow
+    MembershipApplication
   > | null>(null);
+  const [applicationData, setApplicationData] = useState<unknown | null>(null);
+  const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axios.get("/api/admin/membership-applications");
-        if (response.data) {
-          const app: Record<string, MembershipApplicationRow> = {};
-          for (const application of response.data as MembershipApplicationRow[]) {
+        const data = await fetchMembershipApplications();
+        if (data) {
+          const app: Record<string, MembershipApplication> = {};
+          for (const application of data) {
             app[application.user_id] = application;
           }
           setApplications(app);
@@ -50,6 +36,18 @@ const Applications = () => {
     fetchApplications();
   }, []);
 
+  const fetchApplicationData = async (id: string) => {
+    try {
+      const data = await fetchApplicationById(id);
+      if (data) {
+        setApplicationData(data);
+        setIsApplicationModalOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <header>
@@ -57,69 +55,133 @@ const Applications = () => {
       </header>
       <main>
         {applications ? (
-          <div className={cx(styles.box, styles["table-wrapper"])}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th scope="col">User</th>
-                  <th scope="col">Registration & Roll No</th>
-                  <th scope="col">Degree & Discipline</th>
-                  <th scope="col">Graduation Date</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(applications).map((userId) => (
-                  <tr key={userId}>
-                    <td>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "1rem",
-                        }}
-                      >
-                        <Avatar
-                          avatar={applications[userId].avatar}
-                          size="2.2rem"
-                        />
-                        <p className={styles["text-ellipsis"]}>
-                          {dataValueLookup[applications[userId].title]}{" "}
-                          {applications[userId].first_name}{" "}
-                          {applications[userId].last_name}
-                        </p>
-                      </div>
-                    </td>
-                    <td>
-                      <p>
-                        {applications[userId].registration_no} |{" "}
-                        {applications[userId].roll_no}
-                      </p>
-                    </td>
-                    <td>
-                      {dataValueLookup[applications[userId].degree] ||
-                        applications[userId].degree}{" "}
-                      {applications[userId].discipline}
-                    </td>
-                    <td>
-                      {new Date(
-                        applications[userId].graduation_date
-                      ).toLocaleString("default", {
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td>{applications[userId].status}</td>
+          <>
+            <div className={cx(styles["table-wrapper"])}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th scope="col" aria-label="Status"></th>
+                    <th scope="col">Applicant</th>
+                    <th scope="col">Reg/Roll no</th>
+                    <th scope="col">Batch</th>
+                    <th scope="col">Date</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {Object.keys(applications).map((userId) => (
+                    <ApplicationRow
+                      application={applications[userId]}
+                      handleApplicationClick={fetchApplicationData}
+                      key={userId}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Modal
+              isOpen={isApplicationModalOpen}
+              setIsOpen={setIsApplicationModalOpen}
+              modalTitle="Life membership application"
+            >
+              <pre>{JSON.stringify(applicationData, null, 2)}</pre>
+            </Modal>
+          </>
         ) : (
           <Alert severity="info">No pending applications</Alert>
         )}
       </main>
     </div>
+  );
+};
+
+const ApplicationRow: React.FC<{
+  application: MembershipApplication;
+  handleApplicationClick: (id: string) => void;
+}> = ({ application, handleApplicationClick }) => {
+  const [status, setStatus] = useState(application.status);
+
+  return (
+    <tr
+      data-application-status={application.status}
+      onClick={() => {
+        handleApplicationClick(application.user_id);
+        setStatus("approved");
+      }}
+    >
+      <td>
+        <div
+          style={{
+            borderRadius: "50%",
+            width: "6px",
+            height: "6px",
+            backgroundColor: status === "pending" ? "blue" : "green",
+          }}
+        ></div>
+      </td>
+      <td>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          {application.avatar ? (
+            <div
+              style={{
+                width: "2rem",
+                height: "2rem",
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                src={`${import.meta.env.VITE_SERVER_BASE_URL}/media/avatars/${
+                  application.avatar
+                }`}
+                alt="avatar"
+              />
+            </div>
+          ) : (
+            <ProfileCircle strokeWidth={0.8} width={32} height={32} />
+          )}
+          <p className={styles["text-ellipsis"]}>
+            {dataValueLookup[application.title]} {application.first_name}{" "}
+            {application.last_name}
+          </p>
+        </div>
+      </td>
+      <td>
+        <p>{application.registration_no}</p>
+        <p>{application.roll_no}</p>
+      </td>
+      <td>
+        <p>
+          {dataValueLookup[application.degree] || application.degree}
+          {" in "}
+          {application.discipline}
+        </p>
+        <p>
+          Graduated{" "}
+          {new Date(application.graduation_date).toLocaleString("default", {
+            month: "long",
+            year: "numeric",
+          })}
+        </p>
+      </td>
+      <td className={styles["text-ellipsis"]}>
+        {new Date(application.created_at).toLocaleString("default", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })}
+      </td>
+    </tr>
   );
 };
 

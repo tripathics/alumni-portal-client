@@ -1,7 +1,6 @@
 import { AxiosError } from "axios";
 import axios from "../../config/axios.config";
 import { UserType } from "@/types/User.type";
-import { toast } from "react-toastify";
 
 const readUser = async (): Promise<
   | {
@@ -18,9 +17,13 @@ const readUser = async (): Promise<
     });
     return response.data;
   } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
-    if (err.response && err.response?.data.message !== "Token not found") {
-      toast.error("Unauthorized, please login again");
+    if (error instanceof AxiosError) {
+      if (error.response?.data.message) {
+        const errorMessage = error.response.data.message;
+        throw errorMessage;
+      }
+    } else {
+      console.error(error);
     }
   }
 };

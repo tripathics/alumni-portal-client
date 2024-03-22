@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import eventEmitter from "./eventEmitter.config";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
@@ -17,6 +18,13 @@ axiosInstance.interceptors.response.use(
         position: "bottom-center",
         autoClose: 5000,
       });
+    }
+    if (
+      err.response.status === 401 &&
+      err.response.config &&
+      !err.response.config.url?.endsWith("/u")
+    ) {
+      eventEmitter.emit("unauthorized");
     }
     return Promise.reject(err);
   }
