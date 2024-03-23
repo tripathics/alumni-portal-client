@@ -36,13 +36,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (loading || !user) {
-      if (location.state?.from) {
-        setError("Please login to continue.");
-      }
-      return;
-    }
-    if (!(user.first_name && user.last_name && user.title)) {
+    if (loading || !user) return;
+    if (!user.first_name) {
       if (user.role.includes("admin")) {
         return navigate("/admin");
       }
@@ -65,6 +60,7 @@ const Login = () => {
         </NavLink>
         <h1>Sign in to NIT AP Alumni</h1>
       </header>
+      {location.state?.from && <Alert>Please login to continue</Alert>}
       <Alert isOpen={!!error} severity="error" onClose={() => setError(null)}>
         {error}
       </Alert>

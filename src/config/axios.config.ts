@@ -14,10 +14,7 @@ axiosInstance.interceptors.response.use(
   undefined,
   function axiosRetryInterceptor(err) {
     if (!err.response) {
-      toast.error("Network Error", {
-        position: "bottom-center",
-        autoClose: 5000,
-      });
+      toast.error("Network Error");
     }
     if (
       err.response.status === 401 &&

@@ -27,7 +27,7 @@ const useAuth = () => {
       setAdmin(response.user.role.includes("admin"));
     } catch (error) {
       if (typeof error === "string" && error !== "Token not found") {
-        toast.error(error as string);
+        toast.error("Session expired");
       }
     } finally {
       setLoading(false);

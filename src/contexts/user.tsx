@@ -34,13 +34,15 @@ export const UserProvider: React.FC<{
 
   useEffect(() => {
     eventEmitter.on("unauthorized", () => {
-      clearUser();
-      toast.error("Session expired.");
+      if (user) {
+        clearUser();
+        toast.error("Session expired");
+      }
     });
     return () => {
       eventEmitter.off("unauthorized");
     };
-  }, []);
+  }, [user]);
 
   return (
     <UserContext.Provider
