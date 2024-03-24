@@ -12,6 +12,7 @@ import Profile, {
 } from "./views/profile";
 import Admin, { Applications } from "./views/admin";
 import Alumni, { MembershipForm } from "./views/alumni";
+import ResetPassword from "./views/reset-password/page";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
         children: [
           { path: "login", element: <Login /> },
           { path: "register", element: <Register /> },
+          { path: "reset-password", element: <ResetPassword /> },
         ],
       },
     ],
