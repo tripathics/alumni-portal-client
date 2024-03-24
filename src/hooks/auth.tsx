@@ -63,6 +63,7 @@ const useAuth = () => {
       console.error(error);
     } finally {
       clearUser();
+      toast.dismiss();
       toast.info("Logged out", {
         autoClose: 2000,
         closeButton: false,

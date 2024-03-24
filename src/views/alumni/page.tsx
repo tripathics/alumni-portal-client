@@ -9,6 +9,7 @@ import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
 import Alert from "@/components/Alert/Alert";
+import { getDate, getMonth } from "@/utils/helper";
 
 const MembershipForm = () => {
   const [userData, setUserData] = useState<MembershipPrefillDataType | null>(
@@ -84,9 +85,7 @@ const MembershipForm = () => {
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Date of Birth</p>
               <p className={cx(styles.col, styles["value"])}>
-                {new Date(userData.dob).toLocaleDateString("en-IN", {
-                  dateStyle: "long",
-                })}
+                {getDate(userData.dob)}
               </p>
             </div>
             <div className={styles["box-row"]}>
@@ -140,10 +139,7 @@ const MembershipForm = () => {
             <div className={styles["box-row"]}>
               <p className={cx(styles.col, styles["label"])}>Graduation date</p>
               <p className={cx(styles.col, styles["value"])}>
-                {new Date(userData.graduation_date).toLocaleDateString(
-                  "en-IN",
-                  { month: "long", year: "numeric" }
-                )}
+                {getMonth(userData.graduation_date)}
               </p>
             </div>
           </div>

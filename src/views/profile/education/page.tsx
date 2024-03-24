@@ -13,6 +13,7 @@ import { FieldValues } from "react-hook-form";
 import fetchEducationApi from "@/utils/api/fetchEducation";
 import updateEducationApi from "@/utils/api/updateEducation";
 import { EducationType } from "@/types/Profile.type";
+import { getMonth } from "@/utils/helper";
 
 interface EducationFormProps {
   prefillData?: FieldValues;
@@ -90,14 +91,9 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
             {dataValueLookup[data.type]}) in {data.discipline}
           </p>
           <p className={cx(styles["course-duration"])}>
-            {new Date(data.start_date).toLocaleString("default", {
-              month: "short",
-            })}{" "}
-            {new Date(data.start_date).getFullYear()} -{" "}
-            {new Date(data.end_date).toLocaleString("default", {
-              month: "short",
-            })}{" "}
-            {new Date(data.end_date).getFullYear()}
+            {getMonth(data.start_date)}
+            {" - "}
+            {getMonth(data.end_date)}
             {new Date(data.end_date) > new Date() ? " (Expected)" : ""}
           </p>
         </div>
@@ -152,18 +148,6 @@ const Education: React.FC = () => {
   };
 
   const openModal = (data: FieldValues | null = null) => {
-    if (data) {
-      const { start_date, end_date } = data;
-      data = {
-        ...data,
-        start_date: start_date
-          ? new Date(start_date).toISOString().split("T")[0]
-          : "",
-        end_date: end_date
-          ? new Date(end_date).toISOString().split("T")[0]
-          : "",
-      };
-    }
     setEditPrefillData(data as EducationType | null);
     setIsModalOpen(true);
   };

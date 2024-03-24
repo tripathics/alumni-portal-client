@@ -9,6 +9,7 @@ import experienceFormSchema from "@/utils/formSchema/experienceFormSchema";
 import { FieldValues } from "react-hook-form";
 import fetchExperiencesApi from "@/utils/api/fetchExperience";
 import { ExperienceType } from "@/types/Profile.type";
+import { getMonth } from "@/utils/helper";
 
 interface ExperienceFormProps {
   prefillData?: FieldValues;
@@ -59,15 +60,9 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
           </p>
           <p className={cx(styles["course-name"])}>{data.location}</p>
           <p className={cx(styles["course-duration"])}>
-            {new Date(data.start_date).toLocaleString("default", {
-              month: "short",
-            })}{" "}
-            {new Date(data.start_date).getFullYear()} -{" "}
-            {data.end_date
-              ? `${new Date(data.end_date).toLocaleString("default", {
-                  month: "short",
-                })} ${new Date(data.end_date).getFullYear()}`
-              : "Present"}
+            {getMonth(data.start_date)}
+            {" - "}
+            {data.end_date ? getMonth(data.end_date) : "Present"}
           </p>
         </div>
         {!!data.description && (
@@ -134,18 +129,6 @@ const Experience: React.FC = () => {
   };
 
   const openModal = (data: FieldValues | null = null) => {
-    if (data) {
-      const { start_date, end_date } = data;
-      data = {
-        ...data,
-        start_date: start_date
-          ? new Date(start_date).toISOString().split("T")[0]
-          : "",
-        end_date: end_date
-          ? new Date(end_date).toISOString().split("T")[0]
-          : "",
-      };
-    }
     setEditPrefillData(data as ExperienceType | null);
     setIsModalOpen(true);
   };

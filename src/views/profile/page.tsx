@@ -1,6 +1,6 @@
 import SchemaForm, { Button } from "@/components/forms";
 import cx from "classnames";
-import { EditPencil, InfoCircle as InfoIcon } from "iconoir-react";
+import { EditPencil } from "iconoir-react";
 import { dataValueLookup } from "@/utils/constants/data";
 import Modal from "@/components/Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
@@ -15,6 +15,8 @@ import personalDetailsFormSchema from "@/utils/formSchema/personalDetailsFormSch
 import { FieldValues } from "react-hook-form";
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { toast } from "react-toastify";
+import Alert from "@/components/Alert/Alert";
+import { getDate } from "@/utils/helper";
 
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
@@ -84,7 +86,6 @@ const PersonalDetails = () => {
         setPersonalDetails((prev) => ({
           ...prev,
           ...data.user,
-          dob: new Date(data.user.dob).toISOString().split("T")[0],
         }));
       }
     } catch (error) {
@@ -125,7 +126,10 @@ const PersonalDetails = () => {
                 <section className={styles.box}>
                   <PersonalDetailsForm
                     prefillData={
-                      { ...personalDetails, email: user?.email } as FieldValues
+                      {
+                        ...personalDetails,
+                        email: user?.email,
+                      } as FieldValues
                     }
                     onSubmit={updateProfile}
                   />
@@ -191,7 +195,7 @@ const PersonalDetails = () => {
           <div className={styles["box-row"]}>
             <p className={cx(styles.col, styles["label"])}>Date of Birth</p>
             <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.dob}
+              {getDate(personalDetails.dob)}
             </p>
           </div>
           <div className={styles["box-row"]}>
@@ -286,12 +290,9 @@ const PersonalDetails = () => {
     </>
   ) : (
     <>
-      <section className={cx(styles.box, styles.alert, styles.info)}>
-        <InfoIcon />
-        <h3>
-          Fill in your personal details to complete creating your alumni profile
-        </h3>
-      </section>
+      <Alert severity="info">
+        Fill in your personal details to complete creating your alumni profile
+      </Alert>
       <section className={styles.box}>
         <PersonalDetailsForm
           prefillData={
