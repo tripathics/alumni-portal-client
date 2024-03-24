@@ -5,17 +5,21 @@ import { useEffect, useState } from "react";
 import cx from "classnames";
 import { ProfileCircle } from "iconoir-react";
 import fetchMembershipApplications, {
-  MembershipApplication,
+  MembershipApplicationType,
 } from "@/utils/api/fetchMembershipApplications";
 import Modal from "@/components/Modal/Modal";
-import fetchApplicationById from "@/utils/api/fetchApplicationById";
+import fetchApplicationById, {
+  FullApplicationType,
+} from "@/utils/api/fetchApplicationById";
+import { getDate, getMonth } from "@/utils/helper";
 
 const Applications = () => {
   const [applications, setApplications] = useState<Record<
     string,
-    MembershipApplication
+    MembershipApplicationType
   > | null>(null);
-  const [applicationData, setApplicationData] = useState<unknown | null>(null);
+  const [applicationData, setApplicationData] =
+    useState<FullApplicationType | null>(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const Applications = () => {
       try {
         const data = await fetchMembershipApplications();
         if (data) {
-          const app: Record<string, MembershipApplication> = {};
+          const app: Record<string, MembershipApplicationType> = {};
           for (const application of data) {
             app[application.user_id] = application;
           }
@@ -60,9 +64,7 @@ const Applications = () => {
               <table className={styles.table}>
                 <thead>
                   <tr>
-                    <th scope="col" aria-label="Status"></th>
                     <th scope="col">Applicant</th>
-                    <th scope="col">Reg/Roll no</th>
                     <th scope="col">Batch</th>
                     <th scope="col">Date</th>
                   </tr>
@@ -83,7 +85,182 @@ const Applications = () => {
               setIsOpen={setIsApplicationModalOpen}
               modalTitle="Life membership application"
             >
-              <pre>{JSON.stringify(applicationData, null, 2)}</pre>
+              {!!applicationData && (
+                <>
+                  <div className={styles["application-modal"]}>
+                    <div className={styles["box-table"]}>
+                      <div className={cx(styles["box-row"], styles.header)}>
+                        <div className={styles["col"]}>
+                          <h4 className={styles["box-col-header"]}>
+                            Personal details
+                          </h4>
+                        </div>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Full name
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {dataValueLookup[applicationData.title]}{" "}
+                          {applicationData.first_name}{" "}
+                          {applicationData.last_name}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Date of Birth
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {getDate(applicationData.dob)}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>Sex</p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {dataValueLookup[applicationData.sex]}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Category
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {dataValueLookup[applicationData.category]}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Religion
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {applicationData.religion}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Nationality
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {applicationData.nationality}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className={styles["box-table"]}>
+                      <div className={cx(styles["box-row"], styles.header)}>
+                        <div className={styles["col"]}>
+                          <h4 className={styles["box-col-header"]}>
+                            Education at NIT Arunachal Pradesh
+                          </h4>
+                        </div>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Registration no.
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {applicationData.registration_no}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Roll no.
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {applicationData.roll_no}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Course
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {dataValueLookup[applicationData.degree]} in{" "}
+                          {applicationData.discipline}
+                        </p>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <p className={cx(styles.col, styles["label"])}>
+                          Graduation date
+                        </p>
+                        <p className={cx(styles.col, styles["value"])}>
+                          {getMonth(applicationData.graduation_date)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className={styles["box-table"]}>
+                      <div className={cx(styles["box-row"], styles.header)}>
+                        <div className={styles["col"]}>
+                          <h4 className={styles["box-col-header"]}>Address</h4>
+                        </div>
+                        <div className={styles["col"]}>
+                          <h4 className={styles["box-col-header"]}>
+                            Email & Phone
+                          </h4>
+                        </div>
+                      </div>
+                      <div className={styles["box-row"]}>
+                        <div className={styles["col"]}>
+                          <p className={styles["value"]}>
+                            {applicationData.address}
+                          </p>
+                          <p className={styles["value"]}>
+                            {applicationData.city}, {applicationData.state}
+                          </p>
+                          <p
+                            className={styles["value"]}
+                          >{`${applicationData.country} (${applicationData.pincode})`}</p>
+                        </div>
+                        <div className={styles["col"]}>
+                          <p className={styles["value"]}>
+                            {applicationData.email}
+                          </p>
+                          <p className={styles["value"]}>
+                            {applicationData.alt_email}
+                          </p>
+                          <p className={styles["value"]}>
+                            {applicationData.phone}
+                          </p>
+                          <p className={styles["value"]}>
+                            {applicationData.alt_phone}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className={styles["box-table"]}>
+                        <div className={cx(styles["box-row"], styles.header)}>
+                          <div className={styles["col"]}>
+                            <h4 className={styles["box-col-header"]}>
+                              Membership requirements
+                            </h4>
+                          </div>
+                        </div>
+                        <div className={styles["box-row"]}>
+                          <p className={cx(styles.col, styles["label"])}>
+                            Membership level applied
+                          </p>
+                          <p className={cx(styles.col, styles["value"])}>
+                            {dataValueLookup[applicationData.membership_level]}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles["sign-wrapper"]}>
+                      <div className={styles["sign"]}>
+                        <img
+                          width="100%"
+                          src={`${
+                            import.meta.env.VITE_SERVER_BASE_URL
+                          }/media/sign/${applicationData.sign}`}
+                          alt="avatar"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </Modal>
           </>
         ) : (
@@ -95,29 +272,19 @@ const Applications = () => {
 };
 
 const ApplicationRow: React.FC<{
-  application: MembershipApplication;
+  application: MembershipApplicationType;
   handleApplicationClick: (id: string) => void;
 }> = ({ application, handleApplicationClick }) => {
   const [status, setStatus] = useState(application.status);
 
   return (
     <tr
-      data-application-status={application.status}
+      data-application-status={status}
       onClick={() => {
         handleApplicationClick(application.user_id);
         setStatus("approved");
       }}
     >
-      <td>
-        <div
-          style={{
-            borderRadius: "50%",
-            width: "6px",
-            height: "6px",
-            backgroundColor: status === "pending" ? "blue" : "green",
-          }}
-        ></div>
-      </td>
       <td>
         <div
           style={{
@@ -150,15 +317,14 @@ const ApplicationRow: React.FC<{
           ) : (
             <ProfileCircle strokeWidth={0.8} width={32} height={32} />
           )}
-          <p className={styles["text-ellipsis"]}>
-            {dataValueLookup[application.title]} {application.first_name}{" "}
-            {application.last_name}
-          </p>
+          <div>
+            <p className={styles["text-ellipsis"]}>
+              {dataValueLookup[application.title]} {application.first_name}{" "}
+              {application.last_name}
+            </p>
+            <p className={styles["sub-text"]}>Roll no: {application.roll_no}</p>
+          </div>
         </div>
-      </td>
-      <td>
-        <p>{application.registration_no}</p>
-        <p>{application.roll_no}</p>
       </td>
       <td>
         <p>
@@ -166,20 +332,12 @@ const ApplicationRow: React.FC<{
           {" in "}
           {application.discipline}
         </p>
-        <p>
-          Graduated{" "}
-          {new Date(application.graduation_date).toLocaleString("default", {
-            month: "long",
-            year: "numeric",
-          })}
+        <p className={styles["sub-text"]}>
+          Graduated {getMonth(application.graduation_date)}
         </p>
       </td>
       <td className={styles["text-ellipsis"]}>
-        {new Date(application.created_at).toLocaleString("default", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        })}
+        {getDate(application.created_at)}
       </td>
     </tr>
   );

@@ -1,7 +1,7 @@
 import axios from "@/config/axios.config";
 import { AxiosError } from "axios";
 
-export interface MembershipApplication {
+export interface MembershipApplicationType {
   user_id: string;
   membership_level: string;
   sign: string;
@@ -21,7 +21,7 @@ export interface MembershipApplication {
 }
 
 const fetchMembershipApplications = async (): Promise<
-  MembershipApplication[] | undefined
+  MembershipApplicationType[] | undefined
 > => {
   try {
     const response = await axios.get("/api/admin/membership-applications");
