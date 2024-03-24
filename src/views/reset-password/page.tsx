@@ -5,13 +5,15 @@ import { NavLink } from "react-router-dom";
 import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
-import signupApi, { SignupFormData } from "@/utils/api/signup";
+import updatePassword, {
+  UpdatePasswordFormData,
+} from "@/utils/api/updatePassword";
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import axiosInstance from "@/config/axios.config";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import Alert from "@/components/Alert/Alert";
-import { createOtpForSignup } from "@/utils/api/otp/createOtp";
+import { createOtpForAuth } from "@/utils/api/otp/createOtp";
 
 const OTPForm: React.FC<{
   sendOtp: (formData: FieldValues) => void;
@@ -32,7 +34,7 @@ const OTPForm: React.FC<{
       <TextField
         type="text"
         required
-        label="Personal Email"
+        label="Registered email"
         {...register("email", {
           required: "Email is required",
           pattern: {
@@ -79,7 +81,7 @@ const VerifyForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Registered email"
         {...register("email", {
           required: "Email is required",
           pattern: {
@@ -115,7 +117,7 @@ const VerifyForm: React.FC<{
   );
 };
 
-const SignupForm: React.FC<{
+const UpdatePasswordForm: React.FC<{
   signup: (formData: FieldValues) => void;
   email: string;
   loading: boolean;
@@ -138,7 +140,7 @@ const SignupForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Registered email"
         {...register("email", {
           required: "Email is required",
           pattern: {
@@ -174,36 +176,38 @@ const SignupForm: React.FC<{
       />
       <div className={styles["actions"]}>
         <Button disabled={loading} type="submit" className="btn primary">
-          Register
+          Update password
         </Button>
       </div>
     </form>
   );
 };
 
-const Register = () => {
+const ResetPassword = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | React.ReactNode | null>(null);
   const [loading, setLoading] = useState(false);
-  const [formState, setFormState] = useState<"otp" | "verify" | "signup">(
+  const [formState, setFormState] = useState<"otp" | "verify" | "update">(
     "otp"
   );
   const navigate = useNavigate();
 
-  const signup = async (signupFormData: FieldValues) => {
+  const createPassword = async (signupFormData: FieldValues) => {
     try {
       setError(null);
       setLoading(true);
-      const data = await signupApi(signupFormData as SignupFormData);
+      const data = await updatePassword(
+        signupFormData as UpdatePasswordFormData
+      );
       if (data?.id) {
-        toast.success("Account created successfully. Please login.");
+        toast.success("Password updated successfully. Please login.");
         navigate("/login");
       }
     } catch (error) {
-      if (error === "User already exists") {
+      if (error === "User does not exist") {
         setError(
           <>
-            Email already exists. <NavLink to="/login">Login?</NavLink>
+            Email does not exist. <NavLink to="/register">Register?</NavLink>
           </>
         );
       } else {
@@ -223,7 +227,7 @@ const Register = () => {
         otp: otpFormData.otp,
       });
       if (response.data.success) {
-        setFormState("signup");
+        setFormState("update");
       }
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
@@ -237,7 +241,7 @@ const Register = () => {
     try {
       setError(null);
       setLoading(true);
-      const data = await createOtpForSignup(otpFormData.email);
+      const data = await createOtpForAuth(otpFormData.email);
       if (data.success) {
         setEmail(otpFormData.email);
         setFormState("verify");
@@ -245,11 +249,11 @@ const Register = () => {
     } catch (error) {
       const err = error as Error;
       if (err.message) {
-        if (err.message === "User already exists") {
+        if (err.message === "User does not exist") {
           setError(
             <>
-              The email address already exists.{" "}
-              <NavLink to="/login">Login?</NavLink>
+              The email address does not exist.{" "}
+              <NavLink to="/register">Register?</NavLink>
             </>
           );
         } else {
@@ -271,7 +275,7 @@ const Register = () => {
             alt="NIT AP Alumni"
           />
         </NavLink>
-        <h1>Sign up for NIT AP Alumni</h1>
+        <h1>Reset password</h1>
       </header>
       <Alert isOpen={!!error} onClose={() => setError(null)} severity="error">
         {error}
@@ -285,7 +289,11 @@ const Register = () => {
           email={email as string}
         />
       ) : (
-        <SignupForm loading={loading} signup={signup} email={email as string} />
+        <UpdatePasswordForm
+          loading={loading}
+          signup={createPassword}
+          email={email as string}
+        />
       )}
       <div className={cx(styles["box"], styles["action-links"])}>
         <p>
@@ -296,4 +304,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ResetPassword;

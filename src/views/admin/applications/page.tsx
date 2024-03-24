@@ -257,6 +257,9 @@ const Applications = () => {
                           alt="avatar"
                         />
                       </div>
+                      <div className={styles["date"]}>
+                        {getDate(applicationData.created_at)}
+                      </div>
                     </div>
                   </div>
                 </>
