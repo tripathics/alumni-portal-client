@@ -1,6 +1,7 @@
 import Header from "@/components/layouts/PageHeader/PageHeader";
 import useUser from "@/hooks/user";
 import DashboardLayout from "@/components/layouts/dashboard";
+import styles from "./Profile.module.scss";
 import { Outlet } from "react-router";
 
 import PersonalProfile from "./page";
@@ -52,23 +53,19 @@ const Profile = () => {
   return (
     <>
       <Header pageHeading={"Profile"} bgImage="/header-bg/2023-04-09.jpg">
-        {user?.profile_locked ? (
-          <div
-            style={{
-              display: "flex",
-              gap: "1rem",
-              alignItems: "center",
-            }}
-          >
-            <Lock />
-            <p>
-              Profile is locked for editing until your membership application is
-              resolved.
-            </p>
-          </div>
-        ) : (
-          <p>Manage and update your profile</p>
-        )}
+        <div className={styles.header}>
+          {user?.profile_locked ? (
+            <>
+              <Lock />
+              <p>
+                Profile is locked for editing until your membership application
+                is resolved.
+              </p>
+            </>
+          ) : (
+            <p>Manage and update your profile</p>
+          )}
+        </div>
       </Header>
       <div className="__page-content container">
         <DashboardLayout navigations={navigations}>

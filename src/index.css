@@ -19,7 +19,7 @@ html {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   --box-bs: rgba(0, 0, 0, 0.133) 0px 1.6px 3.6px 0px,
     rgba(0, 0, 0, 0.11) 0px 0.3px 0.9px 0px;
-  --text-muted: #6c757d;
+  --text-muted: rgb(108, 117, 125);
 }
 
 /* scrollbar styling */
@@ -109,4 +109,8 @@ hr {
   padding: 0.5rem 1rem;
   text-align: center;
   text-decoration: none;
+}
+
+.muted {
+  color: var(--text-muted);
 }

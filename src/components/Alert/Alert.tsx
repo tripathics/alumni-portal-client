@@ -30,7 +30,13 @@ const Alert: React.FC<AlertProps> = ({
 
   return (
     (isOpen || (onClose === undefined && isOpen === undefined)) && (
-      <div className={cx(styles["alert"], severity ? styles[severity] : null)}>
+      <div
+        className={cx(
+          styles["alert"],
+          "container",
+          severity ? styles[severity] : null
+        )}
+      >
         <div className={styles["alert-content"]}>
           <AlertIcon className={styles["alert-icon"]} width={24} height={24} />
           <div className={styles["message"]}>{children}</div>

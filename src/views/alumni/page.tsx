@@ -1,15 +1,14 @@
 import SchemaForm, { Button } from "@/components/forms";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import alumniPrefillApi from "@/utils/api/alumniPrefill";
-import cx from "classnames";
 import { useEffect, useState } from "react";
-import { dataValueLookup } from "@/utils/constants/data";
 import { NavLink } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
 import Alert from "@/components/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";
+import { Table, TableCell, TableRow } from "@/components/Table/FlexTable";
 
 const MembershipForm = () => {
   const [userData, setUserData] = useState<MembershipPrefillDataType | null>(
@@ -61,116 +60,85 @@ const MembershipForm = () => {
     userData && (
       <>
         <Alert severity="info">
-          <p>
-            Make sure your details are correct before applying for life
-            membership. Go to your <NavLink to="/profile">profile</NavLink> to
-            make any corrections.
-          </p>
+          Make sure your details are correct before applying for life
+          membership. Go to your <NavLink to="/profile">profile</NavLink> to
+          make any corrections.
         </Alert>
         <section className={styles["box"]}>
           <h1 className={styles["title"]}>Profile details</h1>
-          <div className={styles["box-table"]}>
-            <div className={cx(styles["box-row"], styles.header)}>
-              <div className={styles["col"]}>
-                <h4 className={styles["box-col-header"]}>Personal details</h4>
-              </div>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Full name</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {dataValueLookup[userData.title]} {userData.first_name}{" "}
-                {userData.last_name}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Date of Birth</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {getDate(userData.dob)}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Category</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {dataValueLookup[userData.category]}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Nationality</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {userData.nationality}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Religion</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {userData.religion}
-              </p>
-            </div>
-          </div>
+          <Table>
+            <TableRow header>
+              <TableCell>Personal details</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Full name</TableCell>
+              <TableCell>
+                {userData.title} {userData.first_name} {userData.last_name}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Date of Birth</TableCell>
+              <TableCell>{getDate(userData.dob)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Category</TableCell>
+              <TableCell>{userData.category}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Nationality</TableCell>
+              <TableCell>{userData.nationality}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Religion</TableCell>
+              <TableCell>{userData.religion}</TableCell>
+            </TableRow>
+          </Table>
 
-          <div className={styles["box-table"]}>
-            <div className={cx(styles["box-row"], styles.header)}>
-              <div className={styles["col"]}>
-                <h4 className={styles["box-col-header"]}>
-                  Education at NIT Arunachal Pradesh
-                </h4>
-              </div>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>
-                Registration no.
-              </p>
-              <p className={cx(styles.col, styles["value"])}>
-                {userData.registration_no}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Roll no.</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {userData.roll_no}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Course</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {dataValueLookup[userData.degree]} in {userData.discipline}
-              </p>
-            </div>
-            <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>Graduation date</p>
-              <p className={cx(styles.col, styles["value"])}>
-                {getMonth(userData.graduation_date)}
-              </p>
-            </div>
-          </div>
+          <Table>
+            <TableRow header>
+              <TableCell>Education at NIT Arunachal Pradesh</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Registration no.</TableCell>
+              <TableCell>{userData.registration_no}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Roll no.</TableCell>
+              <TableCell>{userData.roll_no}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Course</TableCell>
+              <TableCell>
+                {userData.degree} in {userData.discipline}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell type="label">Graduation date</TableCell>
+              <TableCell>{getMonth(userData.graduation_date)}</TableCell>
+            </TableRow>
+          </Table>
 
-          <div className={styles["box-table"]}>
-            <div className={cx(styles["box-row"], styles.header)}>
-              <div className={styles["col"]}>
-                <h4 className={styles["box-col-header"]}>Address</h4>
-              </div>
-              <div className={styles["col"]}>
-                <h4 className={styles["box-col-header"]}>Email & Phone</h4>
-              </div>
-            </div>
-            <div className={styles["box-row"]}>
-              <div className={styles["col"]}>
-                <p className={styles["value"]}>{userData.address}</p>
-                <p className={styles["value"]}>
+          <Table>
+            <TableRow header>
+              <TableCell>Address</TableCell>
+              <TableCell>Email & Phone</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <p>{userData.address}</p>
+                <p>
                   {userData.city}, {userData.state}
                 </p>
-                <p
-                  className={styles["value"]}
-                >{`${userData.country} (${userData.pincode})`}</p>
-              </div>
-              <div className={styles["col"]}>
-                <p className={styles["value"]}>{userData.email}</p>
-                <p className={styles["value"]}>{userData.alt_email}</p>
-                <p className={styles["value"]}>{userData.phone}</p>
-                <p className={styles["value"]}>{userData.alt_phone}</p>
-              </div>
-            </div>
-          </div>
+                <p>{`${userData.country} (${userData.pincode})`}</p>
+              </TableCell>
+              <TableCell>
+                <p>{userData.email}</p>
+                <p>{userData.alt_email}</p>
+                <p>{userData.phone}</p>
+                <p>{userData.alt_phone}</p>
+              </TableCell>
+            </TableRow>
+          </Table>
         </section>
         <section className={styles["box"]}>
           <SchemaForm
@@ -185,12 +153,12 @@ const MembershipForm = () => {
                   {
                     value: "level1_networking",
                     label:
-                      "Yes! I am Interested to get information and networking only",
+                      "I am Interested to get information and networking only",
                   },
                   {
                     value: "level2_volunteering",
                     label:
-                      "Yes! I am Interested in volunteering for events and activities",
+                      "I am Interested in volunteering for events and activities",
                   },
                 ],
               },

@@ -6,7 +6,6 @@ import Avatar from "@/components/Avatar/Avatar";
 import useUser from "@/hooks/user";
 import NavLi, { NavLiProps } from "./NavLi";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { dataValueLookup } from "@/utils/constants/data";
 
 const Navbar: React.FC = () => {
   const { loading, user, logout } = useUser();
@@ -113,12 +112,7 @@ const Navbar: React.FC = () => {
                         )}
                         {user.first_name ? (
                           <div className={styles["user-name"]}>
-                            {
-                              dataValueLookup[
-                                user.title as keyof typeof dataValueLookup
-                              ]
-                            }{" "}
-                            {user.first_name} {user.last_name}
+                            {user.title} {user.first_name} {user.last_name}
                           </div>
                         ) : (
                           <div className={styles["message"]}>

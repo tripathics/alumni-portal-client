@@ -39,7 +39,7 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
   }
 
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {schema.map((field, index) => {
         if (
           field.type === "text" ||
@@ -124,7 +124,15 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
               {Array.isArray(file) && file.length > 0 && (
                 <div className={styles["image-preview"]}>
                   {file.map((f, _) => (
-                    <div key={_} className={styles["image"]}>
+                    <div
+                      style={{
+                        maxWidth: field.maxFileSize
+                          ? `${field.maxFileSize / 1024}px`
+                          : undefined,
+                      }}
+                      key={_}
+                      className={styles["image"]}
+                    >
                       <img src={URL.createObjectURL(f)} alt={f.name} />
                     </div>
                   ))}
@@ -145,9 +153,7 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
             </div>
           );
         } else if (field.type === "section") {
-          return (
-            <FormSectionSection label={field.label} key={index} />
-          );
+          return <FormSectionSection label={field.label} key={index} />;
         } else {
           return <p key={index}>Invalid field</p>;
         }

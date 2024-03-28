@@ -14,9 +14,9 @@ export const educationFormNITAPSchema: SchemaField[] = [
     type: "select",
     required: "Degree is required",
     options: [
-      { value: "btech", label: "B.Tech" },
-      { value: "mtech", label: "M.Tech" },
-      { value: "phd", label: "PhD" },
+      { value: "Bachelor of Technology", label: "B.Tech" },
+      { value: "Master of Technology", label: "M.Tech" },
+      { value: "PhD", label: "PhD" },
     ],
   },
   {
@@ -24,8 +24,8 @@ export const educationFormNITAPSchema: SchemaField[] = [
     label: "Degree type",
     type: "select",
     options: [
-      { value: "full-time", label: "Full time" },
-      { value: "part-time", label: "Part time" },
+      { value: "Full time", label: "Full time" },
+      { value: "Part time", label: "Part time" },
     ],
     required: "Degree type is required",
   },
@@ -67,8 +67,8 @@ export const educationFormSchema: SchemaField[] = [
     label: "Degree type",
     type: "select",
     options: [
-      { value: "full-time", label: "Full time" },
-      { value: "part-time", label: "Part time" },
+      { value: "Full time", label: "Full time" },
+      { value: "Part time", label: "Part time" },
     ],
     required: "Degree type is required",
   },

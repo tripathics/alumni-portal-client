@@ -4,7 +4,6 @@ import Modal from "@/components/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
-import { dataValueLookup } from "@/utils/constants/data";
 import experienceFormSchema from "@/utils/formSchema/experienceFormSchema";
 import { FieldValues } from "react-hook-form";
 import fetchExperiencesApi from "@/utils/api/fetchExperience";
@@ -55,8 +54,7 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
         </div>
         <div className={cx(styles["course-details"], styles.label)}>
           <p className={cx(styles["course-name"])}>
-            {data.designation}{" "}
-            {data.type === "internship" && dataValueLookup[data.type]}
+            {data.designation} {data.type === "internship" && data.type}
           </p>
           <p className={cx(styles["course-name"])}>{data.location}</p>
           <p className={cx(styles["course-duration"])}>

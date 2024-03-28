@@ -8,10 +8,10 @@ const personalDetailsFormSchema: SchemaField[] = [
     type: "select",
     required: "Title is required",
     options: [
-      { value: "mr", label: "Mr" },
-      { value: "mrs", label: "Mrs" },
-      { value: "ms", label: "Ms" },
-      { value: "dr", label: "Dr" },
+      { value: "Mr", label: "Mr" },
+      { value: "Mrs", label: "Mrs" },
+      { value: "Ms", label: "Ms" },
+      { value: "Dr", label: "Dr" },
     ],
   },
   {
@@ -50,9 +50,9 @@ const personalDetailsFormSchema: SchemaField[] = [
     type: "select",
     required: "Sex is required",
     options: [
-      { value: "male", label: "Male" },
-      { value: "female", label: "Female" },
-      { value: "others", label: "Others" },
+      { value: "Male", label: "Male" },
+      { value: "Female", label: "Female" },
+      { value: "Others", label: "Others" },
     ],
   },
   {
@@ -61,11 +61,11 @@ const personalDetailsFormSchema: SchemaField[] = [
     type: "select",
     required: "Category is required",
     options: [
-      { value: "gen", label: "General" },
-      { value: "obc", label: "OBC" },
-      { value: "sc", label: "SC" },
-      { value: "st", label: "ST" },
-      { value: "ews", label: "EWS" },
+      { value: "General", label: "General" },
+      { value: "OBC", label: "OBC" },
+      { value: "SC", label: "SC" },
+      { value: "ST", label: "ST" },
+      { value: "EWS", label: "EWS" },
     ],
   },
   {

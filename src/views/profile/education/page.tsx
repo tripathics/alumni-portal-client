@@ -4,7 +4,6 @@ import ModalComponent from "@/components/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
-import { dataValueLookup } from "@/utils/constants/data";
 import {
   educationFormNITAPSchema,
   educationFormSchema,
@@ -14,6 +13,7 @@ import fetchEducationApi from "@/utils/api/fetchEducation";
 import updateEducationApi from "@/utils/api/updateEducation";
 import { EducationType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
+import useUser from "@/hooks/user";
 
 interface EducationFormProps {
   prefillData?: FieldValues;
@@ -62,6 +62,8 @@ interface EducationRowProps {
   openEditModal: (data: FieldValues) => void;
 }
 const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
+  const { user } = useUser();
+
   return (
     <div className={cx(styles["box-row"])}>
       <div className={cx(styles["logo-container"])}>
@@ -87,8 +89,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
         </div>
         <div className={cx(styles["course-details"], styles.label)}>
           <p className={cx(styles["course-name"])}>
-            {dataValueLookup[data.degree] || data.degree} (
-            {dataValueLookup[data.type]}) in {data.discipline}
+            {data.degree} ({data.type}) in {data.discipline}
           </p>
           <p className={cx(styles["course-duration"])}>
             {getMonth(data.start_date)}
@@ -105,6 +106,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
       </div>
       <div className={styles.actions}>
         <Button
+          disabled={!!user?.profile_locked}
           attrs={{ "aria-label": "Edit education" }}
           className={cx(styles["editIcon"])}
           onClick={() => openEditModal(data)}
@@ -122,6 +124,7 @@ const Education: React.FC = () => {
     null
   );
   const [educations, setEducations] = useState<EducationType[] | null>([]);
+  const { user } = useUser();
 
   // add, update or delete
   const updateEducation = async (data: FieldValues) => {
@@ -148,6 +151,7 @@ const Education: React.FC = () => {
   };
 
   const openModal = (data: FieldValues | null = null) => {
+    if (user?.profile_locked) return;
     setEditPrefillData(data as EducationType | null);
     setIsModalOpen(true);
   };
@@ -165,7 +169,10 @@ const Education: React.FC = () => {
               <h3 className={styles["title"]}>Education</h3>
             </div>
             <div className={styles.actions}>
-              <Button onClick={() => openModal()}>
+              <Button
+                disabled={!!user?.profile_locked}
+                onClick={() => openModal()}
+              >
                 <AddIcon />
                 Add
               </Button>
