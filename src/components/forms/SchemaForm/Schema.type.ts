@@ -56,15 +56,30 @@ interface TextareaField {
   required?: boolean | string;
 }
 
+/**
+ * Represents a file field in a form.
+ */
 interface FileField {
   type: "file";
   name: string;
   label: string;
   disabled?: boolean;
   required?: boolean | string;
+  /**
+   * Specifies whether multiple files can be selected.
+   */
   multiple?: boolean;
+  /**
+   * An array of allowed file formats.
+   */
   allowedFormats: string[];
+  /**
+   * The maximum file size allowed in bytes.
+   */
   maxFileSize?: number;
+  /**
+   * The minimum file size allowed in bytes.
+   */
   minFileSize?: number;
 }
 

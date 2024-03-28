@@ -131,6 +131,12 @@
   tr[data-application-status="pending"] {
     border-left: 4px solid blue;
   }
+  tr[data-application-status="approved"] {
+    border-left: 4px solid green;
+  }
+  tr[data-application-status="rejected"] {
+    border-left: 4px solid red;
+  }
 
   .sub-text {
     font-size: 0.8rem;
@@ -142,17 +148,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.application-modal {
-  background-color: white;
-  padding: 1rem;
-
-  .sign-wrapper {
-    margin: 1rem 0;
-    display: flex;
-    .sign {
-      width: 10rem;
-    }
-  }
 }

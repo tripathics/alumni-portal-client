@@ -11,7 +11,15 @@
   }
 
   .bg-overlay {
-    background: linear-gradient(90deg, #272727 0%, #272727 13%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.5) 70%, #272727 87%, #272727 100%);
+    background: linear-gradient(
+      90deg,
+      #272727 0%,
+      #272727 13%,
+      rgba(0, 0, 0, 0.5) 30%,
+      rgba(0, 0, 0, 0.5) 70%,
+      #272727 87%,
+      #272727 100%
+    );
   }
 
   .bg-image,
@@ -50,6 +58,16 @@
     p {
       font-weight: 300;
       font-size: 1.25rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
     }
   }
 }

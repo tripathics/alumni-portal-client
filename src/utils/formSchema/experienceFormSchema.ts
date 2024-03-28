@@ -8,8 +8,8 @@ const experienceFormSchema: SchemaField[] = [
     type: "select",
     required: "Type is required",
     options: [
-      { value: "job", label: "Job" },
-      { value: "internship", label: "Internship" },
+      { value: "Job", label: "Job" },
+      { value: "Internship", label: "Internship" },
     ],
   },
   {

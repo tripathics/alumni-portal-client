@@ -1,7 +1,6 @@
 import SchemaForm, { Button } from "@/components/forms";
 import cx from "classnames";
 import { EditPencil } from "iconoir-react";
-import { dataValueLookup } from "@/utils/constants/data";
 import Modal from "@/components/Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
 import readProfile from "@/utils/api/readProfile";
@@ -167,8 +166,8 @@ const PersonalDetails = () => {
           </div>
           <div className={styles["basic-info-content"]}>
             <h2 className={styles["title"]}>
-              {dataValueLookup[personalDetails.title]}{" "}
-              {personalDetails.first_name} {personalDetails.last_name}
+              {personalDetails.title} {personalDetails.first_name}{" "}
+              {personalDetails.last_name}
             </h2>
             <div className={styles["subtitle"]}>
               <p>Class of 2020</p>
@@ -201,13 +200,13 @@ const PersonalDetails = () => {
           <div className={styles["box-row"]}>
             <p className={cx(styles.col, styles["label"])}>Sex</p>
             <p className={cx(styles.col, styles["value"])}>
-              {dataValueLookup[personalDetails.sex]}
+              {personalDetails.sex}
             </p>
           </div>
           <div className={styles["box-row"]}>
             <p className={cx(styles.col, styles["label"])}>Category</p>
             <p className={cx(styles.col, styles["value"])}>
-              {dataValueLookup[personalDetails.category]}
+              {personalDetails.category}
             </p>
           </div>
           <div className={styles["box-row"]}>

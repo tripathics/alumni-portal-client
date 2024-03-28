@@ -5,6 +5,7 @@ import { CategoryType, SexType, TitleType } from "@/types/User.type";
 import { AxiosError } from "axios";
 
 export interface FullApplicationType {
+  id: string;
   user_id: string;
   membership_level: MembershipLevelType;
   sign: string;

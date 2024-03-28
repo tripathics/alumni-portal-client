@@ -7,12 +7,14 @@ interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
   modalTitle?: string;
+  footer?: React.ReactNode;
 }
 const Modal: React.FC<ModalProps> = ({
   isOpen = false,
   setIsOpen,
   children,
   modalTitle = "",
+  footer,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -49,6 +51,7 @@ const Modal: React.FC<ModalProps> = ({
             </button>
           </header>
           <div className={styles.modalContent}>{children}</div>
+          {footer && <footer className={styles.modalFooter}>{footer}</footer>}
         </div>
       </div>
     )

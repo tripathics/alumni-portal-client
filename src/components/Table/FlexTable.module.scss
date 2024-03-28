@@ -1,0 +1,52 @@
+.table {
+  margin: 1rem 0 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 0 1.2rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgb(242, 242, 242);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: var(--text-muted);
+    }
+
+    h4.label {
+      color: black;
+      font-weight: 500;
+      font-size: 0.8rem;
+      margin: 0.4rem 0;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    &.header {
+      border-bottom: 1px solid rgb(229, 231, 235);
+      align-items: center;
+
+      .col {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-muted);
+
+        > * {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

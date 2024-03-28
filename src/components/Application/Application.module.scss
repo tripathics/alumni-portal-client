@@ -1,0 +1,16 @@
+.application-modal {
+  background-color: white;
+  padding: 1.2rem 2rem;
+
+  .sign-wrapper {
+    margin-top: 1rem;
+  }
+  .sign {
+    display: flex;
+    max-width: 9.5rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 1.2rem;
+  }
+}

@@ -2,6 +2,7 @@ import axios from "@/config/axios.config";
 import { AxiosError } from "axios";
 
 export interface MembershipApplicationType {
+  id: string;
   user_id: string;
   membership_level: string;
   sign: string;
