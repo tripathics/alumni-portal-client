@@ -1,12 +1,8 @@
+import AvatarProps from "./AvatarProp.type";
 import styles from "./Avatar.module.scss";
 import cx from "classnames";
 
-interface AvatarProps {
-  avatar: string | null;
-  className?: string;
-  size?: string;
-}
-const Avatar: React.FC<AvatarProps> = ({
+const EditAvatar: React.FC<AvatarProps> = ({
   avatar,
   className = "",
   size = "200px",
@@ -32,4 +28,4 @@ const Avatar: React.FC<AvatarProps> = ({
   </div>
 );
 
-export default Avatar;
+export default EditAvatar;

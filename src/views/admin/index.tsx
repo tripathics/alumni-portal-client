@@ -11,6 +11,7 @@ import {
 } from "iconoir-react";
 
 import Applications from "./applications/page";
+import Users from "./users/page";
 
 const Admin = () => {
   const navigations = [
@@ -67,4 +68,4 @@ const Admin = () => {
 };
 
 export default Admin;
-export { Applications };
+export { Applications, Users };

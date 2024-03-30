@@ -1,4 +1,4 @@
-import Alert from "@/components/Alert/Alert";
+import Alert from "@/components/ui/Alert/Alert";
 import styles from "../Admin.module.scss";
 import { useEffect, useState } from "react";
 import cx from "classnames";
@@ -6,7 +6,7 @@ import { ProfileCircle } from "iconoir-react";
 import fetchMembershipApplications, {
   MembershipApplicationType,
 } from "@/utils/api/fetchMembershipApplications";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/ui/Modal/Modal";
 import fetchApplicationById, {
   FullApplicationType,
 } from "@/utils/api/fetchApplicationById";
@@ -139,9 +139,7 @@ const Applications = () => {
               }
             >
               {!!applicationData && (
-                <>
-                  <Application applicationData={applicationData} />
-                </>
+                <Application applicationData={applicationData} />
               )}
             </Modal>
           </>

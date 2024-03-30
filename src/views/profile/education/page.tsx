@@ -1,6 +1,6 @@
 import cx from "classnames";
 import SchemaForm, { Button } from "@/components/forms";
-import ModalComponent from "@/components/Modal/Modal";
+import Modal from "@/components/ui/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
@@ -183,7 +183,7 @@ const Education: React.FC = () => {
           ))}
 
           {educations?.length === 0 ? (
-            <ModalComponent
+            <Modal
               modalTitle="Add education at NIT Arunachal Pradesh"
               isOpen={isModalOpen}
               setIsOpen={setIsModalOpen}
@@ -191,9 +191,9 @@ const Education: React.FC = () => {
               <section className={styles.box}>
                 <EducationFormNITAP onSubmit={updateEducation} />
               </section>
-            </ModalComponent>
+            </Modal>
           ) : (
-            <ModalComponent
+            <Modal
               modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
               isOpen={isModalOpen}
               setIsOpen={setIsModalOpen}
@@ -204,7 +204,7 @@ const Education: React.FC = () => {
                   prefillData={editPrefillData as FieldValues}
                 />
               </section>
-            </ModalComponent>
+            </Modal>
           )}
         </div>
       </section>

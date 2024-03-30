@@ -12,7 +12,7 @@ import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import axiosInstance from "@/config/axios.config";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import Alert from "@/components/Alert/Alert";
+import Alert from "@/components/ui/Alert/Alert";
 import { createOtpForAuth } from "@/utils/api/otp/createOtp";
 
 const OTPForm: React.FC<{

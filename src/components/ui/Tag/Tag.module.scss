@@ -1,0 +1,13 @@
+.tag {
+  display: flex;
+  width: fit-content;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  line-height: 1.5;
+  padding-inline-start: 0.5rem;
+  padding-inline-end: 0.5rem;
+
+  background-color: blue;
+  color: white;
+  font-weight: 600;
+}

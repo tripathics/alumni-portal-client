@@ -1,20 +1,20 @@
 import SchemaForm, { Button } from "@/components/forms";
 import cx from "classnames";
 import { EditPencil } from "iconoir-react";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/ui/Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
 import readProfile from "@/utils/api/readProfile";
 import updateProfileApi from "@/utils/api/updateProfile";
 import updateAvatarApi from "@/utils/api/updateAvatar";
 import useUser from "@/hooks/user";
-import Avatar from "@/components/Avatar/Avatar";
+import EditAvatar from "@/components/ui/Avatar/EditAvatar";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
-import ProfilePictureUpload from "@/components/forms/AvatarUpload";
+import AvatarUpload from "@/components/forms/AvatarUpload";
 import personalDetailsFormSchema from "@/utils/formSchema/personalDetailsFormSchema";
 import { FieldValues } from "react-hook-form";
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { toast } from "react-toastify";
-import Alert from "@/components/Alert/Alert";
+import Alert from "@/components/ui/Alert/Alert";
 import { getDate } from "@/utils/helper";
 
 interface PersonalDetailsFormProps {
@@ -139,7 +139,7 @@ const PersonalDetails = () => {
         </div>
         <div className={styles["basic-info"]}>
           <div className={styles["avatar-container"]}>
-            <Avatar
+            <EditAvatar
               avatar={personalDetails.avatar}
               className={styles["avatar-crop"]}
             />
@@ -158,7 +158,7 @@ const PersonalDetails = () => {
               }}
               modalTitle="Change profile picture"
             >
-              <ProfilePictureUpload
+              <AvatarUpload
                 avatar={personalDetails.avatar}
                 updateAvatar={updateAvatar}
               />

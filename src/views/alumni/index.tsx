@@ -1,46 +1,22 @@
 import PageHeader from "@/components/layouts/PageHeader/PageHeader";
-import MembershipLayout from "@/components/layouts/dashboard";
-import {
-  Bell as BellIcon,
-  GraduationCap as GraduationCapIcon,
-} from "iconoir-react";
-import { Outlet } from "react-router";
-import MembershipForm from "./page";
+import MembershipForm from "./MembershipApplication";
+import styles from "./Alumni.module.scss";
+import cx from "classnames";
 
 const Alumni: React.FC = () => {
-  const navigations = [
-    {
-      title: "Alumni",
-      links: [
-        {
-          name: "Life Membership",
-          Icon: GraduationCapIcon,
-          path: "/alumni-membership",
-        },
-        {
-          name: "Application status",
-          Icon: BellIcon,
-          path: "/alumni-membership/status",
-        },
-      ],
-    },
-  ];
-
   return (
     <>
       <PageHeader
         pageHeading="Alumni membership"
-        subHeading="Complete your membership registration by filling the details below"
+        subHeading="Apply for life membership for NIT Arunachal Pradesh, alumni association"
         bgImage="/header-bg/2022-01-03.jpg"
       />
-      <div className="__page-content container">
-        <MembershipLayout navigations={navigations}>
-          <Outlet />
-        </MembershipLayout>
+      <div className={cx("__page-content container", styles["membership-form-wrapper"])}>
+        <MembershipForm />
+        <hr/>
       </div>
     </>
   );
 };
 
 export default Alumni;
-export { MembershipForm };

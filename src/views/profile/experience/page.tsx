@@ -1,6 +1,6 @@
 import cx from "classnames";
 import SchemaForm, { Button } from "@/components/forms";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/ui/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";

@@ -82,7 +82,7 @@ const FileInput: React.FC<FileInputProps> = ({
           }}
           name={name}
           render={({ field }) => (
-            <label className={styles.uploadBtn}>
+            <label tabIndex={0} className={styles.uploadBtn}>
               <UploadIcon />
               {files?.length ? "Change" : "Upload"} {label ? label : "File"}
               <input

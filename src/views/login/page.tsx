@@ -7,7 +7,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import styles from "@/components/layouts/auth/Auth.module.scss";
-import Alert from "@/components/Alert/Alert";
+import Alert from "@/components/ui/Alert/Alert";
 
 const Login = () => {
   const location = useLocation();

@@ -6,20 +6,23 @@ import { NavLink } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
-import Alert from "@/components/Alert/Alert";
+import Alert from "@/components/ui/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";
-import { Table, TableCell, TableRow } from "@/components/Table/FlexTable";
+import { Table, TableCell, TableRow } from "@/components/ui/Table/FlexTable";
+import useUser from "@/hooks/user";
 
 const MembershipForm = () => {
   const [userData, setUserData] = useState<MembershipPrefillDataType | null>(
     null
   );
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchPrefillData = async () => {
       try {
+        setLoading(true);
         const data = await alumniPrefillApi();
         if (data) {
           setUserData(data);
@@ -30,8 +33,8 @@ const MembershipForm = () => {
         setLoading(false);
       }
     };
-    fetchPrefillData();
-  }, []);
+    if (!user?.role.includes("alumni")) fetchPrefillData();
+  }, [user]);
 
   const onSubmit = async (data: FieldValues) => {
     const formData = new FormData();
@@ -52,7 +55,9 @@ const MembershipForm = () => {
     }
   };
 
-  return loading ? (
+  return user?.role.includes("alumni") ? (
+    <Alert>You are already a verified Alumni</Alert>
+  ) : loading ? (
     <p>Please wait</p>
   ) : errorMsg ? (
     <Alert>{errorMsg}</Alert>

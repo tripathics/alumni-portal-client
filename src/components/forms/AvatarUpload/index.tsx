@@ -1,4 +1,4 @@
-import Avatar from "@/components/Avatar/Avatar";
+import EditAvatar from "@/components/ui/Avatar/EditAvatar";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import formStyles from "@/components/forms/Form.module.scss";
 import cx from "classnames";
@@ -7,11 +7,11 @@ import { Button } from "..";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
 
-interface ProfilePictureUploadProps {
+interface AvatarUploadProps {
   avatar: string | null;
   updateAvatar: (avatar: File) => void;
 }
-const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
+const AvatarUpload: React.FC<AvatarUploadProps> = ({
   avatar,
   updateAvatar,
 }) => {
@@ -57,7 +57,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
 
   return (
     <div className={cx(styles.box, styles["avatar-upload"])}>
-      <Avatar avatar={fileUrl} className={styles["avatar-crop"]} />
+      <EditAvatar avatar={fileUrl} className={styles["avatar-crop"]} />
       <div className={styles["avatar-upload-info"]}>
         <p>
           For best results, use an image at least 200px by 200px in .jpg format
@@ -79,7 +79,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
             name="avatar"
             render={({ field }) => (
               <>
-                <label className={styles.uploadBtn}>
+                <label tabIndex={0} className={styles.uploadBtn}>
                   <UploadIcon />
                   {fileUrl ? "Change picture" : "Upload picture"}
                   <input
@@ -128,4 +128,4 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
   );
 };
 
-export default ProfilePictureUpload;
+export default AvatarUpload;

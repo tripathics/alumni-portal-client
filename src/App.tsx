@@ -10,8 +10,8 @@ import Profile, {
   Experience,
   PersonalProfile,
 } from "./views/profile";
-import Admin, { Applications } from "./views/admin";
-import Alumni, { MembershipForm } from "./views/alumni";
+import Admin, { Applications, Users } from "./views/admin";
+import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
 
 const router = createBrowserRouter([
@@ -38,14 +38,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "alumni-membership",
-                element: <Alumni />,
-                children: [
-                  { path: "", element: <MembershipForm /> },
-                  {
-                    path: "status",
-                    element: <h1>TODO: Status</h1>,
-                  },
-                ],
+                element: <Alumni />
               },
             ],
           },
@@ -58,6 +51,7 @@ const router = createBrowserRouter([
                 children: [
                   { path: "", element: <h1>TODO: Dashboard</h1> },
                   { path: "applications", element: <Applications /> },
+                  { path: "users", element: <Users /> },
                 ],
               },
             ],

@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.scss";
 import cx from "classnames";
 import { Menu as MenuIcon, User as UserIcon } from "iconoir-react";
-import Avatar from "@/components/Avatar/Avatar";
 import useUser from "@/hooks/user";
 import NavLi, { NavLiProps } from "./NavLi";
-import Dropdown from "@/components/Dropdown/Dropdown";
+import Dropdown from "@/components/ui/Dropdown/Dropdown";
+import Avatar from "@/components/ui/Avatar/Avatar";
 
 const Navbar: React.FC = () => {
   const { loading, user, logout } = useUser();
@@ -97,9 +97,9 @@ const Navbar: React.FC = () => {
                     className={styles["profile-btn"]}
                   >
                     {user?.avatar ? (
-                      <Avatar size={"100%"} avatar={user?.avatar} />
+                      <Avatar size="100%" avatar={user?.avatar} />
                     ) : (
-                      <UserIcon width={22} height={22} strokeWidth={2} />
+                      <UserIcon />
                     )}
                   </button>
                 )}
@@ -110,15 +110,17 @@ const Navbar: React.FC = () => {
                         {user.avatar && (
                           <Avatar avatar={user.avatar} size="6rem" />
                         )}
-                        {user.first_name ? (
-                          <div className={styles["user-name"]}>
-                            {user.title} {user.first_name} {user.last_name}
-                          </div>
-                        ) : (
-                          <div className={styles["message"]}>
-                            Please complete your profile
-                          </div>
-                        )}
+                        <div className={styles["user-name-wrapper"]}>
+                          {user.first_name ? (
+                            <div className={styles["user-name"]}>
+                              {`${user.title} ${user.first_name} ${user.last_name}`}
+                            </div>
+                          ) : (
+                            <div className={styles["message"]}>
+                              Please complete your profile
+                            </div>
+                          )}
+                        </div>
                         <div className={styles["user-email"]}>{user.email}</div>
                       </div>
                     )}

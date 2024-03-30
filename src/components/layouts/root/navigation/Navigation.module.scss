@@ -138,6 +138,7 @@
         .link-txt {
           font-size: 1.2rem;
           padding: 5px 0;
+          white-space: nowrap;
 
           @media screen and (min-width: 768px) {
             font-size: 1rem;
@@ -239,9 +240,18 @@
   gap: 0.5rem;
   padding-top: 1rem;
 
+  .user-name-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+  }
   .user-name {
     font-size: 0.8rem;
     font-weight: 600;
+    text-align: center;
   }
 
   .user-avatar {

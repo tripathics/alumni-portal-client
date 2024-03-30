@@ -31,6 +31,7 @@ const Alert: React.FC<AlertProps> = ({
   return (
     (isOpen || (onClose === undefined && isOpen === undefined)) && (
       <div
+        role="alert"
         className={cx(
           styles["alert"],
           "container",
