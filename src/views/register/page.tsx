@@ -238,7 +238,7 @@ const Register = () => {
       setError(null);
       setLoading(true);
       const data = await createOtpForSignup(otpFormData.email);
-      if (data.success) {
+      if (data?.success) {
         setEmail(otpFormData.email);
         setFormState("verify");
       }

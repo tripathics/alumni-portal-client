@@ -56,22 +56,15 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    if (!isOpen) return;
-
     const keyListener = (e: KeyboardEvent) => {
-      console.log(e.key);
-      if (e.key === "Escape") {
-        closeModal();
-      }
-      if (e.key === "Tab") {
-        handleFocus(e);
-      }
+      if (e.key === "Escape") closeModal();
+      if (e.key === "Tab") handleFocus(e);
     };
 
-    document.body.addEventListener("keydown", keyListener);
+    modalRef.current?.addEventListener("keydown", keyListener);
 
     () => {
-      document.body.removeEventListener("keydown", keyListener);
+      modalRef.current?.removeEventListener("keydown", keyListener);
     };
   }, [isOpen]);
 
@@ -81,6 +74,7 @@ const Modal: React.FC<ModalProps> = ({
     if (isOpen && modal) {
       setTimeout(() => {
         modal.classList.add(styles.active);
+        modal.focus();
       }, 0);
       document.body.style.overflow = "hidden";
     } else {
@@ -93,15 +87,15 @@ const Modal: React.FC<ModalProps> = ({
       <div
         aria-modal="true"
         role="dialog"
-        id="modal"
         ref={modalRef}
+        tabIndex={0}
         className={styles.darkBG}
       >
         <div className={styles.darkBGOverlay} onClick={closeModal}></div>
         <div className={styles.centered}>
           <header className={styles.modalHeader}>
             <h2 className={styles.modalTitle}>{modalTitle}</h2>
-            <button className={styles.closeBtn} onClick={closeModal}>
+            <button autoFocus className={styles.closeBtn} onClick={closeModal}>
               <XmarkIcon strokeWidth={2} />
             </button>
           </header>

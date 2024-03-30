@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
   undefined,
   function axiosRetryInterceptor(err) {
     if (!err.response) {
-      toast.error("Network Error");
+      toast.error("Network Error. Please try again.");
     }
     if (
       err.response.status === 401 &&

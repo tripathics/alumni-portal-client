@@ -18,7 +18,13 @@ interface FileInputProps {
   watch: UseFormWatch<FieldValues>;
   required?: string | boolean;
   allowedFormats?: string[];
+  /**
+   * The maximum file size allowed in bytes.
+   */
   maxFileSize?: number;
+  /**
+   * The minimum file size allowed in bytes.
+   */
   minFileSize?: number;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
 }
@@ -51,17 +57,18 @@ const FileInput: React.FC<FileInputProps> = ({
   };
 
   const checkFileSize = (values: File[]) => {
+    console.log("checking file size");
     if (maxFileSize) {
       for (const file of values) {
-        if (file.size > maxFileSize * 1000) {
-          return `File size should be less than ${maxFileSize / 1000} MB`;
+        if (file.size > maxFileSize) {
+          return `File size should be less than ${maxFileSize / 1024} KB`;
         }
       }
     }
     if (minFileSize) {
       for (const file of values) {
-        if (file.size < minFileSize * 1000) {
-          return `File size should be greater than ${minFileSize / 1000} MB`;
+        if (file.size < minFileSize) {
+          return `File size should be greater than ${minFileSize / 1024} KB`;
         }
       }
     }

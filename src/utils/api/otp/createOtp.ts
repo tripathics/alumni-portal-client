@@ -1,7 +1,15 @@
 import axios from "@/config/axios.config";
 import { AxiosError } from "axios";
 
-export const createOtpForSignup = async (email: string) => {
+export const createOtpForSignup = async (
+  email: string
+): Promise<
+  | {
+      success: boolean;
+      message: string;
+    }
+  | undefined
+> => {
   try {
     const response = await axios.post("/api/users/register-otp-gen", {
       email,
@@ -9,13 +17,21 @@ export const createOtpForSignup = async (email: string) => {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message || error.message);
+      throw new Error(error.response?.data.message);
     }
-    throw error;
+    console.error(error);
   }
 };
 
-export const createOtpForAuth = async (email: string) => {
+export const createOtpForAuth = async (
+  email: string
+): Promise<
+  | {
+      success: boolean;
+      message: string;
+    }
+  | undefined
+> => {
   try {
     const response = await axios.post("/api/users/auth-otp-gen", {
       email,
@@ -23,8 +39,8 @@ export const createOtpForAuth = async (email: string) => {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message || error.message);
+      throw new Error(error.response?.data.message);
     }
-    throw error;
+    console.error(error);
   }
 };
