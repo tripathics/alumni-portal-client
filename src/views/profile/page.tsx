@@ -51,10 +51,9 @@ const PersonalDetails = () => {
       const response = await updateProfileApi(data as PersonalDetailsType);
       if (response?.success) {
         fetchProfile();
-        setTimeout(() => {
-          setIsProfileFormModalOpen(false);
-          toast.success("Profile updated successfully");
-        }, 1000);
+
+        setIsProfileFormModalOpen(false);
+        toast.success("Profile updated successfully");
       }
     } catch (error) {
       console.error(error);
@@ -66,12 +65,10 @@ const PersonalDetails = () => {
       const data = await updateAvatarApi(file); // Await the updateAvatarApi function call
       if (data?.success) {
         fetchProfile();
-        setTimeout(() => {
-          setIsProfileModalOpen(false);
-          toast.success("Profile picture updated successfully", {
-            autoClose: 2000,
-          });
-        }, 1000);
+        setIsProfileModalOpen(false);
+        toast.success("Profile picture updated successfully", {
+          autoClose: 2000,
+        });
       }
     } catch (error) {
       console.error(error);

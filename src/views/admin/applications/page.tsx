@@ -2,19 +2,29 @@ import Alert from "@/components/ui/Alert/Alert";
 import styles from "../Admin.module.scss";
 import { useEffect, useState } from "react";
 import cx from "classnames";
-import { ProfileCircle } from "iconoir-react";
-import fetchMembershipApplications, {
+import {
+  fetchMembershipApplications,
   MembershipApplicationType,
 } from "@/utils/api/fetchMembershipApplications";
 import Modal from "@/components/ui/Modal/Modal";
-import fetchApplicationById, {
+import {
+  fetchApplicationByIdAdmin,
   FullApplicationType,
 } from "@/utils/api/fetchApplicationById";
-import { getDate, getMonth } from "@/utils/helper";
+import { getDateWithTime, getMonth } from "@/utils/helper";
 import Application from "@/components/Application/Application";
 // import { Button } from "@/components/forms";
 import { toast } from "react-toastify";
 import updateApplicationStatus from "@/utils/api/updateApplicationStatus";
+import Button from "@/components/ui/Button";
+import {
+  Table,
+  TableBody,
+  TableHeading,
+  TableRow,
+  TableCell,
+} from "@/components/ui/Table/table";
+import Avatar from "@/components/ui/Avatar/Avatar";
 
 const Applications = () => {
   const [applications, setApplications] = useState<Record<
@@ -45,7 +55,7 @@ const Applications = () => {
 
   const fetchApplicationData = async (id: string) => {
     try {
-      const data = await fetchApplicationById(id);
+      const data = await fetchApplicationByIdAdmin(id);
       if (data) {
         setApplicationData(data);
         setIsApplicationModalOpen(true);
@@ -89,51 +99,49 @@ const Applications = () => {
       <main>
         {applications ? (
           <>
-            <div className={cx(styles["table-wrapper"])}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th scope="col">Applicant</th>
-                    <th scope="col">Batch</th>
-                    <th scope="col">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(applications).map((id) => (
-                    <ApplicationRow
-                      application={applications[id]}
-                      handleApplicationClick={fetchApplicationData}
-                      key={id}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Table>
+              <TableHeading>
+                <TableRow>
+                  <TableCell heading>Applicant</TableCell>
+                  <TableCell heading>Batch</TableCell>
+                  <TableCell heading>Date</TableCell>
+                </TableRow>
+              </TableHeading>
+              <TableBody>
+                {Object.keys(applications).map((id) => (
+                  <ApplicationRow
+                    application={applications[id]}
+                    handleApplicationClick={fetchApplicationData}
+                    key={id}
+                  />
+                ))}
+              </TableBody>
+            </Table>
             <Modal
               isOpen={isApplicationModalOpen}
               setIsOpen={setIsApplicationModalOpen}
               modalTitle="Life membership application"
               footer={
                 applicationData?.status === "pending" && (
-                  <div style={{ display: "flex" }}>
-                    <button
-                      type="button"
+                  <div style={{ display: "flex", gap: "1rem" }}>
+                    <Button
+                      variant="primary"
                       onClick={() => {
                         if (!applicationData) return;
                         updateStatus(applicationData?.id, "approved");
                       }}
                     >
                       Approve
-                    </button>
-                    <button
-                      type="button"
+                    </Button>
+                    <Button
+                      variant="secondary"
                       onClick={() => {
                         if (!applicationData) return;
                         updateStatus(applicationData?.id, "rejected");
                       }}
                     >
                       Reject
-                    </button>
+                    </Button>
                   </div>
                 )
               }
@@ -155,14 +163,19 @@ const ApplicationRow: React.FC<{
   application: MembershipApplicationType;
   handleApplicationClick: (id: string) => void;
 }> = ({ application, handleApplicationClick }) => {
+  const [read, setRead] = useState(false);
+
   return (
-    <tr
-      data-application-status={application.status}
+    <TableRow
+      className={cx(styles["application-row"], styles[application.status], {
+        [styles["read"]]: read,
+      })}
       onClick={() => {
+        setRead(true);
         handleApplicationClick(application.id);
       }}
     >
-      <td>
+      <TableCell>
         <div
           style={{
             display: "flex",
@@ -170,30 +183,7 @@ const ApplicationRow: React.FC<{
             gap: "0.5rem",
           }}
         >
-          {application.avatar ? (
-            <div
-              style={{
-                width: "2rem",
-                height: "2rem",
-                borderRadius: "50%",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                src={`${import.meta.env.VITE_SERVER_BASE_URL}/media/avatars/${
-                  application.avatar
-                }`}
-                alt="avatar"
-              />
-            </div>
-          ) : (
-            <ProfileCircle strokeWidth={0.8} width={32} height={32} />
-          )}
+          <Avatar avatar={application.avatar} size="2rem" />
           <div>
             <p className={styles["text-ellipsis"]}>
               {application.title} {application.first_name}{" "}
@@ -202,21 +192,21 @@ const ApplicationRow: React.FC<{
             <p className={styles["sub-text"]}>Roll no: {application.roll_no}</p>
           </div>
         </div>
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <p>
           {application.degree}
           {" in "}
           {application.discipline}
         </p>
         <p className={styles["sub-text"]}>
-          Graduated {getMonth(application.graduation_date)}
+          Graduation {getMonth(application.graduation_date)}
         </p>
-      </td>
-      <td className={styles["text-ellipsis"]}>
-        {getDate(application.created_at)}
-      </td>
-    </tr>
+      </TableCell>
+      <TableCell className={styles["text-ellipsis"]}>
+        {getDateWithTime(application.created_at)}
+      </TableCell>
+    </TableRow>
   );
 };
 

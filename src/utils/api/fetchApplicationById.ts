@@ -40,7 +40,7 @@ export interface FullApplicationType {
   enrollment_date: string;
 }
 
-const fetchApplicationById = async (
+export const fetchApplicationByIdAdmin = async (
   id: string
 ): Promise<FullApplicationType | undefined> => {
   try {
@@ -55,4 +55,15 @@ const fetchApplicationById = async (
   }
 };
 
-export default fetchApplicationById;
+export const fetchApplicationById = async (
+  id: string
+): Promise<FullApplicationType | undefined> => {
+  try {
+    const response = await axios.get(`/api/alumni/past-applications/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw error.response?.data;
+    }
+  }
+};
