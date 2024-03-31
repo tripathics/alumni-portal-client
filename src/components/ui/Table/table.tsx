@@ -29,8 +29,23 @@ export const TableBody: React.FC<{
 export const TableRow: React.FC<{
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className }) => {
-  return <tr className={className}>{children}</tr>;
+  onClick?: () => void;
+}> = ({ children, className, onClick }) => {
+  return (
+    <tr
+      tabIndex={onClick ? 0 : -1}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick && onClick();
+        }
+      }}
+      className={className}
+    >
+      {children}
+    </tr>
+  );
 };
 
 export const TableCell: React.FC<{
@@ -41,7 +56,7 @@ export const TableCell: React.FC<{
   return heading ? (
     <th className={className}>{children}</th>
   ) : (
-    <tr className={className}>{children}</tr>
+    <td className={className}>{children}</td>
   );
 };
 

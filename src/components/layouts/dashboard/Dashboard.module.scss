@@ -51,7 +51,7 @@ h2 {
 }
 
 .box {
-  border: solid 1px rgb(229 231 235);
+  border: solid 1px var(--gray-4);
   padding: 2rem;
   box-shadow: var(--box-bs);
   background-color: white;
@@ -76,7 +76,7 @@ h2 {
       font-size: 0.9rem;
       font-weight: 400;
       padding: 0.5rem 0;
-      border-bottom: 1px solid rgb(242, 242, 242);
+      border-bottom: 1px solid var(--gray-1);
       --text-muted: rgb(97, 105, 117);
 
       .label {
@@ -102,7 +102,7 @@ h2 {
     }
 
     .box-row.header {
-      border-bottom: 1px solid rgb(229, 231, 235);
+      border-bottom: 1px solid var(--gray-4);
       align-items: center;
 
       .col {
@@ -202,7 +202,7 @@ h2 {
             content: "";
             width: 4px;
             height: 100%;
-            background-color: #18621f;
+            background-color: var(--primary);
             position: absolute;
             left: -8px;
             transform-origin: right;
@@ -301,15 +301,19 @@ h2 {
 
   .avatar-edit {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: #fdfdfd;
+    bottom: 0.125rem;
+    right: 0.125rem;
+    background-color: white;
     border: solid 1px #000;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
+    border-radius: 9999px;
+    padding: 0;
+    width: 2.2rem;
+    height: 2.2rem;
 
     svg {
       width: 1.2rem;
+      height: 1.2rem;
+      color: black;
       stroke-width: 1.8;
     }
   }

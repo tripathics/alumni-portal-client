@@ -21,7 +21,7 @@ export interface MembershipApplicationType {
   enrollment_date: string;
 }
 
-const fetchMembershipApplications = async (): Promise<
+export const fetchMembershipApplications = async (): Promise<
   MembershipApplicationType[] | undefined
 > => {
   try {
@@ -34,4 +34,15 @@ const fetchMembershipApplications = async (): Promise<
   }
 };
 
-export default fetchMembershipApplications;
+export const fetchUserMembershipApplications = async (): Promise<
+  MembershipApplicationType[] | undefined
+> => {
+  try {
+    const response = await axios.get("/api/alumni/past-applications");
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw error.response?.data;
+    }
+  }
+};

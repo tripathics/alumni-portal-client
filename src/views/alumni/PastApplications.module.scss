@@ -1,0 +1,23 @@
+.past-applications {
+  .header {
+    margin: 0 0 1rem;
+  }
+
+  table {
+    .cell {
+      text-transform: capitalize;
+    }
+
+    .row {
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: var(--gray-3);
+      }
+    }
+    .row-disabled {
+      opacity: 0.5;
+    }
+  }
+}
