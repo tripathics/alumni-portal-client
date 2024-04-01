@@ -132,7 +132,7 @@ const Education: React.FC = () => {
       const res = await updateEducationApi(data as EducationType);
       if (res?.success) {
         fetchEducation();
-        setTimeout(() => setIsModalOpen(false), 1000);
+        setIsModalOpen(false);
       }
     } catch (error) {
       console.error(error);

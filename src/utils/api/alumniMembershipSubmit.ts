@@ -22,7 +22,8 @@ const alumniMembershipSubmit = async (
     return response.data;
   } catch (error) {
     if ((error as AxiosError).response?.status === 401) {
-      throw "Unauthorized";
+      const err = error as AxiosError<{ message: string }>;
+      throw new Error(err.response?.data.message || err.message);
     } else {
       console.error(error);
     }

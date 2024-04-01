@@ -108,7 +108,7 @@ const Experience: React.FC = () => {
       })
       .then((resJson) => {
         console.log(resJson);
-        setTimeout(() => setIsModalOpen(false), 1000);
+        setIsModalOpen(false);
       })
       .catch((err) => {
         console.error(err);

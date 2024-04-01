@@ -10,6 +10,7 @@ import Alert from "@/components/ui/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";
 import { Table, TableCell, TableRow } from "@/components/ui/Table/FlexTable";
 import useUser from "@/hooks/user";
+import { toast } from "react-toastify";
 
 const MembershipForm = () => {
   const [userData, setUserData] = useState<MembershipPrefillDataType | null>(
@@ -47,9 +48,12 @@ const MembershipForm = () => {
     });
     try {
       const response = await alumniMembershipSubmit(formData);
-      console.log(response);
+      if (response?.success) {
+        toast.success(response.message);
+        setErrorMsg("Your membership application is pending for approval");
+      }
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
     } finally {
       setLoading(false);
     }
