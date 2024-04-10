@@ -4,6 +4,7 @@ import Tag from "@/components/ui/Tag/Tag";
 import { UserRole } from "@/types/User.type";
 import getUsers from "@/utils/api/getUsers";
 import { useEffect, useState } from "react";
+import Button from "@/components/ui/Elements/Button";
 
 interface UserType {
   user: { name: string | null; avatar: string | null };
@@ -42,7 +43,7 @@ const Users: React.FC = () => {
     <div>
       <h1>Users</h1>
       <DataTable
-        headings={["User", "Email", "Roles"]}
+        headings={["User", "Email", "Roles", "Actions"]}
         rows={users.map((user) => userRow(user))}
       />
     </div>
@@ -74,6 +75,7 @@ const userRow = (user: UserType) => {
         <Tag key={i}>{role}</Tag>
       ))}
     </div>,
+    <Button>Delete</Button>
   ];
 };
 
