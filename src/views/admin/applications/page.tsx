@@ -16,7 +16,7 @@ import Application from "@/components/Application/Application";
 // import { Button } from "@/components/forms";
 import { toast } from "react-toastify";
 import updateApplicationStatus from "@/utils/api/updateApplicationStatus";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/Elements/Button";
 import {
   Table,
   TableBody,

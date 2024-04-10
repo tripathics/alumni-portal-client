@@ -1,4 +1,6 @@
-import { Button, TextField } from "@/components/forms";
+import { TextField } from "@/components/forms";
+import Button from "@/components/ui/Elements/Button";
+import styles from "@/components/layouts/auth/Auth.module.scss";
 import useUser from "@/hooks/user";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -6,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
-import styles from "@/components/layouts/auth/Auth.module.scss";
 import Alert from "@/components/ui/Alert/Alert";
 
 const Login = () => {
@@ -93,9 +94,9 @@ const Login = () => {
           <div className={styles["actions"]}>
             <Button
               disabled={loading}
+              variant="primary"
               type="submit"
-              className="btn primary"
-              // loading={loading}
+              className={styles.btn}
             >
               Login
             </Button>

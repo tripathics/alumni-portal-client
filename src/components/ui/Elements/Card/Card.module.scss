@@ -1,0 +1,11 @@
+.card {
+  border: solid 1px var(--gray-4);
+  padding: 2rem;
+  box-shadow: var(--box-bs);
+  background-color: white;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 1.2rem;
+  }
+}

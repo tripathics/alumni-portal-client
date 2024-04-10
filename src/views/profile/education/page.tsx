@@ -1,5 +1,5 @@
 import cx from "classnames";
-import SchemaForm, { Button } from "@/components/forms";
+import SchemaForm from "@/components/forms";
 import Modal from "@/components/ui/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
@@ -14,6 +14,9 @@ import updateEducationApi from "@/utils/api/updateEducation";
 import { EducationType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
 import useUser from "@/hooks/user";
+import Card from "@/components/ui/Elements/Card/Card";
+import { Table, TableCell, TableRow } from "@/components/ui/Table/FlexTable";
+import Button from "@/components/ui/Elements/Button";
 
 interface EducationFormProps {
   prefillData?: FieldValues;
@@ -65,7 +68,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
   const { user } = useUser();
 
   return (
-    <div className={cx(styles["box-row"])}>
+    <TableRow>
       <div className={cx(styles["logo-container"])}>
         {data.institute ===
         "National Institute of Technology, Arunachal Pradesh" ? (
@@ -83,7 +86,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
           />
         )}
       </div>
-      <div className={cx(styles["col"])}>
+      <TableCell>
         <div className={cx(styles["college-name"], styles.value)}>
           {data.institute}
         </div>
@@ -103,18 +106,19 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
             {data.description}
           </div>
         )}
-      </div>
+      </TableCell>
       <div className={styles.actions}>
         <Button
+          variant="link"
           disabled={!!user?.profile_locked}
           attrs={{ "aria-label": "Edit education" }}
-          className={cx(styles["editIcon"])}
+          className={styles.btn}
           onClick={() => openEditModal(data)}
         >
           <EditPencil />
         </Button>
       </div>
-    </div>
+    </TableRow>
   );
 };
 
@@ -161,54 +165,54 @@ const Education: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <section className={styles.box}>
-        <div className={styles["box-table"]}>
-          <div className={cx(styles["box-row"], styles.header)}>
-            <div className={styles["col"]}>
-              <h3 className={styles["title"]}>Education</h3>
-            </div>
-            <div className={styles.actions}>
-              <Button
-                disabled={!!user?.profile_locked}
-                onClick={() => openModal()}
-              >
-                <AddIcon />
-                Add
-              </Button>
-            </div>
+    <Card>
+      <Table>
+        <TableRow header>
+          <TableCell>
+            <h3 className={styles["title"]}>Education</h3>
+          </TableCell>
+          <div className={styles["actions"]}>
+            <Button
+              variant="link"
+              disabled={!!user?.profile_locked}
+              onClick={() => openModal()}
+              className={styles.btn}
+            >
+              <AddIcon />
+              Add
+            </Button>
           </div>
-          {educations?.map((e) => (
-            <EducationRow data={e} key={e.id} openEditModal={openModal} />
-          ))}
+        </TableRow>
+        {educations?.map((e) => (
+          <EducationRow data={e} key={e.id} openEditModal={openModal} />
+        ))}
 
-          {educations?.length === 0 ? (
-            <Modal
-              modalTitle="Add education at NIT Arunachal Pradesh"
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-            >
-              <section className={styles.box}>
-                <EducationFormNITAP onSubmit={updateEducation} />
-              </section>
-            </Modal>
-          ) : (
-            <Modal
-              modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-            >
-              <section className={styles.box}>
-                <EducationForm
-                  onSubmit={updateEducation}
-                  prefillData={editPrefillData as FieldValues}
-                />
-              </section>
-            </Modal>
-          )}
-        </div>
-      </section>
-    </>
+        {educations?.length === 0 ? (
+          <Modal
+            modalTitle="Add education at NIT Arunachal Pradesh"
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+          >
+            <section className={styles.box}>
+              <EducationFormNITAP onSubmit={updateEducation} />
+            </section>
+          </Modal>
+        ) : (
+          <Modal
+            modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+          >
+            <section className={styles.box}>
+              <EducationForm
+                onSubmit={updateEducation}
+                prefillData={editPrefillData as FieldValues}
+              />
+            </section>
+          </Modal>
+        )}
+      </Table>
+    </Card>
   );
 };
 

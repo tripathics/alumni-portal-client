@@ -18,7 +18,7 @@
   font-size: 0.9rem;
   line-height: 1.2;
 
-  transition: all 0.2s ease-out;
+  transition: all 0.1s ease-out;
 
   &::after {
     position: absolute;
@@ -29,7 +29,7 @@
     pointer-events: none;
     content: "";
     border: solid 1px transparent;
-    transition: all 0.2s ease-out;
+    transition: all 0.1s ease-out;
   }
 
   &:hover {
