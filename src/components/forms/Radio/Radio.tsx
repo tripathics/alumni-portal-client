@@ -23,23 +23,21 @@ const Radio: React.ForwardRefExoticComponent<
     ) : (
       <div className={styles["field-wrapper"]}>
         <div className={styles["form-field"]}>
-          <label htmlFor={name}>{`${label}${
-            required ? "" : " (optional)"
-          }`}</label>
+          <label>{`${label}${required ? "" : " (optional)"}`}</label>
           <div className={styles["radio-group"]}>
             {options.map(({ label, value }, index) => (
               <>
                 <div key={index} className={styles["radio-option"]}>
-                  <input
-                    className={styles.radio}
-                    type="radio"
-                    name={name}
-                    ref={ref}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                  />
-                  <label className={styles["radio-label"]} htmlFor={value}>
+                  <label className={styles["radio-label"]}>
+                    <input
+                      className={styles.radio}
+                      type="radio"
+                      name={name}
+                      ref={ref}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                    />
                     {label}
                   </label>
                 </div>

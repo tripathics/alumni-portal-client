@@ -9,6 +9,7 @@ import {
   FieldErrorsImpl,
   Merge,
 } from "react-hook-form";
+import { buttonVariants } from "@/components/ui/button";
 
 interface FileInputProps {
   control: Control<FieldValues>;
@@ -89,7 +90,13 @@ const FileInput: React.FC<FileInputProps> = ({
           }}
           name={name}
           render={({ field }) => (
-            <label tabIndex={0} className={styles.uploadBtn}>
+            <label
+              tabIndex={0}
+              className={buttonVariants({
+                variant: "outline",
+                size: "default",
+              })}
+            >
               <UploadIcon />
               {files?.length ? "Change" : "Upload"} {label ? label : "File"}
               <input

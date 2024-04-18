@@ -1,4 +1,4 @@
-import Alert from "@/components/ui/Alert/Alert";
+import Alert from "@/components/custom-ui/Alert/Alert";
 import styles from "../Admin.module.scss";
 import { useEffect, useState } from "react";
 import cx from "classnames";
@@ -6,7 +6,7 @@ import {
   fetchMembershipApplications,
   MembershipApplicationType,
 } from "@/utils/api/fetchMembershipApplications";
-import Modal from "@/components/ui/Modal/Modal";
+import Modal from "@/components/custom-ui/Modal/Modal";
 import {
   fetchApplicationByIdAdmin,
   FullApplicationType,
@@ -16,15 +16,15 @@ import Application from "@/components/Application/Application";
 // import { Button } from "@/components/forms";
 import { toast } from "react-toastify";
 import updateApplicationStatus from "@/utils/api/updateApplicationStatus";
-import Button from "@/components/ui/Elements/Button";
+import Button from "@/components/custom-ui/Elements/Button";
 import {
   Table,
   TableBody,
   TableHeading,
   TableRow,
   TableCell,
-} from "@/components/ui/Table/table";
-import Avatar from "@/components/ui/Avatar/Avatar";
+} from "@/components/custom-ui/Table/table";
+import Avatar from "@/components/custom-ui/Avatar/Avatar";
 
 const Applications = () => {
   const [applications, setApplications] = useState<Record<

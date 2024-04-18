@@ -1,3 +1,9 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 h1,
 h2,
 h3,
@@ -60,55 +66,55 @@ h2 {
   @media screen and (max-width: 768px) {
     padding: 1.2rem;
   }
+}
 
-  .box-table {
-    margin: 1rem 0 0;
+.box-table {
+  margin: 1rem 0 0;
 
-    &:first-child {
-      margin-top: 0;
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .box-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0 1.2rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-1);
+    --text-muted: rgb(97, 105, 117);
+
+    .label {
+      color: var(--text-muted);
     }
 
-    .box-row {
-      display: flex;
-      flex-direction: row;
-      gap: 0 1.2rem;
-      flex-wrap: wrap;
-      font-size: 0.9rem;
-      font-weight: 400;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--gray-1);
-      --text-muted: rgb(97, 105, 117);
-
-      .label {
-        color: var(--text-muted);
-      }
-
-      h4.label {
-        color: black;
-        font-weight: 500;
-        font-size: 0.8rem;
-        margin: 0.4rem 0;
-      }
-
-      .col {
-        flex: 1;
-      }
-
-      .box-col-header {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: var(--text-muted);
-      }
+    h4.label {
+      color: black;
+      font-weight: 500;
+      font-size: 0.8rem;
+      margin: 0.4rem 0;
     }
 
-    .box-row.header {
-      border-bottom: 1px solid var(--gray-4);
-      align-items: center;
+    .col {
+      flex: 1;
+    }
 
-      .col {
-        > * {
-          margin: 0;
-        }
+    .box-col-header {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+  }
+
+  .box-row.header {
+    border-bottom: 1px solid var(--gray-4);
+    align-items: center;
+
+    .col {
+      > * {
+        margin: 0;
       }
     }
   }
@@ -185,7 +191,7 @@ h2 {
             content: "";
             width: 4px;
             height: 100%;
-            background-color: var(--primary);
+            background-color: hsla(var(--primary));
             position: absolute;
             left: -8px;
             transform-origin: right;
@@ -298,50 +304,6 @@ h2 {
       height: 1.2rem;
       color: black;
       stroke-width: 1.8;
-    }
-  }
-}
-
-.avatar-upload {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-
-  .avatar-crop {
-    width: 200px;
-    height: 200px;
-  }
-
-  .avatar-upload-actions {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-
-    > * {
-      flex: 1;
-    }
-
-    label,
-    button {
-      display: flex;
-      gap: 0.5rem;
-      border: solid 1px #000;
-      padding: 0.3rem 0.6rem;
-      font-weight: 500;
-      font-size: 1rem;
-      white-space: nowrap;
-      justify-content: center;
-
-      svg {
-        width: 1.2rem;
-        stroke-width: 1.8;
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
 }

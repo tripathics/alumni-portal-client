@@ -1,11 +1,16 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.scss";
 import cx from "classnames";
-import { Menu as MenuIcon, User as UserIcon } from "iconoir-react";
+import {
+  LogIn as LoginIcon,
+  Menu as MenuIcon,
+  User as UserIcon,
+} from "iconoir-react";
 import useUser from "@/hooks/user";
 import NavLi, { NavLiProps } from "./NavLi";
-import Dropdown from "@/components/ui/Dropdown/Dropdown";
-import Avatar from "@/components/ui/Avatar/Avatar";
+import Dropdown from "@/components/custom-ui/Dropdown/Dropdown";
+import Avatar from "@/components/custom-ui/Avatar/Avatar";
+import { Button } from "@/components/ui/button";
 
 const Navbar: React.FC = () => {
   const { loading, user, logout } = useUser();
@@ -56,14 +61,15 @@ const Navbar: React.FC = () => {
             <Dropdown
               position="right"
               toggle={() => (
-                <button
+                <Button
                   type="button"
+                  variant="outline"
                   aria-label="Menu"
                   id={styles.menuToggle}
-                  className={styles["menu-btn"]}
+                  // className={styles["menu-btn"]}
                 >
                   <MenuIcon width={22} height={22} strokeWidth={2} />
-                </button>
+                </Button>
               )}
               render={({ setIsOpen }) => (
                 <div className={cx(styles["collapsable-nav"], "container")}>
@@ -88,21 +94,31 @@ const Navbar: React.FC = () => {
             ) : (
               <Dropdown
                 position="right"
-                toggle={() => (
-                  <button
-                    id={styles.userToggle}
-                    type="button"
-                    aria-label="Profile"
-                    style={user?.avatar ? { border: "none" } : {}}
-                    className={styles["profile-btn"]}
-                  >
-                    {user?.avatar ? (
-                      <Avatar size="100%" avatar={user?.avatar} />
-                    ) : (
-                      <UserIcon />
-                    )}
-                  </button>
-                )}
+                toggle={() =>
+                  !user ? (
+                    <Button variant="default" size="icon">
+                      <LoginIcon />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      id={styles.userToggle}
+                      type="button"
+                      aria-label="Profile"
+                      style={user?.avatar ? { border: "none" } : {}}
+                      className={`
+                        ${user.avatar ? "border-none" : ""}
+                      `}
+                    >
+                      {user.avatar ? (
+                        <Avatar size="100%" avatar={user?.avatar} />
+                      ) : (
+                        <UserIcon />
+                      )}
+                    </Button>
+                  )
+                }
                 render={({ setIsOpen }) => (
                   <div className={cx(styles["collapsable-nav"], "container")}>
                     {user && (

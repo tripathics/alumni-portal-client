@@ -1,5 +1,5 @@
 import { dataValueLookup } from "@/utils/constants/data";
-import { Table, TableCell, TableRow } from "../ui/Table/FlexTable";
+import { Table, TableCell, TableRow } from "../custom-ui/Table/FlexTable";
 import styles from "./Application.module.scss";
 import { FullApplicationType } from "@/utils/api/fetchApplicationById";
 import { getDate, getMonth } from "@/utils/helper";

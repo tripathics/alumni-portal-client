@@ -5,7 +5,7 @@ import cx from "classnames";
 const Home: React.FC = () => {
   return (
     <>
-      <PageHeader bgImage="https://nitap.ac.in/storage/gallery/e0c42cb31ccd84b7c28149fe2643ff52.jpg">
+      <PageHeader bgImage="hero.png">
         <div className={cx(styles.header)}>
           <div className={styles["header-content"]}>
             <h1 className={styles.heading}>

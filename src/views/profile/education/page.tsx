@@ -1,6 +1,6 @@
 import cx from "classnames";
 import SchemaForm from "@/components/forms";
-import Modal from "@/components/ui/Modal/Modal";
+import Modal from "@/components/custom-ui/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
@@ -14,9 +14,13 @@ import updateEducationApi from "@/utils/api/updateEducation";
 import { EducationType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
 import useUser from "@/hooks/user";
-import Card from "@/components/ui/Elements/Card/Card";
-import { Table, TableCell, TableRow } from "@/components/ui/Table/FlexTable";
-import Button from "@/components/ui/Elements/Button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Table,
+  TableCell,
+  TableRow,
+} from "@/components/custom-ui/Table/FlexTable";
+import { Button } from "@/components/ui/button";
 
 interface EducationFormProps {
   prefillData?: FieldValues;
@@ -33,11 +37,7 @@ const EducationFormNITAP: React.FC<EducationFormProps> = ({
       prefillData={prefillData}
       schema={educationFormNITAPSchema}
       onSubmit={onSubmit}
-      actions={
-        <Button type="submit" className="primary">
-          Save
-        </Button>
-      }
+      actions={<Button type="submit">Save</Button>}
     />
   );
 };
@@ -51,11 +51,7 @@ const EducationForm: React.FC<EducationFormProps> = ({
       prefillData={prefillData}
       schema={educationFormSchema}
       onSubmit={onSubmit}
-      actions={
-        <Button type="submit" className="primary">
-          Save
-        </Button>
-      }
+      actions={<Button type="submit">Save</Button>}
     />
   );
 };
@@ -65,8 +61,6 @@ interface EducationRowProps {
   openEditModal: (data: FieldValues) => void;
 }
 const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
-  const { user } = useUser();
-
   return (
     <TableRow>
       <div className={cx(styles["logo-container"])}>
@@ -109,10 +103,9 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
       </TableCell>
       <div className={styles.actions}>
         <Button
-          variant="link"
-          disabled={!!user?.profile_locked}
-          attrs={{ "aria-label": "Edit education" }}
-          className={styles.btn}
+          aria-label="Edit experience details"
+          className="p-1.5 rounded-full w-8 h-8"
+          variant="ghost"
           onClick={() => openEditModal(data)}
         >
           <EditPencil />
@@ -166,52 +159,58 @@ const Education: React.FC = () => {
 
   return (
     <Card>
-      <Table>
-        <TableRow header>
-          <TableCell>
-            <h3 className={styles["title"]}>Education</h3>
-          </TableCell>
-          <div className={styles["actions"]}>
-            <Button
-              variant="link"
-              disabled={!!user?.profile_locked}
-              onClick={() => openModal()}
-              className={styles.btn}
-            >
-              <AddIcon />
-              Add
-            </Button>
-          </div>
-        </TableRow>
-        {educations?.map((e) => (
-          <EducationRow data={e} key={e.id} openEditModal={openModal} />
-        ))}
+      <CardHeader>
+        <Table>
+          <TableRow header>
+            <TableCell>
+              <h3 className={styles["title"]}>Education</h3>
+            </TableCell>
+            <div className={styles["actions"]}>
+              <Button
+                variant="link"
+                className="hover:no-underline px-0"
+                disabled={!!user?.profile_locked}
+                onClick={() => openModal()}
+              >
+                <AddIcon />
+                Add
+              </Button>
+            </div>
+          </TableRow>
+        </Table>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          {educations?.map((e) => (
+            <EducationRow data={e} key={e.id} openEditModal={openModal} />
+          ))}
 
-        {educations?.length === 0 ? (
-          <Modal
-            modalTitle="Add education at NIT Arunachal Pradesh"
-            isOpen={isModalOpen}
-            setIsOpen={setIsModalOpen}
-          >
-            <section className={styles.box}>
-              <EducationFormNITAP onSubmit={updateEducation} />
-            </section>
-          </Modal>
-        ) : (
-          <Modal
-            modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
-            isOpen={isModalOpen}
-            setIsOpen={setIsModalOpen}
-          >
-            <section className={styles.box}>
-              <EducationForm
-                onSubmit={updateEducation}
-                prefillData={editPrefillData as FieldValues}
-              />
-            </section>
-          </Modal>
-        )}
-      </Table>
+          {educations?.length === 0 ? (
+            <Modal
+              modalTitle="Add education at NIT Arunachal Pradesh"
+              isOpen={isModalOpen}
+              setIsOpen={setIsModalOpen}
+            >
+              <div className="bg-card px-8 py-6">
+                <EducationFormNITAP onSubmit={updateEducation} />
+              </div>
+            </Modal>
+          ) : (
+            <Modal
+              modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
+              isOpen={isModalOpen}
+              setIsOpen={setIsModalOpen}
+            >
+              <div className="bg-card px-8 py-6">
+                <EducationForm
+                  onSubmit={updateEducation}
+                  prefillData={editPrefillData as FieldValues}
+                />
+              </div>
+            </Modal>
+          )}
+        </Table>
+      </CardContent>
     </Card>
   );
 };

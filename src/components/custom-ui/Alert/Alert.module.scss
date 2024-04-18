@@ -11,8 +11,6 @@
   display: flex;
   flex-direction: row;
   align-items: start;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 
   --alert-color: #444;
   --alert-border: #e6e6e6;
@@ -27,31 +25,31 @@
   .alert-content {
     display: flex;
     flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     .alert-icon {
       flex-shrink: 0;
     }
 
     .message {
+      position: relative;
       margin-left: 1rem;
       font-weight: 500;
+      flex-grow: 1;
+
+      .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0;
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 9999px;
+      }
     }
-  }
-
-  .close {
-    display: flex;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-left: 1rem;
-    cursor: pointer;
-    color: #555;
-    transition: color 0.2s ease-in-out;
-  }
-
-  .close:hover {
-    color: #000;
   }
 }
 

@@ -1,14 +1,14 @@
 import styles from "./PastApplications.module.scss";
 import Application from "@/components/Application/Application";
-import Alert from "@/components/ui/Alert/Alert";
-import Modal from "@/components/ui/Modal/Modal";
+import Alert from "@/components/custom-ui/Alert/Alert";
+import Modal from "@/components/custom-ui/Modal/Modal";
 import {
   Table,
   TableHeading,
   TableBody,
   TableCell,
   TableRow,
-} from "@/components/ui/Table/table";
+} from "@/components/custom-ui/Table/table";
 import {
   FullApplicationType,
   fetchApplicationById,

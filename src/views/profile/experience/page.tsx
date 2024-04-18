@@ -1,6 +1,7 @@
 import cx from "classnames";
-import SchemaForm, { Button } from "@/components/forms";
-import Modal from "@/components/ui/Modal/Modal";
+import SchemaForm from "@/components/forms";
+import { Button } from "@/components/ui/button";
+import Modal from "@/components/custom-ui/Modal/Modal";
 import { EditPencil, PlusCircle as AddIcon } from "iconoir-react";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
@@ -9,6 +10,12 @@ import { FieldValues } from "react-hook-form";
 import fetchExperiencesApi from "@/utils/api/fetchExperience";
 import { ExperienceType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Table,
+  TableCell,
+  TableRow,
+} from "@/components/custom-ui/Table/FlexTable";
 
 interface ExperienceFormProps {
   prefillData?: FieldValues;
@@ -22,11 +29,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     prefillData={prefillData}
     schema={experienceFormSchema}
     onSubmit={onSubmit}
-    actions={
-      <Button type="submit" className="primary">
-        Save changes
-      </Button>
-    }
+    actions={<Button type="submit">Save changes</Button>}
   />
 );
 
@@ -39,7 +42,7 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
   openEditModal,
 }) => {
   return (
-    <div className={cx(styles["box-row"])}>
+    <TableRow>
       <div className={cx(styles["logo-container"])}>
         <img
           width="50"
@@ -48,7 +51,7 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
           alt="university"
         />
       </div>
-      <div className={cx(styles["col"])}>
+      <TableCell>
         <div className={cx(styles["college-name"], styles.value)}>
           {data.organisation}
         </div>
@@ -68,17 +71,18 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
             {data.description}
           </div>
         )}
-      </div>
+      </TableCell>
       <div className={styles.actions}>
         <Button
-          attrs={{ "aria-label": "Edit education details" }}
-          className={cx(styles["editIcon"])}
+          aria-label="Edit experience details"
+          className="p-1.5 rounded-full w-8 h-8"
+          variant="ghost"
           onClick={() => openEditModal(data)}
         >
           <EditPencil />
         </Button>
       </div>
-    </div>
+    </TableRow>
   );
 };
 
@@ -136,20 +140,28 @@ const Experience: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <section className={styles.box}>
-        <div className={styles["box-table"]}>
-          <div className={cx(styles["box-row"], styles.header)}>
-            <div className={styles["col"]}>
+    <Card>
+      <CardHeader>
+        <Table>
+          <TableRow header>
+            <TableCell>
               <h3 className={styles["title"]}>Experience</h3>
-            </div>
-            <div className={styles.actions}>
-              <Button onClick={() => openModal()}>
+            </TableCell>
+            <div className={styles["actions"]}>
+              <Button
+                variant="link"
+                className="hover:no-underline px-0"
+                onClick={() => openModal()}
+              >
                 <AddIcon />
                 Add
               </Button>
             </div>
-          </div>
+          </TableRow>
+        </Table>
+      </CardHeader>
+      <CardContent>
+        <Table>
           {experiences.map((e) => (
             <ExperienceRow data={e} key={e.id} openEditModal={openModal} />
           ))}
@@ -158,16 +170,16 @@ const Experience: React.FC = () => {
             isOpen={isModalOpen}
             setIsOpen={setIsModalOpen}
           >
-            <section className={styles.box}>
+            <div className="bg-card px-8 py-6">
               <ExperienceForm
                 onSubmit={updateExperience}
                 prefillData={editPrefillData as FieldValues}
               />
-            </section>
+            </div>
           </Modal>
-        </div>
-      </section>
-    </>
+        </Table>
+      </CardContent>
+    </Card>
   );
 };
 

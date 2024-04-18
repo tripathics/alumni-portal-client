@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import styles from "./Modal.module.scss";
+import { useEffect, useRef, useState } from "react";
 import { Xmark as XmarkIcon } from "iconoir-react";
 import { createPortal } from "react-dom";
+import { Button } from "@/components/ui/button";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -17,11 +17,16 @@ const Modal: React.FC<ModalProps> = ({
   modalTitle = "",
   footer,
 }) => {
+  const [animatingState, setAnimatingState] = useState<"animating" | "active">(
+    "animating"
+  );
+
   const modalRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const closeModal = () => {
     if (!modalRef.current) return;
-    modalRef.current.classList.remove(styles.active);
+    setAnimatingState("animating");
     setTimeout(() => {
       setIsOpen(false);
     }, 200);
@@ -61,6 +66,7 @@ const Modal: React.FC<ModalProps> = ({
       if (e.key === "Tab") handleFocus(e);
     };
 
+    closeBtnRef.current?.focus();
     modalRef.current?.addEventListener("keydown", keyListener);
 
     () => {
@@ -69,18 +75,30 @@ const Modal: React.FC<ModalProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
-    const modal = modalRef.current;
-
-    if (isOpen && modal) {
+    if (isOpen) {
       setTimeout(() => {
-        modal.classList.add(styles.active);
-        modal.focus();
+        setAnimatingState("active");
+        const scrollbarWidth =
+          window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
       }, 0);
-      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
   }, [isOpen]);
+
+  const modalStyles = {
+    modalRoot: {
+      animating: "opacity-0 pointer-events-none",
+      active: "opacity-1",
+    },
+    modalContent: {
+      animating: "translate-y-4",
+      active: "translate-y-0",
+    },
+  };
 
   return createPortal(
     isOpen && (
@@ -89,18 +107,35 @@ const Modal: React.FC<ModalProps> = ({
         role="dialog"
         ref={modalRef}
         tabIndex={0}
-        className={styles.darkBG}
+        className={`py-4 px-2 fixed inset-0 z-[9500] bg-foreground/30 flex transition-opacity duration-200 ${modalStyles.modalRoot[animatingState]}`}
       >
-        <div className={styles.darkBGOverlay} onClick={closeModal}></div>
-        <div className={styles.centered}>
-          <header className={styles.modalHeader}>
-            <h2 className={styles.modalTitle}>{modalTitle}</h2>
-            <button autoFocus className={styles.closeBtn} onClick={closeModal}>
+        <div
+          onClick={closeModal}
+          className="fixed inset-0 bg-transparent -z-[1]"
+        ></div>
+        <div
+          className={`rounded-sm shadow-md overflow-clip w-full max-h-full max-w-2xl m-auto flex flex-col transition-transform duration-200 ${modalStyles.modalContent[animatingState]}`}
+        >
+          <header className="relative flex justify-between items-center drop-shadow-sm border-b border-b-slate-200 bg-card px-8 py-3">
+            <h2 className="text-lg font-semibold">{modalTitle}</h2>
+            <Button
+              ref={closeBtnRef}
+              variant="ghost"
+              aria-label="Close modal"
+              className="absolute p-0 w-6 h-6 right-8 top-1/2 -translate-y-1/2"
+              onClick={closeModal}
+            >
               <XmarkIcon strokeWidth={2} />
-            </button>
+            </Button>
           </header>
-          <div className={styles.modalContent}>{children}</div>
-          {footer && <footer className={styles.modalFooter}>{footer}</footer>}
+          <div className="overflow-hidden overflow-y-auto last:*:mb-0">
+            {children}
+          </div>
+          {footer && (
+            <footer className="drop-shadow-sm border-t bg-card px-8 py-3">
+              {footer}
+            </footer>
+          )}
         </div>
       </div>
     ),

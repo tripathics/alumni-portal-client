@@ -1,4 +1,5 @@
-import { Button, TextField } from "@/components/forms";
+import { TextField } from "@/components/forms";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -10,8 +11,10 @@ import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import axiosInstance from "@/config/axios.config";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import Alert from "@/components/ui/Alert/Alert";
+import Alert from "@/components/custom-ui/Alert/Alert";
 import { createOtpForSignup } from "@/utils/api/otp/createOtp";
+import { AuthHeader } from "@/components/layouts/auth";
+import { Card, CardContent } from "@/components/ui/card";
 
 const OTPForm: React.FC<{
   sendOtp: (formData: FieldValues) => void;
@@ -45,7 +48,7 @@ const OTPForm: React.FC<{
         error={errors["email"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button disabled={loading} type="submit">
           Send OTP
         </Button>
       </div>
@@ -107,7 +110,7 @@ const VerifyForm: React.FC<{
         error={errors["otp"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button disabled={loading} type="submit">
           Verify
         </Button>
       </div>
@@ -173,7 +176,7 @@ const SignupForm: React.FC<{
         error={errors["confirmPassword"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button disabled={loading} type="submit">
           Register
         </Button>
       </div>
@@ -263,35 +266,36 @@ const Register = () => {
 
   return (
     <div className={cx("__page-content container", styles["login-container"])}>
-      <header className={styles["login-header"]}>
-        <NavLink to="/">
-          <img
-            className={styles["logo"]}
-            src="/nitap-logo.svg"
-            alt="NIT AP Alumni"
-          />
-        </NavLink>
-        <h1>Sign up for NIT AP Alumni</h1>
-      </header>
+      <AuthHeader title="Sign up for NIT AP Alumni" />
       <Alert isOpen={!!error} onClose={() => setError(null)} severity="error">
         {error}
       </Alert>
-      {formState === "otp" ? (
-        <OTPForm loading={loading} sendOtp={sendOtp} />
-      ) : formState === "verify" ? (
-        <VerifyForm
-          loading={loading}
-          verifyOtp={verifyOtp}
-          email={email as string}
-        />
-      ) : (
-        <SignupForm loading={loading} signup={signup} email={email as string} />
-      )}
-      <div className={cx(styles["box"], styles["action-links"])}>
-        <p>
-          Already have an account? <NavLink to="/login">Login</NavLink>
-        </p>
-      </div>
+      <Card>
+        <CardContent>
+          {formState === "otp" ? (
+            <OTPForm loading={loading} sendOtp={sendOtp} />
+          ) : formState === "verify" ? (
+            <VerifyForm
+              loading={loading}
+              verifyOtp={verifyOtp}
+              email={email as string}
+            />
+          ) : (
+            <SignupForm
+              loading={loading}
+              signup={signup}
+              email={email as string}
+            />
+          )}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <p>
+            Already have an account? <NavLink to="/login">Login</NavLink>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -41,7 +41,7 @@
     background-color: transparent;
     padding: 0.8rem 0;
     border: none;
-    border-bottom: solid 1px #01020433;
+    border-bottom: solid 1px hsl(var(--input) / 20%);
     outline: none;
     width: 100%;
   }
@@ -105,7 +105,7 @@
   }
 
   textarea {
-    border: solid 1px #01020433;
+    border: solid 1px hsl(var(--input) / 20%);
     resize: vertical;
     padding: 0.8rem;
     min-height: 6rem;
@@ -113,11 +113,11 @@
 
   input:focus,
   select:focus {
-    border-bottom: solid 1px #153964;
+    border-bottom: solid 1px hsl(var(--input) / 80%);
   }
 
   textarea:focus {
-    border: solid 1px #153964;
+    border: solid 1px hsl(var(--input) / 80%);
   }
 
   .radio-group {
@@ -134,15 +134,19 @@
       flex-direction: row;
 
       input.radio {
-        width: 1.2rem;
-        height: 1.2rem;
+        width: 1.4rem;
+        height: 1.4rem;
       }
 
       label.radio-label {
         font-family: "Roboto", sans-serif;
         font-size: 1rem;
-        line-height: 1.2;
+        line-height: 0;
         margin-left: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
       }
     }
   }
@@ -197,7 +201,7 @@
 
 .section-title {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 1.6rem;
 }
 

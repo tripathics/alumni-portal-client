@@ -1,4 +1,5 @@
-import SchemaForm, { Button } from "@/components/forms";
+import SchemaForm from "@/components/forms";
+import { Button } from "@/components/ui/button";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import alumniPrefillApi from "@/utils/api/alumniPrefill";
 import { useEffect, useState } from "react";
@@ -6,9 +7,13 @@ import { NavLink } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
-import Alert from "@/components/ui/Alert/Alert";
+import Alert from "@/components/custom-ui/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";
-import { Table, TableCell, TableRow } from "@/components/ui/Table/FlexTable";
+import {
+  Table,
+  TableCell,
+  TableRow,
+} from "@/components/custom-ui/Table/FlexTable";
 import useUser from "@/hooks/user";
 import { toast } from "react-toastify";
 
@@ -181,11 +186,7 @@ const MembershipForm = () => {
               },
             ]}
             onSubmit={onSubmit}
-            actions={
-              <Button type="submit" className="btn primary">
-                Submit for approval
-              </Button>
-            }
+            actions={<Button type="submit">Submit for approval</Button>}
           />
         </section>
       </>

@@ -1,10 +1,10 @@
-import Avatar from "@/components/ui/Avatar/Avatar";
-import DataTable from "@/components/ui/Table/table";
-import Tag from "@/components/ui/Tag/Tag";
+import Avatar from "@/components/custom-ui/Avatar/Avatar";
+import DataTable from "@/components/custom-ui/Table/table";
+import Tag from "@/components/custom-ui/Tag/Tag";
 import { UserRole } from "@/types/User.type";
 import getUsers from "@/utils/api/getUsers";
 import { useEffect, useState } from "react";
-import Button from "@/components/ui/Elements/Button";
+import { Button } from "@/components/ui/button";
 
 interface UserType {
   user: { name: string | null; avatar: string | null };
@@ -75,7 +75,7 @@ const userRow = (user: UserType) => {
         <Tag key={i}>{role}</Tag>
       ))}
     </div>,
-    <Button>Delete</Button>
+    <Button>Delete</Button>,
   ];
 };
 

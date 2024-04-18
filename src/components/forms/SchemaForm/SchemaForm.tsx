@@ -1,6 +1,6 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { TextField, Select, Radio, DateField, NumberField } from "..";
-import Button from "@/components/ui/Elements/Button";
+import { Button } from "@/components/ui/button";
 import styles from "../Form.module.scss";
 import Textarea from "../Textarea/Textarea";
 import FileInput from "../FileInput/FileInput";
@@ -162,9 +162,10 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
       {actions !== null ? (
         actions
       ) : (
-        <Button type="submit" className="primary">
-          Submit
-        </Button>
+        // <Button type="submit" className="primary">
+        //   Submit
+        // </Button>
+        <Button type="submit">Submit</Button>
       )}
     </form>
   );

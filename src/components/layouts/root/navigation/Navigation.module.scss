@@ -2,7 +2,7 @@
   background-color: white;
   position: sticky;
   top: 0;
-  z-index: 9000;
+  z-index: 50;
   box-shadow: var(--box-bs);
 
   .nav-container {
@@ -46,33 +46,14 @@
       }
 
       button {
-        position: relative;
-        background-color: transparent;
-        border: solid 2px #272727;
-        color: #272727;
-        height: 2.5rem;
-        width: 2.5rem;
         border-radius: 9999px;
         cursor: pointer;
-
-        @media screen and (max-width: 768px) {
-          height: 2.2rem;
-          width: 2.2rem;
-        }
       }
 
       svg {
-        height: 1.6rem;
-        width: 1.6rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        @media screen and (max-width: 768px) {
-          height: 1.4rem;
-          width: 1.4rem;
-        }
+        height: 1.4rem;
+        width: 1.4rem;
+        stroke-width: 1.5;
       }
     }
   }
@@ -109,7 +90,7 @@
       font-weight: 500;
 
       .nav-li {
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.5rem;
 
         .link {
           &::after {
@@ -136,7 +117,7 @@
         }
 
         .link-txt {
-          font-size: 1.2rem;
+          font-size: 1rem;
           padding: 5px 0;
           white-space: nowrap;
 
@@ -192,7 +173,7 @@
         }
 
         &.active {
-          color: #18621f;
+          color: hsla(var(--primary));
         }
 
         .link-txt {
@@ -211,7 +192,7 @@
       display: flex;
       height: 100%;
       align-items: center;
-      color: #272727;
+      color: hsla(var(--foreground));
       text-decoration: none;
       transition: color 0.2s ease-in-out;
     }
@@ -219,7 +200,7 @@
 }
 
 .spinner {
-  border: solid 2px #272727;
+  border: solid 2px hsla(var(--foreground));
   border-right: solid 2px transparent;
   border-radius: 9999px;
   width: 2.2rem;

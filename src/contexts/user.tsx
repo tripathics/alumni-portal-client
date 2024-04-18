@@ -6,27 +6,16 @@ import { toast } from "react-toastify";
 
 export const UserContext = createContext<UserContextType>({
   user: null,
-  admin: false,
   loading: false,
   login: async () => {},
   logout: async () => {},
-  checkAuth: async () => {},
   fetchUser: async () => {},
 });
 
 export const UserProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const {
-    admin,
-    checkAuth,
-    fetchUser,
-    loading,
-    login,
-    logout,
-    user,
-    clearUser,
-  } = useAuth();
+  const { fetchUser, loading, login, logout, user, clearUser } = useAuth();
 
   useEffect(() => {
     fetchUser();
@@ -45,9 +34,7 @@ export const UserProvider: React.FC<{
   }, [user]);
 
   return (
-    <UserContext.Provider
-      value={{ admin, checkAuth, fetchUser, loading, login, logout, user }}
-    >
+    <UserContext.Provider value={{ user, loading, fetchUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );
