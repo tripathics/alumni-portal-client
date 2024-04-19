@@ -52,25 +52,12 @@ const Users: React.FC = () => {
 
 const userRow = (user: UserType) => {
   return [
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "0.5rem",
-        alignItems: "center",
-      }}
-    >
+    <div className="flex items-center gap-2">
       <Avatar size="2rem" avatar={user.user.avatar} />
       <div>{user.user.name || "User"}</div>
     </div>,
     user.email,
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "0.5rem",
-      }}
-    >
+    <div className="flex gap-2">
       {user.role.map((role, i) => (
         <Badge variant="secondary" key={i}>
           {role}

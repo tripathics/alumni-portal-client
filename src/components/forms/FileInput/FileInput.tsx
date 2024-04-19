@@ -101,7 +101,7 @@ const FileInput: React.FC<FileInputProps> = ({
               {files?.length ? "Change" : "Upload"} {label ? label : "File"}
               <input
                 {...field}
-                style={{ display: "none" }}
+                className="hidden"
                 type="file"
                 multiple={multiple}
                 value={field.value?.fileName}

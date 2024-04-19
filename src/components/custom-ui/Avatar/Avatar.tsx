@@ -13,11 +13,7 @@ const Avatar: React.FC<AvatarProps> = ({ avatar, className, size }) => {
       className={cx(styles.avatar, className)}
     >
       <img
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
+        className="w-full h-full object-cover"
         src={`${import.meta.env.VITE_SERVER_BASE_URL}/media/avatars/${avatar}`}
         alt="avatar"
       />

@@ -170,13 +170,7 @@ const ApplicationRow: React.FC<{
       }}
     >
       <TableCell>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
+        <div className="flex items-center gap-2">
           <Avatar avatar={application.avatar} size="2rem" />
           <div>
             <p className={styles["text-ellipsis"]}>

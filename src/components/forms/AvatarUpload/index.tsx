@@ -92,7 +92,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                   {fileUrl ? "Change picture" : "Upload picture"}
                   <input
                     {...field}
-                    style={{ display: "none" }}
+                    className="hidden"
                     type="file"
                     multiple={false}
                     value={field.value?.fileName}
