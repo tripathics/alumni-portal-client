@@ -3,7 +3,7 @@ import styles from "@/components/layouts/auth/Auth.module.scss";
 import useUser from "@/hooks/user";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
@@ -89,7 +89,7 @@ const Login = () => {
             />
             <div className={styles["actions"]}>
               <Button disabled={loading} type="submit">
-                Login
+                {loading ? "Signing in" : "Sign in"}
               </Button>
             </div>
           </form>
@@ -99,11 +99,15 @@ const Login = () => {
         <CardContent className={styles["action-links"]}>
           <p>
             Forgot your password?{" "}
-            <NavLink to="/reset-password">Reset it here</NavLink>
+            <Link className="link" to="/reset-password">
+              Reset it here
+            </Link>
           </p>
           <p>
             {"Don't have an account?"}{" "}
-            <NavLink to="/register">Register</NavLink>
+            <Link className="link" to="/register">
+              Register
+            </Link>
           </p>
         </CardContent>
       </Card>

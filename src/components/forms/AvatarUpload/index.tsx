@@ -10,10 +10,12 @@ import { useState } from "react";
 interface AvatarUploadProps {
   avatar: string | null;
   updateAvatar: (avatar: File) => void;
+  loading?: boolean;
 }
 const AvatarUpload: React.FC<AvatarUploadProps> = ({
   avatar,
   updateAvatar,
+  loading,
 }) => {
   const {
     control,
@@ -111,7 +113,6 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
                       field.onChange(null);
                       setFileUrl(null);
                     }}
-                    className="text-base"
                     variant="outline"
                   >
                     <TrashIcon />
@@ -126,6 +127,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
               className="text-base"
               type="submit"
               onClick={handleSubmit(onSubmit)}
+              disabled={loading}
             >
               Save changes
             </Button>

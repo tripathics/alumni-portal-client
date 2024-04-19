@@ -2,7 +2,7 @@ import { TextField } from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
@@ -49,7 +49,7 @@ const OTPForm: React.FC<{
       />
       <div className={styles["actions"]}>
         <Button disabled={loading} type="submit">
-          Send OTP
+          {loading ? "Sending OTP" : "Send OTP"}
         </Button>
       </div>
     </form>
@@ -111,7 +111,7 @@ const VerifyForm: React.FC<{
       />
       <div className={styles["actions"]}>
         <Button disabled={loading} type="submit">
-          Verify
+          {loading ? "Verifying OTP" : "Verify OTP"}
         </Button>
       </div>
     </form>
@@ -177,7 +177,7 @@ const SignupForm: React.FC<{
       />
       <div className={styles["actions"]}>
         <Button disabled={loading} type="submit">
-          Register
+          {loading ? "Signing up" : "Sign up"}
         </Button>
       </div>
     </form>
@@ -206,7 +206,10 @@ const Register = () => {
       if (error === "User already exists") {
         setError(
           <>
-            Email already exists. <NavLink to="/login">Login?</NavLink>
+            Email already exists.{" "}
+            <Link className="link" to="/login">
+              Login?
+            </Link>
           </>
         );
       } else {
@@ -227,6 +230,7 @@ const Register = () => {
       });
       if (response.data.success) {
         setFormState("signup");
+        toast.success("Email verified");
       }
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
@@ -244,6 +248,7 @@ const Register = () => {
       if (data?.success) {
         setEmail(otpFormData.email);
         setFormState("verify");
+        toast.info("OTP sent");
       }
     } catch (error) {
       const err = error as Error;
@@ -252,7 +257,9 @@ const Register = () => {
           setError(
             <>
               The email address already exists.{" "}
-              <NavLink to="/login">Login?</NavLink>
+              <Link className="link" to="/login">
+                Login?
+              </Link>
             </>
           );
         } else {
@@ -292,7 +299,10 @@ const Register = () => {
       <Card>
         <CardContent>
           <p>
-            Already have an account? <NavLink to="/login">Login</NavLink>
+            Already have an account?{" "}
+            <Link className="link" to="/login">
+              Login
+            </Link>
           </p>
         </CardContent>
       </Card>

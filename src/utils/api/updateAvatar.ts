@@ -1,4 +1,5 @@
 import axios from "@/config/axios.config";
+import { AxiosError } from "axios";
 
 const updateAvatar = async (
   file: File
@@ -21,6 +22,9 @@ const updateAvatar = async (
     return response.data;
   } catch (error) {
     // Handle the error here
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message || error.message);
+    }
     console.error(error);
   }
 };

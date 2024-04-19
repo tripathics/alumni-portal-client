@@ -2,7 +2,7 @@ import { TextField } from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
@@ -30,10 +30,7 @@ const OTPForm: React.FC<{
   } = useForm();
 
   return (
-    <form
-      onSubmit={handleSubmit(sendOtp)}
-      className={cx(styles["login-form"], styles["box"])}
-    >
+    <form onSubmit={handleSubmit(sendOtp)} className={styles["login-form"]}>
       <TextField
         type="text"
         required
@@ -76,10 +73,7 @@ const VerifyForm: React.FC<{
   });
 
   return (
-    <form
-      onSubmit={handleSubmit(verifyOtp)}
-      className={cx(styles["login-form"], styles["box"])}
-    >
+    <form onSubmit={handleSubmit(verifyOtp)} className={styles["login-form"]}>
       <TextField
         type="text"
         required
@@ -135,10 +129,7 @@ const UpdatePasswordForm: React.FC<{
   });
 
   return (
-    <form
-      onSubmit={handleSubmit(signup)}
-      className={cx(styles["login-form"], styles["box"])}
-    >
+    <form onSubmit={handleSubmit(signup)} className={styles["login-form"]}>
       <TextField
         type="text"
         required
@@ -296,11 +287,13 @@ const ResetPassword = () => {
       <Card>
         <CardContent>
           <p>
-            Already have an account? <NavLink to="/login">Login</NavLink>
+            Go back to{" "}
+            <Link className="link" to="/login">
+              login
+            </Link>
           </p>
         </CardContent>
       </Card>
-      <div className={cx(styles["box"], styles["action-links"])}></div>
     </div>
   );
 };

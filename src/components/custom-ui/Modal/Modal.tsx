@@ -121,8 +121,9 @@ const Modal: React.FC<ModalProps> = ({
             <Button
               ref={closeBtnRef}
               variant="ghost"
+              size="icon"
               aria-label="Close modal"
-              className="absolute p-0 w-6 h-6 right-8 top-1/2 -translate-y-1/2"
+              className="absolute rounded-full right-8 top-1/2 -translate-y-1/2"
               onClick={closeModal}
             >
               <XmarkIcon strokeWidth={2} />

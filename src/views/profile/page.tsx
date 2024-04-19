@@ -53,9 +53,11 @@ const PersonalDetails = () => {
   const [isProfileFormModalOpen, setIsProfileFormModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [personalDetails, setPersonalDetails] = useState<PersonalDetailsType>();
+  const [loading, setLoading] = useState(false);
 
   const updateProfile = async (data: FieldValues) => {
     try {
+      setLoading(true);
       const response = await updateProfileApi(data as PersonalDetailsType);
       if (response?.success) {
         fetchProfile();
@@ -64,12 +66,15 @@ const PersonalDetails = () => {
         toast.success("Profile updated successfully");
       }
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const updateAvatar = async (file: File) => {
     try {
+      setLoading(true);
       const data = await updateAvatarApi(file); // Await the updateAvatarApi function call
       if (data?.success) {
         fetchProfile();
@@ -79,7 +84,9 @@ const PersonalDetails = () => {
         });
       }
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,8 +158,8 @@ const PersonalDetails = () => {
               />
               <Button
                 variant="outline"
-                className="absolute bottom-0 right-0 p-0 rounded-full w-8 h-8"
-                // className={styles["avatar-edit"]}
+                size="icon"
+                className="absolute bottom-0 right-0 rounded-full"
                 onClick={() => {
                   setIsProfileModalOpen(true);
                 }}
@@ -169,6 +176,7 @@ const PersonalDetails = () => {
                 <AvatarUpload
                   avatar={personalDetails.avatar}
                   updateAvatar={updateAvatar}
+                  loading={loading}
                 />
               </Modal>
             </div>

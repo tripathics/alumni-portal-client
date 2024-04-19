@@ -12,6 +12,24 @@ import Dropdown from "@/components/custom-ui/Dropdown/Dropdown";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import { Button } from "@/components/ui/button";
 
+const NavToggle: React.FC<{
+  active: boolean;
+  children?: React.ReactNode;
+  variant?: "outline" | "fill";
+}> = ({ active, variant = "outline", children }) => (
+  <Button
+    type="button"
+    variant={variant}
+    size="icon"
+    aria-label="Menu"
+    className={`relative before:content-[''] before:absolute before:-z-10 before:rounded-full before:transition-all duration-200 before:bg-foreground/10 ${
+      active ? "before:-inset-1.5" : "before:-inset-0"
+    }`}
+  >
+    {children}
+  </Button>
+);
+
 const Navbar: React.FC = () => {
   const { loading, user, logout } = useUser();
 
@@ -25,8 +43,8 @@ const Navbar: React.FC = () => {
     rolesVislbleTo?: ("user" | "admin" | "alumni")[];
   }
   const userLinks: userLinksType[] = [
-    { label: "Login", href: "/login" },
-    { label: "Register", href: "/register" },
+    { label: "Sign in", href: "/login" },
+    { label: "Sign up", href: "/register" },
     { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "alumni"] },
     {
       label: "Alumni Membership",
@@ -60,16 +78,21 @@ const Navbar: React.FC = () => {
           <div className={styles["nav-toggles"]}>
             <Dropdown
               position="right"
-              toggle={() => (
-                <Button
-                  type="button"
-                  variant="outline"
-                  aria-label="Menu"
-                  id={styles.menuToggle}
-                  // className={styles["menu-btn"]}
-                >
+              toggle={({ isOpen }) => (
+                // <Button
+                //   type="button"
+                //   variant="outline"
+                //   size="icon"
+                //   aria-label="Menu"
+                //   className={`relative before:content-[''] before:absolute before:-z-10 before:rounded-full before:transition-all duration-200 before:bg-accent-foreground ${
+                //     isOpen ? "before:-inset-1.5" : "before:-inset-0"
+                //   }`}
+                // >
+                //   <MenuIcon width={22} height={22} strokeWidth={2} />
+                // </Button>
+                <NavToggle active={isOpen}>
                   <MenuIcon width={22} height={22} strokeWidth={2} />
-                </Button>
+                </NavToggle>
               )}
               render={({ setIsOpen }) => (
                 <div className={cx(styles["collapsable-nav"], "container")}>
@@ -94,29 +117,19 @@ const Navbar: React.FC = () => {
             ) : (
               <Dropdown
                 position="right"
-                toggle={() =>
+                toggle={({ isOpen }) =>
                   !user ? (
-                    <Button variant="default" size="icon">
+                    <NavToggle active={isOpen} variant="fill">
                       <LoginIcon />
-                    </Button>
+                    </NavToggle>
                   ) : (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      id={styles.userToggle}
-                      type="button"
-                      aria-label="Profile"
-                      style={user?.avatar ? { border: "none" } : {}}
-                      className={`
-                        ${user.avatar ? "border-none" : ""}
-                      `}
-                    >
+                    <NavToggle active={isOpen} variant="fill">
                       {user.avatar ? (
                         <Avatar size="100%" avatar={user?.avatar} />
                       ) : (
                         <UserIcon />
                       )}
-                    </Button>
+                    </NavToggle>
                   )
                 }
                 render={({ setIsOpen }) => (

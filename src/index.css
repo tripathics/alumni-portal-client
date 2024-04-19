@@ -31,6 +31,9 @@
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 126, 61%, 24%;
 
+    --link: 208 100% 38%;
+    --link-foreground: 208 100% 98%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
@@ -118,22 +121,6 @@ html {
   --text-muted: rgb(108, 117, 125);
 }
 
-/* scrollbar styling */
-/* ::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  width: 0.5rem;
-}
-::-webkit-scrollbar-thumb {
-  background: #aaa;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #888;
-} */
-
 @media screen and (max-width: 768px) {
   html {
     --gutter-x: 2.2rem;
@@ -142,6 +129,20 @@ html {
 
 body {
   font-family: "Open Sans", serif;
+}
+
+.link {
+  position: relative;
+  color: hsl(var(--link));
+  text-decoration: none;
+}
+.link:hover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid hsl(var(--link));
 }
 
 .container {

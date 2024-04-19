@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import styles from "./Dropdown.module.scss";
 import cx from "classnames";
 
 type RenderProps = {
@@ -18,28 +17,61 @@ const Dropdown: React.FC<DropdownProps> = ({
   position = "left",
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [animatingState, setAnimatingState] = useState<"animating" | "active">(
+    "animating"
+  );
   const ref = useRef<HTMLDivElement>(null);
+
+  const closeDropdown = () => {
+    setAnimatingState("animating");
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        closeDropdown();
       }
     };
 
     if (isOpen) {
-      document.addEventListener("click", handleClickOutside);
+      setTimeout(() => {
+        setAnimatingState("active");
+        document.addEventListener("click", handleClickOutside);
+      }, 0);
     }
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isOpen]);
 
+  const positionStyles = {
+    left: "left-0",
+    right: "right-0",
+    center: "left-1/2 transform -translate-x-1/2",
+  };
+
+  const animatingStyles = {
+    animating: "opacity-0 top-0 pointer-events-none",
+    active: "opacity-100",
+  };
+
   return (
-    <div className={styles.dropdown} ref={ref}>
-      <div className={styles.toggle} onClick={() => setIsOpen(!isOpen)}>
+    <div className={"relative"} ref={ref}>
+      <div
+        className={"flex"}
+        onClick={() => (isOpen ? closeDropdown() : setIsOpen(true))}
+      >
         {toggle({ isOpen, setIsOpen })}
       </div>
       {isOpen && (
-        <div className={cx(styles.render, styles[position])}>
+        <div
+          className={cx(
+            "absolute top-full mt-1 transition-all duration-200",
+            positionStyles[position],
+            animatingStyles[animatingState]
+          )}
+        >
           {render({ isOpen, setIsOpen })}
         </div>
       )}
