@@ -9,11 +9,9 @@ import {
   TableCell,
   TableRow,
 } from "@/components/custom-ui/Table/table";
-import {
-  FullApplicationType,
-  fetchApplicationById,
-} from "@/utils/api/fetchApplicationById";
-import { fetchUserMembershipApplications } from "@/utils/api/fetchMembershipApplications";
+import { fetchApplicationById } from "@/utils/api/admin/fetchApplicationById";
+import { MembershipApplicationType } from "@/types/Membership.type";
+import fetchUserMembershipApplications from "@/utils/api/alumni/fetchUserMembershipApplications";
 import { dataValueLookup } from "@/utils/constants/data";
 import { getDateWithTime } from "@/utils/helper";
 import { useEffect, useState } from "react";
@@ -30,7 +28,7 @@ const PastApplications = () => {
     }[]
   >([]);
   const [applicationData, setApplicationData] =
-    useState<FullApplicationType | null>(null);
+    useState<MembershipApplicationType | null>(null);
 
   useEffect(() => {
     // fetch past applications

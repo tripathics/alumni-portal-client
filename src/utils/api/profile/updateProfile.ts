@@ -1,6 +1,6 @@
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 
 const updateProfile = async (
   data: PersonalDetailsType

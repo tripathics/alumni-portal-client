@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../../config/axios.config";
 import { EducationType } from "@/types/Profile.type";
 
 const updateEducation = async (
@@ -19,8 +19,8 @@ const updateEducation = async (
     });
     return response.data;
   } catch (error) {
-    if ((error as AxiosError).response?.status === 401) {
-      throw "Unauthorized";
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message || error.message);
     } else {
       console.error(error);
     }

@@ -1,11 +1,11 @@
 import SchemaForm from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
-import alumniPrefillApi from "@/utils/api/alumniPrefill";
+import alumniPrefillApi from "@/utils/api/alumni/alumniPrefill";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-import alumniMembershipSubmit from "@/utils/api/alumniMembershipSubmit";
+import alumniMembershipSubmit from "@/utils/api/alumni/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
 import Alert from "@/components/custom-ui/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";

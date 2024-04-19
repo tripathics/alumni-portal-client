@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
-import signupApi, { SignupFormData } from "@/utils/api/signup";
+import signupApi, { SignupFormData } from "@/utils/api/auth/register";
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
 import axiosInstance from "@/config/axios.config";
 import { AxiosError } from "axios";

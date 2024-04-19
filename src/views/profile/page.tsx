@@ -4,9 +4,9 @@ import cx from "classnames";
 import { EditPencil } from "iconoir-react";
 import Modal from "@/components/custom-ui/Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
-import readProfile from "@/utils/api/readProfile";
-import updateProfileApi from "@/utils/api/updateProfile";
-import updateAvatarApi from "@/utils/api/updateAvatar";
+import readProfile from "@/utils/api/profile/readProfile";
+import updateProfileApi from "@/utils/api/profile/updateProfile";
+import updateAvatarApi from "@/utils/api/profile/updateAvatar";
 import useUser from "@/hooks/user";
 import EditAvatar from "@/components/custom-ui/Avatar/EditAvatar";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ProfileSkeleton } from "@/components/Skeletons/Skeletons";
 
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
@@ -54,6 +55,7 @@ const PersonalDetails = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [personalDetails, setPersonalDetails] = useState<PersonalDetailsType>();
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const updateProfile = async (data: FieldValues) => {
     try {
@@ -75,7 +77,7 @@ const PersonalDetails = () => {
   const updateAvatar = async (file: File) => {
     try {
       setLoading(true);
-      const data = await updateAvatarApi(file); // Await the updateAvatarApi function call
+      const data = await updateAvatarApi(file);
       if (data?.success) {
         fetchProfile();
         setIsProfileModalOpen(false);
@@ -92,8 +94,9 @@ const PersonalDetails = () => {
 
   const fetchProfile = useCallback(async () => {
     try {
+      setPageLoading(true);
       const data = await readProfile();
-      if (data?.success) {
+      if (data?.success && data.user) {
         setPersonalDetails((prev) => ({
           ...prev,
           ...data.user,
@@ -101,6 +104,8 @@ const PersonalDetails = () => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   }, []);
 
@@ -112,7 +117,9 @@ const PersonalDetails = () => {
     };
   }, [fetchProfile, fetchUser]);
 
-  return personalDetails?.registration_no ? (
+  return pageLoading ? (
+    <ProfileSkeleton />
+  ) : personalDetails?.registration_no ? (
     <div className={styles["dashboard-page"]}>
       <Card>
         <CardContent className={styles["basic-info-wrapper"]}>
@@ -157,6 +164,7 @@ const PersonalDetails = () => {
                 className={styles["avatar-crop"]}
               />
               <Button
+                aria-label="Edit profile picture"
                 variant="outline"
                 size="icon"
                 className="absolute bottom-0 right-0 rounded-full"

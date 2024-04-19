@@ -2,19 +2,20 @@ import { TextField } from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "@/components/layouts/auth/Auth.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import cx from "classnames";
+
+import { createOtpForAuth } from "@/utils/api/otp/createOtp";
+import verifyOtp from "@/utils/api/otp/verifyOtp";
 import updatePassword, {
   UpdatePasswordFormData,
-} from "@/utils/api/updatePassword";
+} from "@/utils/api/auth/updatePassword";
+
 import { Mail as MailIcon, Key as KeyIcon } from "iconoir-react";
-import axiosInstance from "@/config/axios.config";
-import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import Alert from "@/components/custom-ui/Alert/Alert";
-import { createOtpForAuth } from "@/utils/api/otp/createOtp";
 import { AuthHeader } from "@/components/layouts/auth";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -201,7 +202,10 @@ const ResetPassword = () => {
       if (error === "User does not exist") {
         setError(
           <>
-            Email does not exist. <NavLink to="/register">Register?</NavLink>
+            Email does not exist.{" "}
+            <Link className="link" to="/register">
+              Register?
+            </Link>
           </>
         );
       } else {
@@ -212,20 +216,19 @@ const ResetPassword = () => {
     }
   };
 
-  const verifyOtp = async (otpFormData: FieldValues) => {
+  const handleVerifyOtp = async (otpFormData: FieldValues) => {
     try {
       setError(null);
       setLoading(true);
-      const response = await axiosInstance.post("/api/otp/verify", {
-        email: otpFormData.email,
-        otp: otpFormData.otp,
-      });
-      if (response.data.success) {
+      const { email, otp } = otpFormData;
+      const data = await verifyOtp(email, otp);
+      if (data?.success) {
         setFormState("update");
+        toast.success("Email verified");
       }
     } catch (error) {
-      const err = error as AxiosError<{ message: string }>;
-      setError(err.response?.data.message || err.message);
+      const err = error as Error;
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -247,7 +250,9 @@ const ResetPassword = () => {
           setError(
             <>
               The email address does not exist.{" "}
-              <NavLink to="/register">Register?</NavLink>
+              <Link className="link" to="/register">
+                Register?
+              </Link>
             </>
           );
         } else {
@@ -272,7 +277,7 @@ const ResetPassword = () => {
           ) : formState === "verify" ? (
             <VerifyForm
               loading={loading}
-              verifyOtp={verifyOtp}
+              verifyOtp={handleVerifyOtp}
               email={email as string}
             />
           ) : (

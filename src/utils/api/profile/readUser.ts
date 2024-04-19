@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 import { UserType } from "@/types/User.type";
 
 const readUser = async (): Promise<

@@ -9,8 +9,8 @@ import {
   educationFormSchema,
 } from "@/utils/formSchema/educationForm";
 import { FieldValues } from "react-hook-form";
-import fetchEducationApi from "@/utils/api/fetchEducation";
-import updateEducationApi from "@/utils/api/updateEducation";
+import fetchEducationApi from "@/utils/api/profile/education/fetchEducation";
+import updateEducationApi from "@/utils/api/profile/education/updateEducation";
 import { EducationType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
 import useUser from "@/hooks/user";
@@ -21,23 +21,31 @@ import {
   TableRow,
 } from "@/components/custom-ui/Table/FlexTable";
 import { Button } from "@/components/ui/button";
+import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
+import { toast } from "react-toastify";
 
 interface EducationFormProps {
-  prefillData?: FieldValues;
   onSubmit: (data: FieldValues) => void;
+  prefillData?: FieldValues;
+  loading?: boolean;
 }
 const EducationFormNITAP: React.FC<EducationFormProps> = ({
   onSubmit,
   prefillData = {
     institute: "National Institute of Technology, Arunachal Pradesh",
   },
+  loading,
 }) => {
   return (
     <SchemaForm
       prefillData={prefillData}
       schema={educationFormNITAPSchema}
       onSubmit={onSubmit}
-      actions={<Button type="submit">Save</Button>}
+      actions={
+        <Button disabled={loading} type="submit">
+          {loading ? "Saving" : "Save"}
+        </Button>
+      }
     />
   );
 };
@@ -45,13 +53,18 @@ const EducationFormNITAP: React.FC<EducationFormProps> = ({
 const EducationForm: React.FC<EducationFormProps> = ({
   onSubmit,
   prefillData = {},
+  loading,
 }) => {
   return (
     <SchemaForm
       prefillData={prefillData}
       schema={educationFormSchema}
       onSubmit={onSubmit}
-      actions={<Button type="submit">Save</Button>}
+      actions={
+        <Button disabled={loading} type="submit">
+          {loading ? "Saving" : "Save"}
+        </Button>
+      }
     />
   );
 };
@@ -120,30 +133,39 @@ const Education: React.FC = () => {
   const [editPrefillData, setEditPrefillData] = useState<EducationType | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
   const [educations, setEducations] = useState<EducationType[] | null>([]);
   const { user } = useUser();
 
   // add, update or delete
   const updateEducation = async (data: FieldValues) => {
     try {
+      setLoading(true);
       const res = await updateEducationApi(data as EducationType);
       if (res?.success) {
         fetchEducation();
         setIsModalOpen(false);
+        toast.success("Educations updated");
       }
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchEducation = async () => {
     try {
+      setPageLoading(true);
       const data = await fetchEducationApi();
       if (data) {
         setEducations(data.educationRecords || []);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -159,7 +181,7 @@ const Education: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="py-0">
         <Table>
           <TableRow header>
             <TableCell>
@@ -169,7 +191,7 @@ const Education: React.FC = () => {
               <Button
                 variant="link"
                 className="hover:no-underline px-0"
-                disabled={!!user?.profile_locked}
+                disabled={!!user?.profile_locked || pageLoading}
                 onClick={() => openModal()}
               >
                 <AddIcon />
@@ -181,34 +203,48 @@ const Education: React.FC = () => {
       </CardHeader>
       <CardContent>
         <Table>
-          {educations?.map((e) => (
-            <EducationRow data={e} key={e.id} openEditModal={openModal} />
-          ))}
-
-          {educations?.length === 0 ? (
-            <Modal
-              modalTitle="Add education at NIT Arunachal Pradesh"
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-            >
-              <div className="bg-card px-8 py-6">
-                <EducationFormNITAP onSubmit={updateEducation} />
-              </div>
-            </Modal>
+          {pageLoading ? (
+            <>
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+            </>
           ) : (
-            <Modal
-              modalTitle={editPrefillData ? "Edit Education" : "Add Education"}
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-            >
-              <div className="bg-card px-8 py-6">
-                <EducationForm
-                  onSubmit={updateEducation}
-                  prefillData={editPrefillData as FieldValues}
-                />
-              </div>
-            </Modal>
+            educations?.map((e) => (
+              <EducationRow data={e} key={e.id} openEditModal={openModal} />
+            ))
           )}
+
+          {!pageLoading &&
+            (educations?.length === 0 ? (
+              <Modal
+                modalTitle="Add education at NIT Arunachal Pradesh"
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+              >
+                <div className="bg-card px-8 py-6">
+                  <EducationFormNITAP
+                    onSubmit={updateEducation}
+                    loading={loading}
+                  />
+                </div>
+              </Modal>
+            ) : (
+              <Modal
+                modalTitle={
+                  editPrefillData ? "Edit Education" : "Add Education"
+                }
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+              >
+                <div className="bg-card px-8 py-6">
+                  <EducationForm
+                    onSubmit={updateEducation}
+                    prefillData={editPrefillData as FieldValues}
+                    loading={loading}
+                  />
+                </div>
+              </Modal>
+            ))}
         </Table>
       </CardContent>
     </Card>

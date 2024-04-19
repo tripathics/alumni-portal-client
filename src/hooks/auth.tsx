@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { UserType } from "../types/User.type";
-import loginApi from "@/utils/api/login";
-import logoutApi from "@/utils/api/logout";
-import readUser from "@/utils/api/readUser";
+import loginApi from "@/utils/api/auth/login";
+import logoutApi from "@/utils/api/auth/logout";
+import readUser from "@/utils/api/profile/readUser";
 import { toast } from "react-toastify";
 
 const useAuth = () => {

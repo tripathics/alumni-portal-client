@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 
 export interface UpdatePasswordFormData {
   email: string;
@@ -17,16 +17,10 @@ const updatePassword = async (
     });
     return response.data;
   } catch (error) {
-    switch ((error as AxiosError).response?.status) {
-      case 400:
-        throw (error as AxiosError<{ message: string }>).response?.data.message;
-        break;
-      case 401:
-        console.error(error);
-        break;
-      default:
-        console.error(error);
-        break;
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message || error.message);
+    } else {
+      console.error(error);
     }
   }
 };

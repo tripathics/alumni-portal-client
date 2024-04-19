@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
 
 const alumniPrefill = async (): Promise<

@@ -1,6 +1,6 @@
 import { UserType } from "@/types/User.type";
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 
 const login = async (loginFormData: {
   email: string;

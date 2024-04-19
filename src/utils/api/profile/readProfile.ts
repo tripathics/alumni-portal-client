@@ -1,4 +1,4 @@
-import axios from "../../config/axios.config";
+import axios from "../../../config/axios.config";
 import { PersonalDetailsType } from "@/types/Profile.type";
 
 const readProfile = async (): Promise<

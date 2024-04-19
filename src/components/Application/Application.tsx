@@ -1,10 +1,10 @@
 import { dataValueLookup } from "@/utils/constants/data";
 import { Table, TableCell, TableRow } from "../custom-ui/Table/FlexTable";
 import styles from "./Application.module.scss";
-import { FullApplicationType } from "@/utils/api/fetchApplicationById";
 import { getDate, getMonth } from "@/utils/helper";
+import { MembershipApplicationType } from "@/types/Membership.type";
 
-const Application: React.FC<{ applicationData: FullApplicationType }> = ({
+const Application: React.FC<{ applicationData: MembershipApplicationType }> = ({
   applicationData,
 }) => {
   return (

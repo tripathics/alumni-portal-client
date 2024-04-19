@@ -7,7 +7,7 @@ import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import { useEffect, useState } from "react";
 import experienceFormSchema from "@/utils/formSchema/experienceFormSchema";
 import { FieldValues } from "react-hook-form";
-import fetchExperiencesApi from "@/utils/api/fetchExperience";
+import fetchExperiencesApi from "@/utils/api/profile/experience/fetchExperience";
 import { ExperienceType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -16,20 +16,29 @@ import {
   TableCell,
   TableRow,
 } from "@/components/custom-ui/Table/FlexTable";
+import updateExperience from "@/utils/api/profile/experience/updateExperience";
+import { toast } from "react-toastify";
+import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
 
 interface ExperienceFormProps {
-  prefillData?: FieldValues;
   onSubmit: (data: FieldValues) => void;
+  prefillData?: FieldValues;
+  loading?: boolean;
 }
 const ExperienceForm: React.FC<ExperienceFormProps> = ({
   onSubmit,
   prefillData = {},
+  loading,
 }) => (
   <SchemaForm
     prefillData={prefillData}
     schema={experienceFormSchema}
     onSubmit={onSubmit}
-    actions={<Button type="submit">Save changes</Button>}
+    actions={
+      <Button disabled={loading} type="submit">
+        {loading ? "Saving" : "Save"}
+      </Button>
+    }
   />
 );
 
@@ -91,42 +100,38 @@ const Experience: React.FC = () => {
   const [editPrefillData, setEditPrefillData] = useState<ExperienceType | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
   const [experiences, setExperiences] = useState<ExperienceType[]>([]);
 
   // add, update or delete
-  const updateExperience = (data: FieldValues) => {
-    fetch("/api/users/experience", {
-      method: "POST",
-      body: JSON.stringify(data),
-      credentials: "include",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          fetchExperiences();
-          return res.json();
-        }
-        return null;
-      })
-      .then((resJson) => {
-        console.log(resJson);
+  const handleUpdateExperience = async (data: FieldValues) => {
+    try {
+      setLoading(true);
+      const response = await updateExperience(data as ExperienceType);
+      if (response?.success) {
+        fetchExperiences();
+        toast.success("Experiences updated");
         setIsModalOpen(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchExperiences = async () => {
     try {
+      setPageLoading(true);
       const response = await fetchExperiencesApi();
       if (response?.success) {
         setExperiences(response.experienceRecords || []);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -141,7 +146,7 @@ const Experience: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="py-0">
         <Table>
           <TableRow header>
             <TableCell>
@@ -151,6 +156,7 @@ const Experience: React.FC = () => {
               <Button
                 variant="link"
                 className="hover:no-underline px-0"
+                disabled={pageLoading}
                 onClick={() => openModal()}
               >
                 <AddIcon />
@@ -162,9 +168,16 @@ const Experience: React.FC = () => {
       </CardHeader>
       <CardContent>
         <Table>
-          {experiences.map((e) => (
-            <ExperienceRow data={e} key={e.id} openEditModal={openModal} />
-          ))}
+          {pageLoading ? (
+            <>
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+            </>
+          ) : (
+            experiences.map((e) => (
+              <ExperienceRow data={e} key={e.id} openEditModal={openModal} />
+            ))
+          )}
           <Modal
             modalTitle={editPrefillData ? "Edit Experience" : "Add Experience"}
             isOpen={isModalOpen}
@@ -172,8 +185,9 @@ const Experience: React.FC = () => {
           >
             <div className="bg-card px-8 py-6">
               <ExperienceForm
-                onSubmit={updateExperience}
+                onSubmit={handleUpdateExperience}
                 prefillData={editPrefillData as FieldValues}
+                loading={loading}
               />
             </div>
           </Modal>
