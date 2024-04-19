@@ -116,7 +116,7 @@ const Modal: React.FC<ModalProps> = ({
         <div
           className={`rounded-sm shadow-md overflow-clip w-full max-h-full max-w-2xl m-auto flex flex-col transition-transform duration-200 ${modalStyles.modalContent[animatingState]}`}
         >
-          <header className="relative flex justify-between items-center drop-shadow-sm border-b border-b-slate-200 bg-card px-8 py-3">
+          <header className="relative flex justify-between items-center drop-shadow-sm border-b-2 border-b-slate-200 bg-card px-8 py-3">
             <h2 className="text-lg font-semibold">{modalTitle}</h2>
             <Button
               ref={closeBtnRef}
@@ -133,7 +133,7 @@ const Modal: React.FC<ModalProps> = ({
             {children}
           </div>
           {footer && (
-            <footer className="drop-shadow-sm border-t bg-card px-8 py-3">
+            <footer className="drop-shadow-sm border-t-2 border-t-slate-200 bg-card px-8 py-3">
               {footer}
             </footer>
           )}

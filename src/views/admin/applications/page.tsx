@@ -10,7 +10,7 @@ import { getDateWithTime, getMonth } from "@/utils/helper";
 import Application from "@/components/Application/Application";
 import { toast } from "react-toastify";
 import updateApplicationStatus from "@/utils/api/updateApplicationStatus";
-import Button from "@/components/custom-ui/Elements/Button";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -118,16 +118,7 @@ const Applications = () => {
               modalTitle="Life membership application"
               footer={
                 applicationData?.status === "pending" && (
-                  <div style={{ display: "flex", gap: "1rem" }}>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        if (!applicationData) return;
-                        updateStatus(applicationData?.id, "approved");
-                      }}
-                    >
-                      Approve
-                    </Button>
+                  <div className="flex gap-4 justify-between *:grow">
                     <Button
                       variant="secondary"
                       onClick={() => {
@@ -136,6 +127,14 @@ const Applications = () => {
                       }}
                     >
                       Reject
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        if (!applicationData) return;
+                        updateStatus(applicationData?.id, "approved");
+                      }}
+                    >
+                      Approve
                     </Button>
                   </div>
                 )

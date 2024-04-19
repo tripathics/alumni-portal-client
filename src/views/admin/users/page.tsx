@@ -1,6 +1,6 @@
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import DataTable from "@/components/custom-ui/Table/table";
-import Tag from "@/components/custom-ui/Tag/Tag";
+import { Badge } from "@/components/ui/badge";
 import { UserRole } from "@/types/User.type";
 import getUsers from "@/utils/api/getUsers";
 import { useEffect, useState } from "react";
@@ -72,7 +72,9 @@ const userRow = (user: UserType) => {
       }}
     >
       {user.role.map((role, i) => (
-        <Tag key={i}>{role}</Tag>
+        <Badge variant="secondary" key={i}>
+          {role}
+        </Badge>
       ))}
     </div>,
     <Button>Delete</Button>,
