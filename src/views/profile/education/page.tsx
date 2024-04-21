@@ -14,12 +14,15 @@ import updateEducationApi from "@/utils/api/profile/education/updateEducation";
 import { EducationType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
 import useUser from "@/hooks/user";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
+  TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
-} from "@/components/custom-ui/Table/FlexTable";
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
 import { toast } from "react-toastify";
@@ -76,23 +79,25 @@ interface EducationRowProps {
 const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
   return (
     <TableRow>
-      <div className={cx(styles["logo-container"])}>
-        {data.institute ===
-        "National Institute of Technology, Arunachal Pradesh" ? (
-          <img
-            className={styles["logo"]}
-            src="/nitap-logo.svg"
-            alt="nitap-logo"
-          />
-        ) : (
-          <img
-            width="50"
-            height="50"
-            src="https://img.icons8.com/ios-filled/50/university.png"
-            alt="university"
-          />
-        )}
-      </div>
+      <TableCell className="max-w-fit w-[66px]">
+        <div className={styles["logo-container"]}>
+          {data.institute ===
+          "National Institute of Technology, Arunachal Pradesh" ? (
+            <img
+              className={styles["logo"]}
+              src="/nitap-logo.svg"
+              alt="nitap-logo"
+            />
+          ) : (
+            <img
+              width="50"
+              height="50"
+              src="https://img.icons8.com/ios-filled/50/university.png"
+              alt="university"
+            />
+          )}
+        </div>
+      </TableCell>
       <TableCell>
         <div className={cx(styles["college-name"], styles.value)}>
           {data.institute}
@@ -114,7 +119,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
           </div>
         )}
       </TableCell>
-      <div className={styles.actions}>
+      <TableCell className={styles.actions}>
         <Button
           aria-label="Edit experience details"
           className="p-1.5 rounded-full w-8 h-8"
@@ -123,7 +128,7 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
         >
           <EditPencil />
         </Button>
-      </div>
+      </TableCell>
     </TableRow>
   );
 };
@@ -133,7 +138,7 @@ const Education: React.FC = () => {
   const [editPrefillData, setEditPrefillData] = useState<EducationType | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [educations, setEducations] = useState<EducationType[] | null>([]);
   const { user } = useUser();
@@ -181,38 +186,36 @@ const Education: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader className="py-0">
-        <Table>
-          <TableRow header>
-            <TableCell>
-              <h3 className={styles["title"]}>Education</h3>
-            </TableCell>
-            <div className={styles["actions"]}>
-              <Button
-                variant="link"
-                className="hover:no-underline px-0"
-                disabled={!!user?.profile_locked || pageLoading}
-                onClick={() => openModal()}
-              >
-                <AddIcon />
-                Add
-              </Button>
-            </div>
-          </TableRow>
-        </Table>
-      </CardHeader>
       <CardContent>
         <Table>
-          {pageLoading ? (
-            <>
-              <ProfileTableRowSkeleton />
-              <ProfileTableRowSkeleton />
-            </>
-          ) : (
-            educations?.map((e) => (
-              <EducationRow data={e} key={e.id} openEditModal={openModal} />
-            ))
-          )}
+          <TableHeader>
+            <TableRow>
+              <TableHead colSpan={2}>Education</TableHead>
+              <TableHead colSpan={1} className="text-right">
+                <Button
+                  variant="link"
+                  className="hover:no-underline px-0"
+                  disabled={!!user?.profile_locked || pageLoading}
+                  onClick={() => openModal()}
+                >
+                  <AddIcon />
+                  Add
+                </Button>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {pageLoading ? (
+              <>
+                <ProfileTableRowSkeleton />
+                <ProfileTableRowSkeleton />
+              </>
+            ) : (
+              educations?.map((e) => (
+                <EducationRow data={e} key={e.id} openEditModal={openModal} />
+              ))
+            )}
+          </TableBody>
 
           {!pageLoading &&
             (educations?.length === 0 ? (

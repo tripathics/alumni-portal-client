@@ -10,6 +10,7 @@ import Alert from "@/components/custom-ui/Alert/Alert";
 import { getDate, getMonth } from "@/utils/helper";
 import {
   Table,
+  TableBody,
   TableCell,
   TableHead,
   TableHeader,
@@ -37,7 +38,7 @@ const MembershipForm = () => {
     }[]
   >([]);
   const [errorMsg, setAlertMsg] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useUser();
 
@@ -115,7 +116,7 @@ const MembershipForm = () => {
               <Skeleton className="w-[120px] h-4" />
             </CardHeader>
             <CardContent>
-              <TableSkeleton rows={5} cols={2} />
+              <TableSkeleton rows={4} cols={2} />
             </CardContent>
           </Card>
         ) : userData ? (
@@ -135,98 +136,106 @@ const MembershipForm = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="pt-6 pb-1">
+                      <TableHead colSpan={2} className="pt-6 pb-1">
                         Personal details
                       </TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Full name
-                    </TableCell>
-                    <TableCell>
-                      {userData.title} {userData.first_name}{" "}
-                      {userData.last_name}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Date of Birth
-                    </TableCell>
-                    <TableCell>{getDate(userData.dob)}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Category
-                    </TableCell>
-                    <TableCell>{userData.category}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Nationality
-                    </TableCell>
-                    <TableCell>{userData.nationality}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Religion
-                    </TableCell>
-                    <TableCell>{userData.religion}</TableCell>
-                  </TableRow>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Full name
+                      </TableCell>
+                      <TableCell>
+                        {userData.title} {userData.first_name}{" "}
+                        {userData.last_name}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Date of Birth
+                      </TableCell>
+                      <TableCell>{getDate(userData.dob)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Category
+                      </TableCell>
+                      <TableCell>{userData.category}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Nationality
+                      </TableCell>
+                      <TableCell>{userData.nationality}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Religion
+                      </TableCell>
+                      <TableCell>{userData.religion}</TableCell>
+                    </TableRow>
+                  </TableBody>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="pt-6 pb-1">
+                      <TableHead colSpan={2} className="pt-6 pb-1">
                         Education at NIT Arunachal Pradesh
                       </TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Registration no.
-                    </TableCell>
-                    <TableCell>{userData.registration_no}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Roll no.
-                    </TableCell>
-                    <TableCell>{userData.roll_no}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Course
-                    </TableCell>
-                    <TableCell>
-                      {userData.degree} in {userData.discipline}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">
-                      Graduation date
-                    </TableCell>
-                    <TableCell>{getMonth(userData.graduation_date)}</TableCell>
-                  </TableRow>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Registration no.
+                      </TableCell>
+                      <TableCell>{userData.registration_no}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Roll no.
+                      </TableCell>
+                      <TableCell>{userData.roll_no}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Course
+                      </TableCell>
+                      <TableCell>
+                        {userData.degree} in {userData.discipline}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">
+                        Graduation date
+                      </TableCell>
+                      <TableCell>
+                        {getMonth(userData.graduation_date)}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
                   <TableHeader>
                     <TableRow>
                       <TableHead className="pt-6 pb-1">Address</TableHead>
                       <TableHead className="pt-6 pb-1">Email & Phone</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableRow>
-                    <TableCell>
-                      <p>{userData.address}</p>
-                      <p>
-                        {userData.city}, {userData.state}
-                      </p>
-                      <p>{`${userData.country} (${userData.pincode})`}</p>
-                    </TableCell>
-                    <TableCell>
-                      <p>{userData.email}</p>
-                      <p>{userData.alt_email}</p>
-                      <p>{userData.phone}</p>
-                      <p>{userData.alt_phone}</p>
-                    </TableCell>
-                  </TableRow>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        <p>{userData.address}</p>
+                        <p>
+                          {userData.city}, {userData.state}
+                        </p>
+                        <p>{`${userData.country} (${userData.pincode})`}</p>
+                      </TableCell>
+                      <TableCell>
+                        <p>{userData.email}</p>
+                        <p>{userData.alt_email}</p>
+                        <p>{userData.phone}</p>
+                        <p>{userData.alt_phone}</p>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
                 </Table>
               </CardContent>
             </Card>

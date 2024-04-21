@@ -1,8 +1,4 @@
 import {
-  TableCell as FlexTableCell,
-  TableRow as FlexTableRow,
-} from "../custom-ui/Table/FlexTable";
-import {
   TableRow,
   TableCell,
   Table,
@@ -13,15 +9,19 @@ import {
 import { Skeleton } from "../ui/skeleton";
 
 export const ProfileTableRowSkeleton: React.FC = () => (
-  <FlexTableRow>
-    <Skeleton className="w-[50px] h-[50px] rounded-full" />
-    <FlexTableCell>
+  <TableRow>
+    <TableCell className="w-[66px]">
+      <Skeleton className="w-[50px] h-[50px] rounded-full" />
+    </TableCell>
+    <TableCell>
       <Skeleton className="w-2/3 h-4 mb-4" />
       <Skeleton className="w-1/2 h-4 mb-2" />
       <Skeleton className="w-1/3 h-4" />
-    </FlexTableCell>
-    <Skeleton className="w-8 h-8 rounded-full" />
-  </FlexTableRow>
+    </TableCell>
+    <TableCell className="w-[48px] text-right">
+      <Skeleton className="w-8 h-8 rounded-full" />
+    </TableCell>
+  </TableRow>
 );
 
 export const TableRowSkeleton: React.FC<{ cols?: number }> = ({ cols = 2 }) => (
@@ -63,7 +63,7 @@ export const ProfileSkeleton = () => (
         <Skeleton className="rounded-full md:w-[150px] md:h-[150px] w-[100px] h-[100px]" />
         <div className="grow">
           <Skeleton className="w-[250px] h-6 mb-6" />
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Skeleton className="w-[80px] h-3" />
             <Skeleton className="w-[100px] h-3" />
             <Skeleton className="w-[200px] h-4" />
