@@ -17,9 +17,9 @@ export const UserProvider: React.FC<{
 }> = ({ children }) => {
   const { fetchUser, loading, login, logout, user, clearUser } = useAuth();
 
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, [fetchUser]);
 
   useEffect(() => {
     eventEmitter.on("unauthorized", () => {

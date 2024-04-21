@@ -14,6 +14,13 @@ import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
 
+import React, { useState, createContext } from "react";
+
+import PLogin from "./components/resetPassword/PLogin";
+import OTPInput from "./components/resetPassword/OTPInput";
+import Recovered from "./components/resetPassword/Recovered";
+import Reset from "./components/resetPassword/Reset";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,7 +40,7 @@ const router = createBrowserRouter([
                   { path: "", element: <PersonalProfile /> },
                   { path: "education", element: <Education /> },
                   { path: "experience", element: <Experience /> },
-                  { path: "account", element: <h1>TODO: Account</h1> },
+                  { path: "account", element: <resetPassword /> },
                 ],
               },
               {
@@ -72,6 +79,18 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const [page, setPage] = useState<string>("login");
+  const [email, setEmail] = useState<string | undefined>();
+  const [otp, setOTP] = useState<string | undefined>();
+
+  function NavigateComponents() {
+    if (page === "login") return <PLogin />;
+    if (page === "otp") return <OTPInput />;
+    if (page === "reset") return <Reset />;
+
+    return <Recovered />;
+  }
+
   return (
     <>
       <UserProvider>
@@ -86,8 +105,35 @@ const App = () => {
         />
         <RouterProvider router={router} />
       </UserProvider>
+
+      <RecoveryContext.Provider
+        value={{ page, setPage, otp, setOTP, setEmail, email }}
+      >
+        <div className="flex justify-center items-center">
+          <NavigateComponents />
+        </div>
+      </RecoveryContext.Provider>
     </>
   );
 };
+
+// password recovery
+interface RecoveryContextType {
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: React.Dispatch<React.SetStateAction<string | undefined>>;
+  otp: string | undefined;
+  setOTP: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
+
+export const RecoveryContext = createContext<RecoveryContextType>({
+  page: "login",
+  setPage: () => {},
+  email: undefined,
+  setEmail: () => {},
+  otp: undefined,
+  setOTP: () => {},
+});
 
 export default App;

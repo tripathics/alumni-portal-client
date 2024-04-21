@@ -109,13 +109,13 @@ const PersonalDetails = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchProfile();
+  // useEffect(() => {
+  //   fetchProfile();
 
-    return () => {
-      fetchUser();
-    };
-  }, [fetchProfile, fetchUser]);
+  //   return () => {
+  //     fetchUser();
+  //   };
+  // }, [fetchProfile, fetchUser]);
 
   return pageLoading ? (
     <ProfileSkeleton />
