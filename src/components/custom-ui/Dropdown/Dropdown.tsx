@@ -63,7 +63,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         className="flex"
         onClick={() => (isOpen ? closeDropdown() : setIsOpen(true))}
       >
-        {toggle({ isOpen, closeDropdown })}
+        {toggle({ isOpen: animatingState === "active", closeDropdown })}
       </div>
       {isOpen && (
         <div

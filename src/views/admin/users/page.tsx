@@ -2,7 +2,7 @@ import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import DataTable from "@/components/custom-ui/Table/table";
 import { Badge } from "@/components/ui/badge";
 import { UserRole } from "@/types/User.type";
-import getUsers from "@/utils/api/getUsers";
+import getUsers from "@/utils/api/admin/getUsers";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 

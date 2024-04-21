@@ -9,15 +9,16 @@ import { MembershipApplicationType } from "@/types/Membership.type";
 import { getDateWithTime, getMonth } from "@/utils/helper";
 import Application from "@/components/Application/Application";
 import { toast } from "react-toastify";
-import updateApplicationStatus from "@/utils/api/updateApplicationStatus";
+import updateApplicationStatus from "@/utils/api/admin/updateApplicationStatus";
 import { Button } from "@/components/ui/button";
 import {
   Table,
+  TableHeader,
   TableBody,
-  TableHeading,
   TableRow,
   TableCell,
-} from "@/components/custom-ui/Table/table";
+  TableHead,
+} from "@/components/ui/table";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import { MembershipApplicationOverviewType } from "@/types/Membership.type";
 
@@ -95,13 +96,13 @@ const Applications = () => {
         {applications ? (
           <>
             <Table>
-              <TableHeading>
+              <TableHeader>
                 <TableRow>
-                  <TableCell heading>Applicant</TableCell>
-                  <TableCell heading>Batch</TableCell>
-                  <TableCell heading>Date</TableCell>
+                  <TableHead>Applicant</TableHead>
+                  <TableHead>Batch</TableHead>
+                  <TableHead>Date</TableHead>
                 </TableRow>
-              </TableHeading>
+              </TableHeader>
               <TableBody>
                 {Object.keys(applications).map((id) => (
                   <ApplicationRow

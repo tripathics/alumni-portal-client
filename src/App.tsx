@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Slide, ToastContainer } from "react-toastify";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { UserProvider } from "./contexts/user";
+import { Slide, ToastContainer } from "react-toastify";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
@@ -13,7 +14,6 @@ import Profile, {
 import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const router = createBrowserRouter([
   {

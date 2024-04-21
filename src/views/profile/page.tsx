@@ -199,12 +199,12 @@ const PersonalDetails = () => {
                 {personalDetails.title} {personalDetails.first_name}{" "}
                 {personalDetails.last_name}
               </h2>
-              <div className={styles["subtitle"]}>
+              <div className="flex flex-col gap-1">
                 <p>Class of 2020</p>
-                <p>
+                <div>
                   <Tooltip>
                     <TooltipTrigger>
-                      <span className="text-muted-foreground font-mono font-semibold text-xs tracking-wide">
+                      <span className="text-muted-foreground font-mono font-semibold text-sm tracking-wide">
                         {personalDetails.registration_no}
                       </span>
                     </TooltipTrigger>
@@ -215,19 +215,14 @@ const PersonalDetails = () => {
                   |
                   <Tooltip>
                     <TooltipTrigger>
-                      <span className="text-muted-foreground font-mono font-semibold text-xs tracking-wide">
+                      <span className="text-muted-foreground font-mono font-semibold text-sm tracking-wide">
                         {personalDetails.roll_no}
                       </span>
                     </TooltipTrigger>
                     <TooltipContent sideOffset={2}>Roll no.</TooltipContent>
                   </Tooltip>
-                </p>
-                <p>
-                  <Tooltip>
-                    <TooltipTrigger>{user?.email}</TooltipTrigger>
-                    <TooltipContent sideOffset={2}>Email</TooltipContent>
-                  </Tooltip>
-                </p>
+                </div>
+                <div>{user?.email}</div>
               </div>
             </div>
           </div>

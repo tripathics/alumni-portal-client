@@ -1,5 +1,5 @@
 export type TitleType = "mr" | "mrs" | "miss" | "dr";
-export type UserRole = "user" | "admin" | "alumni";
+export type UserRole = "user" | "coordinator" | "admin" | "alumni";
 export type SexType = "male" | "female" | "others";
 export type CategoryType = "gen" | "obc" | "sc" | "st" | "ews" | "others";
 
