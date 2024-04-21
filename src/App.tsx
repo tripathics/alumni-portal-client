@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                   { path: "", element: <PersonalProfile /> },
                   { path: "education", element: <Education /> },
                   { path: "experience", element: <Experience /> },
-                  { path: "account", element: <resetPassword /> },
+                  { path: "account", element: <Reset /> },
                 ],
               },
               {
@@ -105,14 +105,6 @@ const App = () => {
         />
         <RouterProvider router={router} />
       </UserProvider>
-
-      <RecoveryContext.Provider
-        value={{ page, setPage, otp, setOTP, setEmail, email }}
-      >
-        <div className="flex justify-center items-center">
-          <NavigateComponents />
-        </div>
-      </RecoveryContext.Provider>
     </>
   );
 };
