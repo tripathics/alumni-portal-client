@@ -13,6 +13,7 @@ import Profile, {
 import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "alumni-membership",
-                element: <Alumni />
+                element: <Alumni />,
               },
             ],
           },
@@ -84,7 +85,9 @@ const App = () => {
           theme="dark"
           transition={Slide}
         />
-        <RouterProvider router={router} />
+        <TooltipProvider>
+          <RouterProvider router={router} />
+        </TooltipProvider>
       </UserProvider>
     </>
   );

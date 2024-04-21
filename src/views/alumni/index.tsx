@@ -2,7 +2,6 @@ import PageHeader from "@/components/layouts/PageHeader/PageHeader";
 import MembershipForm from "./MembershipApplication";
 import styles from "./Alumni.module.scss";
 import cx from "classnames";
-import PastApplications from "./PastApplications";
 
 const Alumni: React.FC = () => {
   return (
@@ -19,8 +18,6 @@ const Alumni: React.FC = () => {
         )}
       >
         <MembershipForm />
-        <hr />
-        <PastApplications />
       </div>
     </>
   );

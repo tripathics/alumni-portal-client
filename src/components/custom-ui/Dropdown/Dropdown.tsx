@@ -3,12 +3,12 @@ import cx from "classnames";
 
 type RenderProps = {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  closeDropdown: () => void;
 };
 
 interface DropdownProps {
-  toggle: ({ isOpen, setIsOpen }: RenderProps) => React.ReactNode;
-  render: ({ isOpen, setIsOpen }: RenderProps) => React.ReactNode;
+  toggle: ({ isOpen, closeDropdown }: RenderProps) => React.ReactNode;
+  render: ({ isOpen, closeDropdown }: RenderProps) => React.ReactNode;
   position?: "left" | "right" | "center";
 }
 const Dropdown: React.FC<DropdownProps> = ({
@@ -53,26 +53,26 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const animatingStyles = {
     animating: "opacity-0 top-0 pointer-events-none",
-    active: "opacity-100",
+    active: "opacity-100 top-full",
   };
 
   return (
-    <div className={"relative"} ref={ref}>
+    <div className="relative" ref={ref}>
       <div
-        className={"flex"}
+        className="flex"
         onClick={() => (isOpen ? closeDropdown() : setIsOpen(true))}
       >
-        {toggle({ isOpen, setIsOpen })}
+        {toggle({ isOpen, closeDropdown })}
       </div>
       {isOpen && (
         <div
           className={cx(
-            "absolute top-full mt-1 transition-all duration-200",
+            "absolute mt-1 transition-all duration-200",
             positionStyles[position],
             animatingStyles[animatingState]
           )}
         >
-          {render({ isOpen, setIsOpen })}
+          {render({ isOpen, closeDropdown })}
         </div>
       )}
     </div>

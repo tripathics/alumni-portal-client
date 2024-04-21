@@ -18,7 +18,7 @@ import {
 } from "@/components/custom-ui/Table/FlexTable";
 import updateExperience from "@/utils/api/profile/experience/updateExperience";
 import { toast } from "react-toastify";
-import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
+import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
 
 interface ExperienceFormProps {
   onSubmit: (data: FieldValues) => void;
@@ -170,8 +170,8 @@ const Experience: React.FC = () => {
         <Table>
           {pageLoading ? (
             <>
-              <TableRowSkeleton />
-              <TableRowSkeleton />
+              <ProfileTableRowSkeleton />
+              <ProfileTableRowSkeleton />
             </>
           ) : (
             experiences.map((e) => (

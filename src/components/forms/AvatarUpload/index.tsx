@@ -68,7 +68,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
       {errors.avatar && (
         <p className={formStyles["error"]}>{errors.avatar.message as string}</p>
       )}
-      <form className={styles["avatar-upload-form"]}>
+      <form className="w-full">
         <div className={styles["avatar-upload-actions"]}>
           <Controller
             control={control}
@@ -129,7 +129,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
               onClick={handleSubmit(onSubmit)}
               disabled={loading}
             >
-              Save changes
+              {loading ? "Saving..." : "Save changes"}
             </Button>
           )}
         </div>

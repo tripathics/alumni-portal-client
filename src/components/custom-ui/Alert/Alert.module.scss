@@ -22,6 +22,10 @@
   background-color: white;
   box-shadow: var(--box-bs);
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   .alert-content {
     display: flex;
     flex-grow: 1;

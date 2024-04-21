@@ -112,7 +112,7 @@ const Application: React.FC<{ applicationData: MembershipApplicationType }> = ({
             </div>
           </TableCell>
           <TableCell>
-            <p className="muted">Dated</p>
+            <p className="text-muted">Dated</p>
             <time>{getDate(applicationData.created_at)}</time>
           </TableCell>
         </TableRow>

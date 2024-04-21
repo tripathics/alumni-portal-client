@@ -207,7 +207,3 @@ hr {
   text-align: center;
   text-decoration: none;
 }
-
-.muted {
-  color: var(--text-muted);
-}

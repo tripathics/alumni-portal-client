@@ -25,6 +25,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ProfileSkeleton } from "@/components/Skeletons/Skeletons";
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
@@ -195,14 +201,32 @@ const PersonalDetails = () => {
               </h2>
               <div className={styles["subtitle"]}>
                 <p>Class of 2020</p>
-                <p className={styles["mono"]}>
-                  <span title="Registration no.">
-                    {personalDetails.registration_no}
-                  </span>
-                  |<span title="Roll no.">{personalDetails.roll_no}</span>
+                <p>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <span className="text-muted-foreground font-mono font-semibold text-xs tracking-wide">
+                        {personalDetails.registration_no}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent sideOffset={2}>
+                      Registration no.
+                    </TooltipContent>
+                  </Tooltip>
+                  |
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <span className="text-muted-foreground font-mono font-semibold text-xs tracking-wide">
+                        {personalDetails.roll_no}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent sideOffset={2}>Roll no.</TooltipContent>
+                  </Tooltip>
                 </p>
                 <p>
-                  <span title="Email">{user?.email}</span>
+                  <Tooltip>
+                    <TooltipTrigger>{user?.email}</TooltipTrigger>
+                    <TooltipContent sideOffset={2}>Email</TooltipContent>
+                  </Tooltip>
                 </p>
               </div>
             </div>
@@ -292,10 +316,23 @@ const PersonalDetails = () => {
               </h4>
             </div>
             <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>LinkedIn</p>
+              <p
+                className={cx(
+                  styles.col,
+                  styles["label"],
+                  "flex gap-1 items-center"
+                )}
+              >
+                <LinkedInLogoIcon />
+                LinkedIn
+              </p>
               <p className={cx(styles.col, styles["value"])}>
                 {personalDetails.linkedin ? (
-                  <a href={personalDetails.linkedin} target="_blank">
+                  <a
+                    className="link"
+                    href={personalDetails.linkedin}
+                    target="_blank"
+                  >
                     {personalDetails.linkedin}
                   </a>
                 ) : (
@@ -304,10 +341,23 @@ const PersonalDetails = () => {
               </p>
             </div>
             <div className={styles["box-row"]}>
-              <p className={cx(styles.col, styles["label"])}>GitHub</p>
+              <p
+                className={cx(
+                  styles.col,
+                  styles["label"],
+                  "flex gap-1 items-center"
+                )}
+              >
+                <GitHubLogoIcon />
+                GitHub
+              </p>
               <p className={cx(styles.col, styles["value"])}>
                 {personalDetails.github ? (
-                  <a href={personalDetails.github} target="_blank">
+                  <a
+                    className="link"
+                    href={personalDetails.github}
+                    target="_blank"
+                  >
                     {personalDetails.github}
                   </a>
                 ) : (
@@ -322,7 +372,9 @@ const PersonalDetails = () => {
   ) : (
     <div className={styles["dashboard-page"]}>
       <Alert severity="info">
-        Fill in your personal details to complete creating your alumni profile
+        {user?.role.includes("admin")
+          ? "Fill in your personal details to complete creating your profile"
+          : "Fill in your personal details to complete creating your alumni profile"}
       </Alert>
       <Card>
         <CardContent>

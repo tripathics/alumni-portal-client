@@ -11,6 +11,8 @@ import NavLi, { NavLiProps } from "./NavLi";
 import Dropdown from "@/components/custom-ui/Dropdown/Dropdown";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
 const NavToggle: React.FC<{
   active: boolean;
@@ -45,11 +47,15 @@ const Navbar: React.FC = () => {
   const userLinks: userLinksType[] = [
     { label: "Sign in", href: "/login" },
     { label: "Sign up", href: "/register" },
-    { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "alumni"] },
+    {
+      label: "Profile",
+      href: "/profile",
+      rolesVislbleTo: ["user", "alumni", "admin"],
+    },
     {
       label: "Alumni Membership",
       href: "/alumni-membership",
-      rolesVislbleTo: ["user", "alumni"],
+      rolesVislbleTo: ["user", "alumni", "admin"],
     },
     { label: "Admin", href: "/admin", rolesVislbleTo: ["admin"] },
     {
@@ -57,7 +63,7 @@ const Navbar: React.FC = () => {
       href: "/",
       action: logout,
       type: "button",
-      rolesVislbleTo: ["user", "admin"],
+      rolesVislbleTo: ["user", "admin", "alumni"],
     },
   ];
 
@@ -79,22 +85,11 @@ const Navbar: React.FC = () => {
             <Dropdown
               position="right"
               toggle={({ isOpen }) => (
-                // <Button
-                //   type="button"
-                //   variant="outline"
-                //   size="icon"
-                //   aria-label="Menu"
-                //   className={`relative before:content-[''] before:absolute before:-z-10 before:rounded-full before:transition-all duration-200 before:bg-accent-foreground ${
-                //     isOpen ? "before:-inset-1.5" : "before:-inset-0"
-                //   }`}
-                // >
-                //   <MenuIcon width={22} height={22} strokeWidth={2} />
-                // </Button>
                 <NavToggle active={isOpen}>
                   <MenuIcon width={22} height={22} strokeWidth={2} />
                 </NavToggle>
               )}
-              render={({ setIsOpen }) => (
+              render={({ closeDropdown }) => (
                 <div className={cx(styles["collapsable-nav"], "container")}>
                   <hr />
                   <ul className={styles["collapsable-nav-list"]}>
@@ -102,7 +97,7 @@ const Navbar: React.FC = () => {
                       <NavLi
                         key={index}
                         {...link}
-                        action={() => setIsOpen(false)}
+                        action={() => closeDropdown()}
                       />
                     ))}
                   </ul>
@@ -117,22 +112,38 @@ const Navbar: React.FC = () => {
             ) : (
               <Dropdown
                 position="right"
-                toggle={({ isOpen }) =>
-                  !user ? (
-                    <NavToggle active={isOpen} variant="fill">
-                      <LoginIcon />
-                    </NavToggle>
-                  ) : (
-                    <NavToggle active={isOpen} variant="fill">
-                      {user.avatar ? (
-                        <Avatar size="100%" avatar={user?.avatar} />
+                toggle={({ isOpen }) => (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      {!user ? (
+                        <NavToggle active={isOpen} variant="fill">
+                          <LoginIcon />
+                        </NavToggle>
+                      ) : user.avatar ? (
+                        <NavToggle active={isOpen} variant="fill">
+                          <Avatar size="100%" avatar={user?.avatar} />
+                        </NavToggle>
                       ) : (
-                        <UserIcon />
+                        <NavToggle active={isOpen} variant="outline">
+                          <UserIcon />
+                        </NavToggle>
                       )}
-                    </NavToggle>
-                  )
-                }
-                render={({ setIsOpen }) => (
+                    </TooltipTrigger>
+                    <TooltipContent align="end">
+                      {user ? (
+                        <>
+                          <p className="mb-1 font-semibold">
+                            {user.title} {user.first_name} {user.last_name}
+                          </p>
+                          <p className="text-">{user.email}</p>
+                        </>
+                      ) : (
+                        <p className="text-center">Sign in</p>
+                      )}
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+                render={({ closeDropdown }) => (
                   <div className={cx(styles["collapsable-nav"], "container")}>
                     {user && (
                       <div className={styles["user-info"]}>
@@ -167,7 +178,7 @@ const Navbar: React.FC = () => {
                             key={link.href}
                             {...link}
                             action={() => {
-                              setIsOpen(false);
+                              closeDropdown();
                               link.action && link.action();
                             }}
                           />

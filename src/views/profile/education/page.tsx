@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/custom-ui/Table/FlexTable";
 import { Button } from "@/components/ui/button";
-import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
+import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
 import { toast } from "react-toastify";
 
 interface EducationFormProps {
@@ -205,8 +205,8 @@ const Education: React.FC = () => {
         <Table>
           {pageLoading ? (
             <>
-              <TableRowSkeleton />
-              <TableRowSkeleton />
+              <ProfileTableRowSkeleton />
+              <ProfileTableRowSkeleton />
             </>
           ) : (
             educations?.map((e) => (
