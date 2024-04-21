@@ -10,12 +10,15 @@ import { FieldValues } from "react-hook-form";
 import fetchExperiencesApi from "@/utils/api/profile/experience/fetchExperience";
 import { ExperienceType } from "@/types/Profile.type";
 import { getMonth } from "@/utils/helper";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
+  TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
-} from "@/components/custom-ui/Table/FlexTable";
+} from "@/components/ui/table";
 import updateExperience from "@/utils/api/profile/experience/updateExperience";
 import { toast } from "react-toastify";
 import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
@@ -52,14 +55,16 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
 }) => {
   return (
     <TableRow>
-      <div className={cx(styles["logo-container"])}>
-        <img
-          width="50"
-          height="50"
-          src="https://img.icons8.com/ios-filled/50/university.png"
-          alt="university"
-        />
-      </div>
+      <TableCell className="max-w-fit w-[66px]">
+        <div className={cx(styles["logo-container"])}>
+          <img
+            width="50"
+            height="50"
+            src="https://img.icons8.com/ios-filled/50/university.png"
+            alt="university"
+          />
+        </div>
+      </TableCell>
       <TableCell>
         <div className={cx(styles["college-name"], styles.value)}>
           {data.organisation}
@@ -81,7 +86,7 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
           </div>
         )}
       </TableCell>
-      <div className={styles.actions}>
+      <TableCell className={styles.actions}>
         <Button
           aria-label="Edit experience details"
           className="p-1.5 rounded-full w-8 h-8"
@@ -90,7 +95,7 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
         >
           <EditPencil />
         </Button>
-      </div>
+      </TableCell>
     </TableRow>
   );
 };
@@ -146,38 +151,37 @@ const Experience: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader className="py-0">
-        <Table>
-          <TableRow header>
-            <TableCell>
-              <h3 className={styles["title"]}>Experience</h3>
-            </TableCell>
-            <div className={styles["actions"]}>
-              <Button
-                variant="link"
-                className="hover:no-underline px-0"
-                disabled={pageLoading}
-                onClick={() => openModal()}
-              >
-                <AddIcon />
-                Add
-              </Button>
-            </div>
-          </TableRow>
-        </Table>
-      </CardHeader>
       <CardContent>
         <Table>
-          {pageLoading ? (
-            <>
-              <ProfileTableRowSkeleton />
-              <ProfileTableRowSkeleton />
-            </>
-          ) : (
-            experiences.map((e) => (
-              <ExperienceRow data={e} key={e.id} openEditModal={openModal} />
-            ))
-          )}
+          <TableHeader>
+            <TableRow>
+              <TableHead colSpan={2}>Experience</TableHead>
+              <TableHead colSpan={1} className="text-right">
+                <Button
+                  variant="link"
+                  className="hover:no-underline px-0"
+                  disabled={pageLoading}
+                  onClick={() => openModal()}
+                >
+                  <AddIcon />
+                  Add
+                </Button>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {pageLoading ? (
+              <>
+                <ProfileTableRowSkeleton />
+                <ProfileTableRowSkeleton />
+              </>
+            ) : (
+              experiences.map((e) => (
+                <ExperienceRow data={e} key={e.id} openEditModal={openModal} />
+              ))
+            )}
+          </TableBody>
+
           <Modal
             modalTitle={editPrefillData ? "Edit Experience" : "Add Experience"}
             isOpen={isModalOpen}
