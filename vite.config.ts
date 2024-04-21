@@ -7,8 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api/": "http://localhost:5000/",
-      "/media/": "http://localhost:5000/",
+      "/media/": process.env.VITE_SERVER_BASE_URL || "http://localhost:5000/",
     },
   },
   resolve: {

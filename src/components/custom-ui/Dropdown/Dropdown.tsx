@@ -59,6 +59,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className="relative" ref={ref}>
       <div
+        aria-haspopup="menu"
         className="flex"
         onClick={() => (isOpen ? closeDropdown() : setIsOpen(true))}
       >

@@ -2,8 +2,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import eventEmitter from "./eventEmitter.config";
 
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_SERVER_BASE_URL || "http://localhost:5000"
+    : "";
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },

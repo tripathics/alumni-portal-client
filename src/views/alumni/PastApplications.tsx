@@ -1,4 +1,3 @@
-import styles from "./PastApplications.module.scss";
 import Application from "@/components/Application/Application";
 import Modal from "@/components/custom-ui/Modal/Modal";
 import {
@@ -11,13 +10,8 @@ import {
 } from "@/components/ui/table";
 import { fetchApplicationById } from "@/utils/api/admin/fetchApplicationById";
 import { MembershipApplicationType } from "@/types/Membership.type";
-// import fetchUserMembershipApplications from "@/utils/api/alumni/fetchUserMembershipApplications";
-// import { dataValueLookup } from "@/utils/constants/data";
 import { getDateWithTime } from "@/utils/helper";
-import {
-  // useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 import cx from "classnames";
 import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

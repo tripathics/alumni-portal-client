@@ -238,7 +238,7 @@ const PersonalDetails = () => {
         <CardHeader>
           <CardTitle>Personal details</CardTitle>
           <CardDescription>
-            <p>These details are used for account safety purposes.</p>
+            These details are used for account safety purposes.
           </CardDescription>
         </CardHeader>
         <CardContent>

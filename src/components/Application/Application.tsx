@@ -104,9 +104,7 @@ const Application: React.FC<{ applicationData: MembershipApplicationType }> = ({
             <div className={styles["sign"]}>
               <img
                 width="100%"
-                src={`${import.meta.env.VITE_SERVER_BASE_URL}/media/sign/${
-                  applicationData.sign
-                }`}
+                src={`/media/sign/${applicationData.sign}`}
                 alt={applicationData.first_name}
               />
             </div>

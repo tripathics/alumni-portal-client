@@ -10,7 +10,7 @@ import useUser from "@/hooks/user";
 import NavLi, { NavLiProps } from "./NavLi";
 import Dropdown from "@/components/custom-ui/Dropdown/Dropdown";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
@@ -19,17 +19,18 @@ const NavToggle: React.FC<{
   children?: React.ReactNode;
   variant?: "outline" | "fill";
 }> = ({ active, variant = "outline", children }) => (
-  <Button
-    type="button"
-    variant={variant}
-    size="icon"
-    aria-label="Menu"
-    className={`relative before:content-[''] before:absolute before:-z-10 before:rounded-full before:transition-all duration-200 before:bg-foreground/10 ${
-      active ? "before:-inset-1.5" : "before:-inset-0"
-    }`}
+  <div
+    role="navigation"
+    className={buttonVariants({
+      variant,
+      size: "icon",
+      className: `relative before:content-[''] before:absolute before:-z-10 before:rounded-full before:transition-all duration-200 before:bg-foreground/10 ${
+        active ? "before:-inset-1.5" : "before:-inset-0"
+      }`,
+    })}
   >
     {children}
-  </Button>
+  </div>
 );
 
 const Navbar: React.FC = () => {

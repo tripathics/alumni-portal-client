@@ -15,12 +15,7 @@ const EditAvatar: React.FC<AvatarProps> = ({
       avatar.includes("blob:") ? (
         <img src={avatar} alt="avatar" />
       ) : (
-        <img
-          src={`${
-            import.meta.env.VITE_SERVER_BASE_URL
-          }/media/avatars/${avatar}`}
-          alt="avatar"
-        />
+        <img src={`/media/avatars/${avatar}`} alt="avatar" />
       )
     ) : (
       <img src="https://via.placeholder.com/200" alt="avatar" />
