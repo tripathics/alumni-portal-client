@@ -1,4 +1,6 @@
-import Header from "@/components/layouts/PageHeader/PageHeader";
+import Header, {
+  PageSubtitle,
+} from "@/components/layouts/PageHeader/PageHeader";
 import useUser from "@/hooks/user";
 import DashboardLayout from "@/components/layouts/dashboard";
 import styles from "./Profile.module.scss";
@@ -57,13 +59,13 @@ const Profile = () => {
           {user?.profile_locked ? (
             <>
               <Lock />
-              <p>
-                Profile is locked for editing until your membership application
-                is resolved.
-              </p>
+              <PageSubtitle
+                subtitle="Profile is locked for editing until your membership application
+                is resolved."
+              />
             </>
           ) : (
-            <p>Manage and update your profile</p>
+            <PageSubtitle subtitle="Manage and update your profile" />
           )}
         </div>
       </Header>

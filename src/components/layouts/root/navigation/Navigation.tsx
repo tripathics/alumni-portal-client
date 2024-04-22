@@ -13,6 +13,7 @@ import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
+import { Spinner } from "@/components/ui/spinner";
 
 const NavToggle: React.FC<{
   active: boolean;
@@ -106,10 +107,7 @@ const Navbar: React.FC = () => {
               )}
             />
             {loading ? (
-              <div
-                className={styles["spinner"]}
-                aria-label="Loading auth status"
-              ></div>
+              <Spinner />
             ) : (
               <Dropdown
                 position="right"

@@ -18,8 +18,8 @@ export const ProfileTableRowSkeleton: React.FC = () => (
       <Skeleton className="w-1/2 h-4 mb-2" />
       <Skeleton className="w-1/3 h-4" />
     </TableCell>
-    <TableCell className="w-[48px] text-right">
-      <Skeleton className="w-8 h-8 rounded-full" />
+    <TableCell className="w-12 text-right">
+      <Skeleton className="inline-block w-8 h-8 rounded-full" />
     </TableCell>
   </TableRow>
 );
@@ -112,4 +112,13 @@ export const ProfileSkeleton = () => (
       </div>
     </div>
   </>
+);
+
+export const PageHeaderSkeleton = () => (
+  <div className="bg-black/5 py-10">
+    <div className="container">
+      <Skeleton className="max-w-[300px] w-1/3 md:h-10 h-9 mb-6" />
+      <Skeleton className="w-5/6 md:h-5 h-4" />
+    </div>
+  </div>
 );

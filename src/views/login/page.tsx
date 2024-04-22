@@ -88,7 +88,7 @@ const Login = () => {
               error={errors["password"]}
             />
             <div className={styles["actions"]}>
-              <Button disabled={loading} type="submit">
+              <Button loading={loading} type="submit">
                 {loading ? "Signing in" : "Sign in"}
               </Button>
             </div>

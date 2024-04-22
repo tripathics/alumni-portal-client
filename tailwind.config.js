@@ -24,6 +24,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'sans': ['Open Sans', 'sans-serif'],
+        'serif': ['Libre Baskerville', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,6 +82,13 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundSize: {
+        'size-header-large': '75%'
+      },
+      backgroundImage: {
+        'header-large': 'linear-gradient(90deg, #272727 0%, #272727 13%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.5) 70%, #272727 87%, #272727 100%)',
+        'header-mobile': 'linear-gradient(rgb(0 0 0 / 0.53) 0%, rgb(0 0 0 / 0.55) 100%)',
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

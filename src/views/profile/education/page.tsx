@@ -119,11 +119,11 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
           </div>
         )}
       </TableCell>
-      <TableCell className={styles.actions}>
+      <TableCell className="w-12 text-right">
         <Button
           aria-label="Edit experience details"
           className="p-1.5 rounded-full w-8 h-8"
-          variant="ghost"
+          variant="secondary"
           onClick={() => openEditModal(data)}
         >
           <EditPencil />

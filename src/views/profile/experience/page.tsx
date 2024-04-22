@@ -86,11 +86,11 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
           </div>
         )}
       </TableCell>
-      <TableCell className={styles.actions}>
+      <TableCell className="text-right w-12">
         <Button
           aria-label="Edit experience details"
           className="p-1.5 rounded-full w-8 h-8"
-          variant="ghost"
+          variant="secondary"
           onClick={() => openEditModal(data)}
         >
           <EditPencil />

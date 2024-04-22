@@ -1,3 +1,4 @@
+import { PageHeaderSkeleton } from "@/components/Skeletons/Skeletons";
 import useUser from "@/hooks/user";
 import { Navigate, Outlet, useLocation } from "react-router";
 
@@ -7,7 +8,7 @@ const ProtectedRoutes = ({ adminRoute = false }) => {
   const location = useLocation();
 
   return loading ? (
-    <div>Loading...</div>
+    <PageHeaderSkeleton />
   ) : !user ? (
     <Navigate to="/login" state={{ from: location.pathname }} />
   ) : !user.role.includes("admin") && adminRoute ? (

@@ -202,21 +202,6 @@
   }
 }
 
-.spinner {
-  border: solid 2px hsla(var(--foreground));
-  border-right: solid 2px transparent;
-  border-radius: 9999px;
-  width: 2.2rem;
-  height: 2.2rem;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .user-info {
   display: flex;
   align-items: center;
