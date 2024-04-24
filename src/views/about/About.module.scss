@@ -1,0 +1,158 @@
+.__pageContentContainer{
+  flex: 1;
+  padding: 2rem 2rem 2rem 2rem;
+  
+}
+
+.__pageContentContainer h1{
+  font-size: xx-large;
+  
+  
+}
+
+.Section_2{
+  
+  margin: 2rem;
+  margin-bottom: 200px;
+  padding: 1rem ;
+  
+}
+
+.card{
+    background-color: rgb(113, 113, 113, 0.3);
+    width: 300px;
+    border-radius: 1rem;
+    padding: 1rem ;
+    margin-left: 1.5rem;
+    
+    //box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);-->
+}
+
+.card:hover{
+  background-color: rgb(113, 113, 113);
+  
+}
+
+.cardsContainer{
+    display: flex;
+}
+
+.cardImg{
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.cardTitle{
+    font-weight: 500;
+    text-align: center;
+    color: white;
+}
+
+.cardInfo{
+    font-size: 0.85rem;
+    opacity: 0.8;
+    text-align: center;
+    color: whitesmoke;
+
+}
+
+.social_media{
+    width: 20s;
+    opacity: 0.8;
+    display: flex;
+
+}
+
+
+.social_media img {
+    width: 10;
+    color: white;
+    opacity: 0.6;
+    padding: 3px 3px 3px 3px;
+}
+
+
+
+.social_media img:hover{
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
+.Section_1{
+  display: flex;
+  margin-bottom: 50px;
+  
+}
+
+.card_1{
+  width: 300px;
+  margin: 2rem;
+  
+}
+
+.body{
+  margin: 2rem;
+  
+}
+.message {
+  padding-top: 5px;
+  padding-right: 10px;
+  margin: 2rem;
+}
+
+.cardTitle_1{
+  font-weight: 700;
+  text-align: center;
+  color: black;
+  padding-top: 0.4rem;
+  padding-bottom: 0.25rem;
+}
+
+.cardInfo_1{
+  margin-left: 0.5rem ;
+  text-align: left;
+  font-weight: 400;
+  
+}
+
+
+
+.contactInfo_mail{
+  display: flex;
+  
+  text-align: left;
+  justify-content: left;
+}
+
+.contactInfo_mail div{
+  
+  margin: 0.3rem;
+}
+
+.foot{
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
+  
+}
+
+.Line{
+  width: 100%;
+  height: 40%;
+  border-top:  1px solid black;
+  margin-top: 2rem;
+  
+  
+}
+
+.creator{
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.creator a{
+  text-decoration: none;
+}
