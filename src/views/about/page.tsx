@@ -9,6 +9,8 @@ const About = () => {
         subHeading="Welcome College alumni and undergraduates! We hope you will explore the many ways to connect with the NIT Arunachal Pradesh community."
         bgImage="/header-bg/2023-06-07-1.jpg"
       />
+      <div className="__page-content container">
+
       <section className={styles.__pageContentContainer}>
         <h1>About</h1>
 
@@ -160,6 +162,8 @@ const About = () => {
         </div>
 
       </section>
+      
+      </div>
     </>
   );
 };

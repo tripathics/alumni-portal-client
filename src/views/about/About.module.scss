@@ -56,17 +56,22 @@
 
 }
 
-.social_media{
+.social_media {
     width: 20s;
-    opacity: 0.8;
-    display: flex;
+    opacity: 0.8;  
+    align-items: end;
+    
+}
 
+.social_media ul  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .social_media img {
-    width: 10;
-    color: white;
+    
     opacity: 0.6;
     padding: 3px 3px 3px 3px;
 }
