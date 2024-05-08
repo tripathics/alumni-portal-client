@@ -107,7 +107,9 @@ const Navbar: React.FC = () => {
               )}
             />
             {loading ? (
-              <Spinner />
+              <div className="h-9 w-9 flex justify-center items-center">
+                <Spinner />
+              </div>
             ) : (
               <Dropdown
                 position="right"
