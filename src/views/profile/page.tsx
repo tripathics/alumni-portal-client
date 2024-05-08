@@ -35,10 +35,12 @@ import {
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
   onSubmit: (data: FieldValues) => void;
+  loading?: boolean;
 }
 const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
   prefillData,
   onSubmit,
+  loading,
 }) => {
   return (
     <SchemaForm
@@ -46,8 +48,8 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
       schema={personalDetailsFormSchema}
       onSubmit={onSubmit}
       actions={
-        <Button type="submit" className="primary">
-          Save changes
+        <Button type="submit" loading={loading} className="primary">
+          {loading ? "Saving" : "Save changes"}
         </Button>
       }
     />
@@ -157,6 +159,7 @@ const PersonalDetails = () => {
                         } as FieldValues
                       }
                       onSubmit={updateProfile}
+                      loading={loading}
                     />
                   </section>
                 </Modal>
@@ -378,6 +381,7 @@ const PersonalDetails = () => {
               { ...personalDetails, email: user?.email } as FieldValues
             }
             onSubmit={updateProfile}
+            loading={loading}
           />
         </CardContent>
       </Card>

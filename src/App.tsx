@@ -5,15 +5,21 @@ import { Slide, ToastContainer } from "react-toastify";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
-import { Home, About, Login, Register } from "./views";
-import Profile, {
+import {
+  Home,
+  About,
+  Login,
+  ResetPassword,
+  Register,
+  Profile,
+  PersonalProfile,
   Education,
   Experience,
-  PersonalProfile,
-} from "./views/profile";
-import Admin, { Applications, Users } from "./views/admin";
-import Alumni from "./views/alumni";
-import ResetPassword from "./views/reset-password/page";
+  AlumniMembership,
+  Admin,
+  Applications,
+  Users,
+} from "./views";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +45,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "alumni-membership",
-                element: <Alumni />,
+                element: <AlumniMembership />,
               },
             ],
           },

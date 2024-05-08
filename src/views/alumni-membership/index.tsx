@@ -3,7 +3,7 @@ import MembershipForm from "./MembershipApplication";
 import styles from "./Alumni.module.scss";
 import cx from "classnames";
 
-const Alumni: React.FC = () => {
+const AlumniMembership: React.FC = () => {
   return (
     <>
       <PageHeader
@@ -23,4 +23,4 @@ const Alumni: React.FC = () => {
   );
 };
 
-export default Alumni;
+export default AlumniMembership;

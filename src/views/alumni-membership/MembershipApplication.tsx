@@ -37,7 +37,7 @@ const MembershipForm = () => {
       status: string;
     }[]
   >([]);
-  const [errorMsg, setAlertMsg] = useState<string | null>(null);
+  const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useUser();
@@ -76,7 +76,12 @@ const MembershipForm = () => {
     Promise.all([
       !user?.role.includes("alumni") && fetchPrefillData(),
       fetchApplications(),
-    ]).finally(() => setLoading(false));
+    ]).finally(() => {
+      if (user?.role.includes("alumni")) {
+        setAlertMsg("You are already a member of the alumni association.");
+      }
+      setLoading(false);
+    });
   }, [user]);
 
   const onSubmit = async (data: FieldValues) => {
@@ -284,7 +289,7 @@ const MembershipForm = () => {
             </Card>
           </>
         ) : (
-          <Alert>{errorMsg}</Alert>
+          <Alert>{alertMsg}</Alert>
         )}
       </div>
       <hr />

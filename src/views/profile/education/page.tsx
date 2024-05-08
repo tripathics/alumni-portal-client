@@ -45,7 +45,7 @@ const EducationFormNITAP: React.FC<EducationFormProps> = ({
       schema={educationFormNITAPSchema}
       onSubmit={onSubmit}
       actions={
-        <Button disabled={loading} type="submit">
+        <Button loading={loading} type="submit">
           {loading ? "Saving" : "Save"}
         </Button>
       }
@@ -64,7 +64,7 @@ const EducationForm: React.FC<EducationFormProps> = ({
       schema={educationFormSchema}
       onSubmit={onSubmit}
       actions={
-        <Button disabled={loading} type="submit">
+        <Button loading={loading} type="submit">
           {loading ? "Saving" : "Save"}
         </Button>
       }

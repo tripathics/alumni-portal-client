@@ -127,7 +127,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
               className="text-base"
               type="submit"
               onClick={handleSubmit(onSubmit)}
-              disabled={loading}
+              loading={loading}
             >
               {loading ? "Saving..." : "Save changes"}
             </Button>

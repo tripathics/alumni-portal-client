@@ -48,7 +48,7 @@ const OTPForm: React.FC<{
         error={errors["email"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit">
+        <Button loading={loading} type="submit">
           {loading ? "Sending OTP" : "Send OTP"}
         </Button>
       </div>
@@ -110,7 +110,7 @@ const VerifyForm: React.FC<{
         error={errors["otp"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit">
+        <Button loading={loading} type="submit">
           {loading ? "Verifying OTP" : "Verify OTP"}
         </Button>
       </div>
@@ -176,7 +176,7 @@ const SignupForm: React.FC<{
         error={errors["confirmPassword"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit">
+        <Button loading={loading} type="submit">
           {loading ? "Signing up" : "Sign up"}
         </Button>
       </div>

@@ -38,7 +38,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     schema={experienceFormSchema}
     onSubmit={onSubmit}
     actions={
-      <Button disabled={loading} type="submit">
+      <Button loading={loading} type="submit">
         {loading ? "Saving" : "Save"}
       </Button>
     }
