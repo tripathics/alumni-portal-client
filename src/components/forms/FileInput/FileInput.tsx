@@ -9,7 +9,6 @@ import {
   FieldErrorsImpl,
   Merge,
 } from "react-hook-form";
-import { buttonVariants } from "@/components/ui/button";
 
 interface FileInputProps {
   control: Control<FieldValues>;
@@ -48,9 +47,11 @@ const FileInput: React.FC<FileInputProps> = ({
 
   const checkFileType = (values: File[]) => {
     if (allowedFormats) {
-      for (const file of values) {
-        if (!allowedFormats.includes(file.type)) {
-          return "Inavalid file format";
+      if (values) {
+        for (const file of values) {
+          if (!allowedFormats.includes(file.type)) {
+            return "Inavalid file format";
+          }
         }
       }
     }
@@ -58,7 +59,6 @@ const FileInput: React.FC<FileInputProps> = ({
   };
 
   const checkFileSize = (values: File[]) => {
-    console.log("checking file size");
     if (maxFileSize) {
       for (const file of values) {
         if (file.size > maxFileSize) {
@@ -90,18 +90,12 @@ const FileInput: React.FC<FileInputProps> = ({
           }}
           name={name}
           render={({ field }) => (
-            <label
-              tabIndex={0}
-              className={buttonVariants({
-                variant: "outline",
-                size: "default",
-              })}
-            >
+            <label tabIndex={0} className={styles.uploadBtn}>
               <UploadIcon />
               {files?.length ? "Change" : "Upload"} {label ? label : "File"}
               <input
                 {...field}
-                className="hidden"
+                style={{ display: "none" }}
                 type="file"
                 multiple={multiple}
                 value={field.value?.fileName}

@@ -19,6 +19,7 @@ import {
   Admin,
   Applications,
   Users,
+  Dashboard,
 } from "./views";
 
 const router = createBrowserRouter([
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
                 path: "admin",
                 element: <Admin />,
                 children: [
-                  { path: "", element: <h1>TODO: Dashboard</h1> },
+                  { path: "", element: <Dashboard /> },
                   { path: "applications", element: <Applications /> },
                   { path: "users", element: <Users /> },
                 ],

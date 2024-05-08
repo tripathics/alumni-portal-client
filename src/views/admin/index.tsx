@@ -12,6 +12,7 @@ import {
 
 import Applications from "./applications/page";
 import Users from "./users/page";
+import Dashboard from "./dashboard/page";
 
 const Admin = () => {
   const navigations = [
@@ -68,4 +69,4 @@ const Admin = () => {
 };
 
 export default Admin;
-export { Applications, Users };
+export { Applications, Users, Dashboard };

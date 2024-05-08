@@ -5,6 +5,7 @@ import { UserRole } from "@/types/User.type";
 import getUsers from "@/utils/api/admin/getUsers";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 interface UserType {
   user: { name: string | null; avatar: string | null };
@@ -14,10 +15,12 @@ interface UserType {
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
         const data = await getUsers();
         if (!data) return;
         setUsers(
@@ -34,6 +37,8 @@ const Users: React.FC = () => {
         );
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUsers();
@@ -41,11 +46,19 @@ const Users: React.FC = () => {
 
   return (
     <div>
-      <h1>Users</h1>
-      <DataTable
-        headings={["User", "Email", "Roles", "Actions"]}
-        rows={users.map((user) => userRow(user))}
-      />
+      <header>
+        <h2 className="mb-4">Membership Applications</h2>
+      </header>
+      {loading ? (
+        <Spinner />
+      ) : users.length === 0 ? (
+        <p>No users found</p>
+      ) : (
+        <DataTable
+          headings={["User", "Email", "Roles", "Actions"]}
+          rows={users.map((user) => userRow(user))}
+        />
+      )}
     </div>
   );
 };

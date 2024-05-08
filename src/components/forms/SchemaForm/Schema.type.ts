@@ -45,6 +45,7 @@ interface RadioField {
   options: {
     value: string;
     label: string;
+    defaultChecked?: boolean;
   }[];
 }
 

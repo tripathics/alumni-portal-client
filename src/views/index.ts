@@ -6,7 +6,7 @@ import ResetPassword from "./reset-password/page";
 
 import Profile, { PersonalProfile, Education, Experience } from "./profile";
 import AlumniMembership from "./alumni-membership";
-import Admin, { Applications, Users } from "./admin";
+import Admin, { Applications, Users, Dashboard } from "./admin";
 
 export {
   Home,
@@ -22,4 +22,5 @@ export {
   Admin,
   Applications,
   Users,
+  Dashboard,
 };

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import { MembershipApplicationOverviewType } from "@/types/Membership.type";
+import { Spinner } from "@/components/ui/spinner";
 
 const Applications = () => {
   const [applications, setApplications] = useState<Record<
@@ -30,10 +31,12 @@ const Applications = () => {
   const [applicationData, setApplicationData] =
     useState<MembershipApplicationType | null>(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
+        setLoading(true);
         const data = await fetchMembershipApplications();
         if (data) {
           const app: Record<string, MembershipApplicationOverviewType> = {};
@@ -44,6 +47,8 @@ const Applications = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchApplications();
@@ -90,10 +95,12 @@ const Applications = () => {
   return (
     <div>
       <header>
-        <h2>Membership Applications</h2>
+        <h2 className="mb-4">Membership Applications</h2>
       </header>
       <main>
-        {applications ? (
+        {loading ? (
+          <Spinner />
+        ) : applications && Object.keys(applications).length ? (
           <>
             <Table>
               <TableHeader>

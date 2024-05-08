@@ -7,7 +7,7 @@ export interface RadioProps {
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   name: string;
   label: string;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string; defaultChecked?: boolean }[];
   required?: boolean | string;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
 }
@@ -25,7 +25,7 @@ const Radio: React.ForwardRefExoticComponent<
         <div className={styles["form-field"]}>
           <label>{`${label}${required ? "" : " (optional)"}`}</label>
           <div className={styles["radio-group"]}>
-            {options.map(({ label, value }, index) => (
+            {options.map(({ label, value, defaultChecked }, index) => (
               <>
                 <div key={index} className={styles["radio-option"]}>
                   <label className={styles["radio-label"]}>
@@ -34,6 +34,7 @@ const Radio: React.ForwardRefExoticComponent<
                       type="radio"
                       name={name}
                       ref={ref}
+                      defaultChecked={defaultChecked}
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
