@@ -19,11 +19,18 @@
 }
 
 .card{
+  width: 30%; /* Adjust as needed */
+  margin: 20px;
+  float: left;
     background-color: rgb(113, 113, 113, 0.3);
     width: 300px;
+    //height: 280px;
     border-radius: 1rem;
     padding: 1rem ;
     margin-left: 1.5rem;
+    position: relative;
+    justify-content: center;
+    align-items: center;
     
     //box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);-->
 }
@@ -35,6 +42,10 @@
 
 .cardsContainer{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 
 .cardImg{
@@ -56,10 +67,31 @@
 
 }
 
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .card {
+      width: 70%; /* Adjust as needed */
+  }
+}
+
+/* Media query for even smaller screens */
+@media screen and (max-width: 576px) {
+  .card {
+      width: 90%; /* Adjust as needed */
+  }
+}
+
 .social_media {
     width: 20s;
     opacity: 0.8;  
     align-items: end;
+    //position: absolute;
+    //top: 235px;
+    left: 50px;
+    //bottom: 100px;
+    
+    
     
 }
 
@@ -67,18 +99,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
+    
 }
 
 
-.social_media img {
+.social_media svg  {
     
     opacity: 0.6;
-    padding: 3px 3px 3px 3px;
+    padding-left: 500px;
+    padding: 5px 5px 8px 5px;
+    width: 40px;
+    height: 40px;
+    padding-left: 5px;
+    
 }
 
 
 
-.social_media img:hover{
+.social_media svg:hover{
     opacity: 1;
     transform: scale(1.1);
 }
