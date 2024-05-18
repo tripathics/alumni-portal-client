@@ -47,7 +47,6 @@ const Myfooter =() =>{
                   <a href="" className="facebook">TERMS OF USE </a>
                   <a href="" className="linkedin">GO TO NITAP WEBSITE </a>
                   <a href="" className="instagram">ADMIN PROFILE </a>
-                  <a href=""></a>
                 </div>
               </div>
             </div>
