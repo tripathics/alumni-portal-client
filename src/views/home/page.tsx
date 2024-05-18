@@ -1,4 +1,5 @@
 import PageHeader from "@/components/layouts/PageHeader/PageHeader";
+import Myfooter from "../../components/layouts/PageFooter/PageFooter";
 
 const Home: React.FC = () => {
   return (
@@ -11,7 +12,9 @@ const Home: React.FC = () => {
       />
       <div className="__page-content container">
         <h1>Home</h1>
+        
       </div>
+      <Myfooter></Myfooter>
     </>
   );
 };
