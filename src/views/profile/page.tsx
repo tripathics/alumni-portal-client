@@ -15,7 +15,6 @@ import personalDetailsFormSchema from "@/utils/formSchema/personalDetailsFormSch
 import { FieldValues } from "react-hook-form";
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { toast } from "react-toastify";
-import Alert from "@/components/custom-ui/Alert/Alert";
 import { getDate } from "@/utils/helper";
 import {
   Card,
@@ -369,11 +368,6 @@ const PersonalDetails = () => {
     </div>
   ) : (
     <div className={styles["dashboard-page"]}>
-      <Alert severity="info">
-        {user?.role.includes("admin")
-          ? "Fill in your personal details to complete creating your profile"
-          : "Fill in your personal details to complete creating your alumni profile"}
-      </Alert>
       <Card>
         <CardContent>
           <PersonalDetailsForm

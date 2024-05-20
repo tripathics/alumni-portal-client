@@ -18,6 +18,7 @@ import {
   LogOut as LogOutIcon,
   Lock,
 } from "iconoir-react";
+import ProfileCompletionStatus from "@/components/ProfileCompletionStatus/ProfileCompletionStatus";
 
 const Profile = () => {
   const { user, logout } = useUser();
@@ -71,6 +72,7 @@ const Profile = () => {
       </Header>
       <div className="__page-content container">
         <DashboardLayout navigations={navigations}>
+          <ProfileCompletionStatus />
           <Outlet />
         </DashboardLayout>
       </div>
@@ -79,5 +81,4 @@ const Profile = () => {
 };
 
 export default Profile;
-// export { PersonalProfile, Education, Experience };
 export { PersonalProfile, Education, Experience };

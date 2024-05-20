@@ -16,6 +16,7 @@ import {
   Education,
   Experience,
   AlumniMembership,
+  MembershipApplicationPrint,
   Admin,
   Applications,
   Users,
@@ -64,7 +65,15 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { path: "*", element: <h1>Not Found</h1> },
+        ],
+      },
+      {
+        element: <PrivateRoutes />,
+        children: [
+          {
+            path: "alumni-membership/print/:id",
+            element: <MembershipApplicationPrint />,
+          },
         ],
       },
       {
@@ -75,6 +84,7 @@ const router = createBrowserRouter([
           { path: "reset-password", element: <ResetPassword /> },
         ],
       },
+      { path: "*", element: <h1>Not Found</h1> },
     ],
   },
 ]);

@@ -5,7 +5,9 @@ import Register from "./register/page";
 import ResetPassword from "./reset-password/page";
 
 import Profile, { PersonalProfile, Education, Experience } from "./profile";
-import AlumniMembership from "./alumni-membership";
+import AlumniMembership, {
+  MembershipApplicationPrint,
+} from "./alumni-membership";
 import Admin, { Applications, Users, Dashboard } from "./admin";
 
 export {
@@ -19,6 +21,7 @@ export {
   Education,
   Experience,
   AlumniMembership,
+  MembershipApplicationPrint,
   Admin,
   Applications,
   Users,

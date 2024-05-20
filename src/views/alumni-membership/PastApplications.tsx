@@ -15,6 +15,9 @@ import { useState } from "react";
 import cx from "classnames";
 import { TableRowSkeleton } from "@/components/Skeletons/Skeletons";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Printer } from "iconoir-react";
 
 const PastApplications: React.FC<{
   applications: {
@@ -28,6 +31,7 @@ const PastApplications: React.FC<{
   const [loading, setLoading] = useState(false);
   const [applicationData, setApplicationData] =
     useState<MembershipApplicationType | null>(null);
+  const navigate = useNavigate();
 
   const handleRowClick = async (id: string) => {
     try {
@@ -40,6 +44,11 @@ const PastApplications: React.FC<{
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePrint = (id: string) => {
+    setApplicationData(null);
+    navigate(`/alumni-membership/print/${id}`);
   };
 
   return (
@@ -62,6 +71,12 @@ const PastApplications: React.FC<{
                 <TableRowSkeleton cols={3} />
                 <TableRowSkeleton cols={3} />
               </>
+            ) : applications.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center">
+                  No past applications found
+                </TableCell>
+              </TableRow>
             ) : (
               applications.map((app) => (
                 <TableRow
@@ -88,6 +103,20 @@ const PastApplications: React.FC<{
           setIsOpen={(open) => {
             if (!open) setApplicationData(null);
           }}
+          footer={
+            applicationData && (
+              <div>
+                <Button
+                  onClick={() => {
+                    handlePrint(applicationData.id);
+                  }}
+                >
+                  <Printer />
+                  Print
+                </Button>
+              </div>
+            )
+          }
         >
           {applicationData && <Application applicationData={applicationData} />}
         </Modal>

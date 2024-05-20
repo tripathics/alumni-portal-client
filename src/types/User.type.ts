@@ -11,6 +11,7 @@ export interface UserType {
   first_name: string;
   last_name?: string | null;
   avatar: string;
+  education_at_nitap_exists: boolean | null;
   profile_locked: boolean | null;
 }
 

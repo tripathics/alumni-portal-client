@@ -59,3 +59,13 @@ export interface MembershipApplicationType {
   graduation_date: string;
   enrollment_date: string;
 }
+
+export interface MembershipApplicationAcknowledgementType {
+  id: string;
+  user_id: string;
+  membership_level: MembershipLevelType;
+  sign: string;
+  created_at: string;
+  updated_at: string;
+  status: MembershipApplcationStatus;
+}

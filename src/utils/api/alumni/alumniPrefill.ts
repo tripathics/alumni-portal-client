@@ -12,7 +12,7 @@ const alumniPrefill = async (): Promise<
     });
     return response.data;
   } catch (error) {
-    const err = error as AxiosError<{ message: string }>;
+    const err = error as AxiosError<{ message?: string }>;
     if (err.response?.data.message) {
       throw new Error(err.response.data.message);
     }

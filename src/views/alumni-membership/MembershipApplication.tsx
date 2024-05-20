@@ -2,7 +2,7 @@ import SchemaForm from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import alumniPrefillApi from "@/utils/api/alumni/alumniPrefill";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import alumniMembershipSubmit from "@/utils/api/alumni/alumniMembershipSubmit";
 import { MembershipPrefillDataType } from "@/types/Alumni.type";
@@ -40,6 +40,7 @@ const MembershipForm = () => {
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
   const { user } = useUser();
 
   const fetchPrefillData = async () => {
@@ -98,11 +99,7 @@ const MembershipForm = () => {
       const response = await alumniMembershipSubmit(formData);
       if (response?.success) {
         toast.success(response.message);
-        setAlertMsg(
-          "Membership application is pending and will be reviewed by the admin"
-        );
-        setLoading(true);
-        await fetchApplications();
+        navigate(`/alumni-membership/print/${response.application.id}`);
       }
     } catch (error) {
       toast.error((error as Error).message);

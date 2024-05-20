@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import axios from "../../../config/axios.config";
+import { MembershipApplicationAcknowledgementType } from "@/types/Membership.type";
 
 const alumniMembershipSubmit = async (
   data: FormData
@@ -7,6 +8,7 @@ const alumniMembershipSubmit = async (
   | {
       message: string;
       success: boolean;
+      application: MembershipApplicationAcknowledgementType;
     }
   | undefined
 > => {
