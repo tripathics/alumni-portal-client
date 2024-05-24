@@ -1,23 +1,26 @@
-import useUser from "@/hooks/user";
 import Alert from "../custom-ui/Alert/Alert";
 import { Link } from "react-router-dom";
+import useUser from "@/hooks/user";
 
 const ProfileCompletionStatus = () => {
-  const { user } = useUser();
+  const { user, profileCompletionStatus } = useUser();
 
-  if (!user) return null;
+  if (!profileCompletionStatus) return null;
+
+  const { personal_profile, education, membership_application } =
+    profileCompletionStatus;
 
   return (
-    !user.profile_locked &&
-    !user.role.includes("alumni") && (
+    !membership_application &&
+    !user?.role.includes("alumni") && (
       <Alert>
         Complete{" your "}
-        {!user.first_name && (
+        {!personal_profile && (
           <Link className="link" to="/profile">
             personal details,{" "}
           </Link>
         )}
-        {!user.education_at_nitap_exists && (
+        {!education && (
           <>
             <Link className="link" to="/profile/education">
               education at NITAP

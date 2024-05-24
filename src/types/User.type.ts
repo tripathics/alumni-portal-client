@@ -11,14 +11,21 @@ export interface UserType {
   first_name: string;
   last_name?: string | null;
   avatar: string;
-  education_at_nitap_exists: boolean | null;
   profile_locked: boolean | null;
+}
+
+export interface ProfileCompletionStatusType {
+  personal_profile: boolean;
+  education: boolean;
+  membership_application: boolean;
 }
 
 export interface UserContextType {
   user: UserType | null;
+  profileCompletionStatus: ProfileCompletionStatusType | null;
   loading: boolean;
   login: (user: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
   fetchUser: () => Promise<void>;
+  refreshProfileCompletionStatus: () => Promise<void>;
 }

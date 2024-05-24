@@ -56,7 +56,7 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
 };
 
 const PersonalDetails = () => {
-  const { user, fetchUser } = useUser();
+  const { user, fetchUser, refreshProfileCompletionStatus } = useUser();
 
   const [isProfileFormModalOpen, setIsProfileFormModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -70,6 +70,7 @@ const PersonalDetails = () => {
       const response = await updateProfileApi(data as PersonalDetailsType);
       if (response?.success) {
         fetchProfile();
+        refreshProfileCompletionStatus();
 
         setIsProfileFormModalOpen(false);
         toast.success("Profile updated successfully");

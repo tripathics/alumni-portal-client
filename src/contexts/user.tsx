@@ -10,12 +10,23 @@ export const UserContext = createContext<UserContextType>({
   login: async () => {},
   logout: async () => {},
   fetchUser: async () => {},
+  profileCompletionStatus: null,
+  refreshProfileCompletionStatus: async () => {},
 });
 
 export const UserProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const { fetchUser, loading, login, logout, user, clearUser } = useAuth();
+  const {
+    fetchUser,
+    loading,
+    login,
+    logout,
+    user,
+    clearUser,
+    profileCompletionStatus,
+    refreshProfileCompletionStatus,
+  } = useAuth();
 
   useEffect(() => {
     fetchUser();
@@ -34,7 +45,17 @@ export const UserProvider: React.FC<{
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, loading, fetchUser, login, logout }}>
+    <UserContext.Provider
+      value={{
+        user,
+        loading,
+        fetchUser,
+        login,
+        logout,
+        profileCompletionStatus,
+        refreshProfileCompletionStatus,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

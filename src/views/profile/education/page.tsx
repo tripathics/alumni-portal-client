@@ -141,7 +141,7 @@ const Education: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [educations, setEducations] = useState<EducationType[] | null>([]);
-  const { user } = useUser();
+  const { user, refreshProfileCompletionStatus } = useUser();
 
   // add, update or delete
   const updateEducation = async (data: FieldValues) => {
@@ -150,6 +150,8 @@ const Education: React.FC = () => {
       const res = await updateEducationApi(data as EducationType);
       if (res?.success) {
         fetchEducation();
+        refreshProfileCompletionStatus();
+
         setIsModalOpen(false);
         toast.success("Educations updated");
       }

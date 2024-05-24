@@ -41,7 +41,7 @@ const MembershipForm = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, refreshProfileCompletionStatus } = useUser();
 
   const fetchPrefillData = async () => {
     try {
@@ -100,6 +100,7 @@ const MembershipForm = () => {
       if (response?.success) {
         toast.success(response.message);
         navigate(`/alumni-membership/print/${response.application.id}`);
+        refreshProfileCompletionStatus();
       }
     } catch (error) {
       toast.error((error as Error).message);
