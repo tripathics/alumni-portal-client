@@ -78,7 +78,6 @@ const useAuth = () => {
     try {
       const data = await getProfileCompletionStatus();
       if (data) setProfileCompletionStatus(data);
-      console.log(data, profileCompletionStatus);
     } catch (error) {
       console.error(error);
     }
