@@ -1,28 +1,51 @@
-type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
+import getUsers from "@/utils/api/admin/getUsers";
+import { User, columns } from "./columns";
+import { DataTable } from "./data-table";
+import { useEffect, useState } from "react";
 
-export const payments: Payment[] = [
-  {
-    id: "728ed52f",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    id: "489e1d42",
-    amount: 125,
-    status: "processing",
-    email: "example@gmail.com",
-  },
-  // ...
-];
+async function getData(): Promise<User[]> {
+  try {
+    const data = await getUsers();
+    if (!data) return [];
+    return data.users.map((user) => ({
+      id: user.id,
+      avatar: user.avatar,
+      name: user.first_name
+        ? `${user.title} ${user.first_name} ${user.last_name}`
+        : "User",
+      email: user.email,
+      role: user.role,
+    }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
-const Users = () => {
-  return <div>hello</div>;
-};
+export default function Users() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
 
-export default Users;
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await getData();
+        setUsers(data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  return (
+    <div className="container mx-auto py-10">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <DataTable columns={columns} data={users} />
+      )}
+    </div>
+  );
+}
