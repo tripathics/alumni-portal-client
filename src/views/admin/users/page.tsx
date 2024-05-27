@@ -40,7 +40,10 @@ export default function Users() {
   }, []);
 
   return (
-    <div className="container mx-auto py-10">
+    <div>
+      <header>
+        <h2 className="mb-4">Users</h2>
+      </header>
       {loading ? (
         <p>Loading...</p>
       ) : (

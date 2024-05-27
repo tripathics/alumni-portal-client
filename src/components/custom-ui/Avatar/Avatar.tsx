@@ -1,6 +1,5 @@
 import AvatarProps from "./AvatarProp.type";
 import { ProfileCircle } from "iconoir-react";
-import styles from "./Avatar.module.scss";
 import cx from "classnames";
 
 const Avatar: React.FC<AvatarProps> = ({ avatar, className, size }) => {
@@ -10,7 +9,10 @@ const Avatar: React.FC<AvatarProps> = ({ avatar, className, size }) => {
         width: size,
         height: size,
       }}
-      className={cx(styles.avatar, className)}
+      className={cx(
+        className,
+        "rounded-full overflow-hidden aspect-square shrink-0 w-48"
+      )}
     >
       <img
         className="w-full h-full object-cover"
@@ -20,7 +22,7 @@ const Avatar: React.FC<AvatarProps> = ({ avatar, className, size }) => {
     </div>
   ) : (
     <ProfileCircle
-      className={styles.fallbackIcon}
+      className="w-48 h-48 shrink-0"
       strokeWidth={0.8}
       style={{
         width: size,
