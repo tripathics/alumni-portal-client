@@ -1,6 +1,6 @@
 import getUsers from "@/utils/api/admin/getUsers";
 import { User, columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/ui/data-table";
 import { useEffect, useState } from "react";
 
 async function getData(): Promise<User[]> {
