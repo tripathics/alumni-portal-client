@@ -15,8 +15,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   variant = "default",
 }) => {
   const variantStyles = {
-    default: "",
-    large: "md:min-h-[70vh] min-h-[50vh]",
+    default: "gap-4",
+    large: "gap-12 md:gap-20 md:min-h-[70vh] min-h-[50vh]",
   };
 
   return (
@@ -45,8 +45,8 @@ export const PageTitle: React.FC<{
   variant?: "default" | "large";
 }> = ({ title, variant = "default" }) => {
   const variantStyles = {
-    default: "text-3xl md:text-4xl mb-4",
-    large: "md:text-5xl text-4xl md:mb-20 mb-12 max-w-2xl",
+    default: "text-3xl md:text-4xl",
+    large: "md:text-5xl text-4xl max-w-2xl",
   };
 
   return (

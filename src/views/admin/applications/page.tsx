@@ -8,7 +8,7 @@ async function getData(): Promise<MembershipApplication[]> {
   try {
     const data = await fetchMembershipApplications();
     if (!data) return [];
-    return data.map(d => ({
+    return data.map((d) => ({
       id: d.id,
       avatar: d.avatar,
       created_at: d.created_at,
@@ -16,8 +16,8 @@ async function getData(): Promise<MembershipApplication[]> {
       discipline: d.discipline,
       graduation_date: d.graduation_date,
       name: `${d.title} ${d.first_name} ${d.last_name}`,
-      roll_no: d.roll_no
-    }))
+      roll_no: d.roll_no,
+    }));
   } catch (error) {
     console.error(error);
     return [];
@@ -46,11 +46,7 @@ export default function Users() {
       <header>
         <h2 className="mb-4">Membership applications</h2>
       </header>
-      {loading ? (
-          <Spinner />
-      ) : (
-        <DataTable columns={columns} data={users} />
-      )}
+      {loading ? <Spinner /> : <DataTable columns={columns} data={users} />}
     </div>
   );
 }
