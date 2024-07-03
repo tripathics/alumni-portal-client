@@ -17,6 +17,7 @@ async function getData(): Promise<MembershipApplication[]> {
       graduation_date: d.graduation_date,
       name: `${d.title} ${d.first_name} ${d.last_name}`,
       roll_no: d.roll_no,
+      status: d.status,
     }));
   } catch (error) {
     console.error(error);
@@ -24,8 +25,8 @@ async function getData(): Promise<MembershipApplication[]> {
   }
 }
 
-export default function Users() {
-  const [users, setUsers] = useState<MembershipApplication[]>([]);
+export default function Applications() {
+  const [applications, setApplications] = useState<MembershipApplication[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function Users() {
       try {
         setLoading(true);
         const data = await getData();
-        setUsers(data);
+        setApplications(data);
       } finally {
         setLoading(false);
       }
@@ -46,7 +47,11 @@ export default function Users() {
       <header>
         <h2 className="mb-4">Membership applications</h2>
       </header>
-      {loading ? <Spinner /> : <DataTable columns={columns} data={users} />}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <DataTable columns={columns} data={applications} />
+      )}
     </div>
   );
 }

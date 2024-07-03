@@ -18,6 +18,7 @@ export interface ProfileCompletionStatusType {
   personal_profile: boolean;
   education: boolean;
   membership_application: boolean;
+  [key: string]: boolean;
 }
 
 export interface UserContextType {

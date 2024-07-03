@@ -76,6 +76,7 @@ const PersonalDetails = () => {
         toast.success("Profile updated successfully");
       }
     } catch (error) {
+      console.log(error);
       toast.error((error as Error).message);
     } finally {
       setLoading(false);

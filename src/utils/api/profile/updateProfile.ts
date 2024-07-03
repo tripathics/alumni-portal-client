@@ -19,18 +19,8 @@ const updateProfile = async (
     });
     return response.data;
   } catch (error) {
-    switch ((error as AxiosError).response?.status) {
-      case 400:
-        // Handle 401 error
-        throw (error as AxiosError<{ message: string }>).response?.data.message;
-        break;
-      case 401:
-        // Handle 500 error
-        console.error(error);
-        break;
-      default:
-        console.error(error);
-        break;
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
     }
   }
 };

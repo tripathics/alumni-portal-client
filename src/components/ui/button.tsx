@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading && <Spinner className="w-4 h-4" aria-hidden={true} />}
-        {children}
+        {loading && size === "icon" ? null : children}
       </Comp>
     );
   }

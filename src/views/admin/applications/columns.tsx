@@ -2,10 +2,14 @@ import Application from "@/components/Application/Application";
 import Avatar from "@/components/custom-ui/Avatar/Avatar";
 import Modal from "@/components/custom-ui/Modal/Modal";
 import { Button } from "@/components/ui/button";
-import { MembershipApplicationType } from "@/types/Membership.type";
+import {
+  MembershipApplcationStatus,
+  MembershipApplicationType,
+} from "@/types/Membership.type";
 import { fetchApplicationByIdAdmin } from "@/utils/api/admin/fetchApplicationById";
 import updateApplicationStatus from "@/utils/api/admin/updateApplicationStatus";
-import { getDateWithTime, getMonth } from "@/utils/helper";
+import { getDateWithTime, getMonth, toTitleCase } from "@/utils/helper";
+import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -13,6 +17,7 @@ import { toast } from "react-toastify";
 export type MembershipApplication = {
   id: string;
   avatar: string | null;
+  status: MembershipApplcationStatus;
   name: string;
   roll_no: string;
   degree: string;
@@ -57,6 +62,11 @@ export const columns: ColumnDef<MembershipApplication>[] = [
     accessorKey: "date",
     header: "Date",
     cell: (cell) => getDateWithTime(cell.row.original.created_at),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: (cell) => toTitleCase(cell.row.original.status),
   },
   {
     id: "actions",
@@ -107,15 +117,16 @@ const ApplicationAction: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div className="flex items-center">
       <Button
-        variant="outline"
-        size="sm"
+        variant="ghost"
+        size="icon"
         onClick={(e) => {
           e.preventDefault();
           fetchApplicationData();
         }}
-        disabled={loading}
+        loading={loading}
+        aria-label="View application"
       >
-        View
+        <EyeOpenIcon width={16} height={16} />
       </Button>
       <Modal
         isOpen={isApplicationModalOpen}

@@ -32,7 +32,7 @@ export const columns: ColumnDef<User>[] = [
     cell: (cell) => (
       <div className="flex flex-wrap">
         {cell.row.original.role.map((role) => (
-          <Badge key={role} className="mr-2" color="primary">
+          <Badge key={role} className="mr-2" variant="secondary">
             {role}
           </Badge>
         ))}
