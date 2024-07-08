@@ -1,10 +1,11 @@
-import styles from "../Form.module.scss"
+import { toKebabCase } from "@/utils/helper";
+import styles from "../Form.module.scss";
 
 interface FormSectionHeadingProps {
   label: string;
 }
 const FormSectionHeading: React.FC<FormSectionHeadingProps> = ({ label }) => (
-  <h3 className={styles["section-title"]}>
+  <h3 id={toKebabCase(label)} className={styles["section-title"]}>
     {label}
   </h3>
 );

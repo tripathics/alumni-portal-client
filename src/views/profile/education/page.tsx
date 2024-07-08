@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 interface EducationFormProps {
   onSubmit: (data: FieldValues) => void;
@@ -134,7 +135,14 @@ const EducationRow: React.FC<EducationRowProps> = ({ data, openEditModal }) => {
 };
 
 const Education: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { state: locationState, key: locationKey } = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(
+    locationState?.modal === "education"
+  );
+  useEffect(() => {
+    setIsModalOpen(locationState?.modal === "education");
+  }, [locationKey, locationState]);
+
   const [editPrefillData, setEditPrefillData] = useState<EducationType | null>(
     null
   );

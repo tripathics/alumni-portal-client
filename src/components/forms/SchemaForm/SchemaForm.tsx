@@ -124,14 +124,14 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
             <div key={index} className={styles["field-wrapper"]}>
               {Array.isArray(file) && file.length > 0 && (
                 <div className={styles["image-preview"]}>
-                  {file.map((f, _) => (
+                  {file.map((f, i) => (
                     <div
                       style={{
                         maxWidth: field.maxFileSize
                           ? `${field.maxFileSize / 1024}px`
                           : undefined,
                       }}
-                      key={_}
+                      key={i}
                       className={styles["image"]}
                     >
                       <img src={URL.createObjectURL(f)} alt={f.name} />

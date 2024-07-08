@@ -13,7 +13,6 @@ const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const clearUser = () => {
-    console.log("clearing user");
     setUser(null);
     setProfileCompletionStatus(null);
   };

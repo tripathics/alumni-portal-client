@@ -22,6 +22,7 @@ import {
 import updateExperience from "@/utils/api/profile/experience/updateExperience";
 import { toast } from "react-toastify";
 import { ProfileTableRowSkeleton } from "@/components/Skeletons/Skeletons";
+import { useLocation } from "react-router-dom";
 
 interface ExperienceFormProps {
   onSubmit: (data: FieldValues) => void;
@@ -101,7 +102,14 @@ const ExperienceRow: React.FC<ExperienceRowProps> = ({
 };
 
 const Experience: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { state: locationState, key: locationKey } = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(
+    locationState?.modal === "experience"
+  );
+  useEffect(() => {
+    setIsModalOpen(locationState?.modal === "experience");
+  }, [locationKey, locationState]);
+
   const [editPrefillData, setEditPrefillData] = useState<ExperienceType | null>(
     null
   );

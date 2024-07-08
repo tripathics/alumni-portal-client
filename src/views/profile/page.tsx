@@ -30,6 +30,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLocation } from "react-router-dom";
 
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
@@ -57,12 +58,19 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
 
 const PersonalDetails = () => {
   const { user, fetchUser, refreshProfileCompletionStatus } = useUser();
+  const { state, key } = useLocation();
 
   const [isProfileFormModalOpen, setIsProfileFormModalOpen] = useState(false);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(
+    state?.modal === "avatar"
+  );
   const [personalDetails, setPersonalDetails] = useState<PersonalDetailsType>();
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+
+  useEffect(() => {
+    setIsAvatarModalOpen(state?.modal === "avatar");
+  }, [key]);
 
   const updateProfile = async (data: FieldValues) => {
     try {
@@ -70,6 +78,7 @@ const PersonalDetails = () => {
       const response = await updateProfileApi(data as PersonalDetailsType);
       if (response?.success) {
         fetchProfile();
+        fetchUser();
         refreshProfileCompletionStatus();
 
         setIsProfileFormModalOpen(false);
@@ -89,7 +98,8 @@ const PersonalDetails = () => {
       const data = await updateAvatarApi(file);
       if (data?.success) {
         fetchProfile();
-        setIsProfileModalOpen(false);
+        setIsAvatarModalOpen(false);
+        fetchUser();
         toast.success("Profile picture updated successfully", {
           autoClose: 2000,
         });
@@ -120,11 +130,7 @@ const PersonalDetails = () => {
 
   useEffect(() => {
     fetchProfile();
-
-    return () => {
-      fetchUser();
-    };
-  }, [fetchProfile, fetchUser]);
+  }, [fetchProfile]);
 
   return pageLoading ? (
     <ProfileSkeleton />
@@ -179,15 +185,15 @@ const PersonalDetails = () => {
                 size="icon"
                 className="absolute bottom-0 right-0 rounded-full"
                 onClick={() => {
-                  setIsProfileModalOpen(true);
+                  setIsAvatarModalOpen(true);
                 }}
               >
                 <EditPencil />
               </Button>
               <Modal
-                isOpen={isProfileModalOpen}
+                isOpen={isAvatarModalOpen}
                 setIsOpen={(val) => {
-                  setIsProfileModalOpen(val);
+                  setIsAvatarModalOpen(val);
                 }}
                 modalTitle="Change profile picture"
               >
